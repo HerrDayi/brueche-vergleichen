@@ -21,7 +21,7 @@
     </div>
   </header>
 
-  <!-- Navigation Tabs -->
+  <!-- Navigation Tabs (Wissensspeicher entfernt) -->
   <div class="nav-container">
     <nav class="nav-tabs">
       <button class="tab-btn active" data-tab="tab-hilfen">
@@ -36,10 +36,6 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         Nenner-Maschine
       </button>
-      <button class="tab-btn" data-tab="tab-wissen">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
-        Wissensspeicher
-      </button>
     </nav>
   </div>
 
@@ -47,7 +43,7 @@
   <main class="main-content">
 
     <!-- ====================================================================
-         TAB 1: GESTUFTE HILFEN (OHNE LÖSUNGS-SPOILER)
+         TAB 1: GESTUFTE HILFEN (OHNE LÖSUNGS-SPOILER & MIT ECHTEN BRÜCHEN)
          ==================================================================== -->
     <section id="tab-hilfen" class="tab-pane active">
       
@@ -71,7 +67,7 @@
           </div>
           <div class="task-body">
             <div class="task-desc">
-              Jonas ist <span class="frac"><span class="num">3</span><span class="den">4</span></span> gelaufen, Amira <span class="frac"><span class="num">5</span><span class="den">8</span></span>. Amira behauptet: <em>„5 ist größer als 3, also bin ich weiter gelaufen!“</em>
+              Jonas ist <strong><span class="frac"><span class="num">3</span><span class="den">4</span></span></strong> gelaufen, Amira <strong><span class="frac"><span class="num">5</span><span class="den">8</span></span></strong>. Amira behauptet: <em>„5 ist größer als 3, also bin ich weiter gelaufen!“</em>
             </div>
 
             <div class="hint-steps">
@@ -87,7 +83,7 @@
                 <div class="hint-content">
                   Schau dir deine beiden gezeichneten Streifen genau an:<br>
                   In wie viele Teile ist der Streifen von Jonas geteilt (4 Teile)? Und der von Amira (8 Teile)?<br>
-                  👉 <em>Ist ein Viertel-Stück (<span class="frac"><span class="num">1</span><span class="den">4</span></span>) genauso lang wie ein Achtel-Stück (<span class="frac"><span class="num">1</span><span class="den">8</span></span>)? Darf man die Zähler vergleichen, wenn die Stücke verschieden groß sind?</em>
+                  👉 <em>Ist ein Viertel-Stück (<span class="frac"><span class="num">1</span><span class="den">4</span></span>) genauso lang wie ein Achtel-Stück (<span class="frac"><span class="num">1</span><span class="den">8</span></span>)? Darf man einfach nur die Zähler vergleichen, wenn die Stücke verschieden groß sind?</em>
                 </div>
               </div>
 
@@ -102,9 +98,9 @@
                 </button>
                 <div class="hint-content">
                   Ein Viertel ist doppelt so lang wie ein Achtel (<span class="frac"><span class="num">1</span><span class="den">4</span></span> = <span class="frac"><span class="num">2</span><span class="den">8</span></span>).<br>
-                  Teile jedes der 4 Viertel bei Jonas in der Mitte noch einmal durch (mit einem Bleistift-Strich).<br>
-                  In wie viele Teile ist sein Streifen jetzt geteilt? Wie viele davon sind gefärbt?<br>
-                  👉 <em>Sobald Jonas seinen Anteil in Achteln hat, vergleiche die Zähler auf deinem Arbeitsblatt: Wer ist weiter gelaufen?</em>
+                  Teile jedes der 4 Viertel bei Jonas in der Mitte noch einmal durch (mit einem Bleistift-Strich):<br>
+                  <div class="hint-math-box"><span class="frac"><span class="num">3 · 2</span><span class="den">4 · 2</span></span> = <span class="frac"><span class="num">6</span><span class="den">8</span></span></div><br>
+                  👉 <em>Vergleiche nun: Jonas hat <span class="frac"><span class="num">6</span><span class="den">8</span></span> und Amira hat <span class="frac"><span class="num">5</span><span class="den">8</span></span>. Wer ist weiter gelaufen? Hat Amira recht? Formuliere deinen Satz auf dem Arbeitsblatt!</em>
                 </div>
               </div>
             </div>
@@ -148,7 +144,7 @@
                 <button class="hint-trigger">
                   <div class="hint-meta">
                     <span class="step-indicator">2</span>
-                    <span>Stufe 2: Erweiterungszahlen</span>
+                    <span>Stufe 2: Strategie-Hilfe (Erweitern)</span>
                   </div>
                   <span class="hint-btn-text">Aufdecken ▼</span>
                 </button>
@@ -170,13 +166,13 @@
           <div class="task-header">
             <div class="task-title-group">
               <span class="badge-task">Aufgabe 3</span>
-              <span class="task-title">Wenn keiner der Nenner passt</span>
+              <span class="task-title">Wenn keiner der Nenner passt (2 Drittel und 3 Viertel)</span>
             </div>
             <span class="toggle-arrow">▼</span>
           </div>
           <div class="task-body">
             <div class="task-desc">
-              Vergleiche <span class="frac"><span class="num">2</span><span class="den">3</span></span> und <span class="frac"><span class="num">3</span><span class="den">4</span></span>. Hier passt 3 nicht direkt in 4!
+              Hier passt 3 nicht direkt in 4. Wir müssen einen gemeinsamen Nenner finden!
             </div>
 
             <div class="hint-steps">
@@ -184,7 +180,7 @@
                 <button class="hint-trigger">
                   <div class="hint-meta">
                     <span class="step-indicator">1</span>
-                    <span>Stufe 1: Vielfache aufschreiben</span>
+                    <span>Stufe 1: Denkanstoß (Vielfachenreihen)</span>
                   </div>
                   <span class="hint-btn-text">Aufdecken ▼</span>
                 </button>
@@ -192,7 +188,7 @@
                   Sage die 3er-Reihe und die 4er-Reihe auf:<br>
                   • 3er-Reihe: 3, 6, 9, <strong>12</strong>, 15...<br>
                   • 4er-Reihe: 4, 8, <strong>12</strong>, 16...<br>
-                  👉 <em>Welche Zahl taucht als erstes in beiden Reihen auf? Das ist dein gemeinsamer Nenner!</em>
+                  👉 <em>Welche Zahl taucht als erstes in beiden Reihen auf? Das ist dein gemeinsamer Hauptnenner!</em>
                 </div>
               </div>
 
@@ -200,7 +196,7 @@
                 <button class="hint-trigger">
                   <div class="hint-meta">
                     <span class="step-indicator">2</span>
-                    <span>Stufe 2: Beide Brüche erweitern</span>
+                    <span>Stufe 2: Strategie-Hilfe (Beide Brüche erweitern)</span>
                   </div>
                   <span class="hint-btn-text">Aufdecken ▼</span>
                 </button>
@@ -208,7 +204,7 @@
                   Der gemeinsame Nenner ist <strong>12</strong>.<br>
                   • Erweitere <span class="frac"><span class="num">2</span><span class="den">3</span></span> mit <strong>4</strong> (denn 3 · 4 = 12).<br>
                   • Erweitere <span class="frac"><span class="num">3</span><span class="den">4</span></span> mit <strong>3</strong> (denn 4 · 3 = 12).<br>
-                  👉 <em>Welche Zähler entstehen dabei? Vergleiche die beiden Zähler und erkläre auf deinem Arbeitsblatt, warum man hier beide Brüche verändern musste!</em>
+                  👉 <em>Rechne die neuen Zähler aus: Welcher Bruch hat nach dem Erweitern mehr Zwölftel? Begründe bei Teil c auf deinem Arbeitsblatt, warum man hier beide Brüche verändern musste!</em>
                 </div>
               </div>
             </div>
@@ -240,7 +236,7 @@
                 </button>
                 <div class="hint-content">
                   Überlege: Wenn du eine Pizza in 5 Stücke teilst, sind die Stücke dann größer, als wenn du sie in 7 Stücke teilst?<br>
-                  👉 <em>Ja! Ein Fünftel (<span class="frac"><span class="num">1</span><span class="den">5</span></span>) ist größer als ein Siebtel (<span class="frac"><span class="num">1</span><span class="den">7</span></span>). Dieser Teil von Murats Satz stimmt also!</em>
+                  👉 <em>Ja! 1 Fünftel (<span class="frac"><span class="num">1</span><span class="den">5</span></span>) ist tatsächlich größer als 1 Siebtel (<span class="frac"><span class="num">1</span><span class="den">7</span></span>). Dieser Teil von Murats Satz stimmt also!</em>
                 </div>
               </div>
 
@@ -253,10 +249,10 @@
                   <span class="hint-btn-text">Aufdecken ▼</span>
                 </button>
                 <div class="hint-content">
-                  Gemeinsamer Nenner von 5 und 7 ist <strong>35</strong>.<br>
+                  Bringe beide Brüche auf den gemeinsamen Nenner <strong>35</strong>:<br>
                   • Erweitere <span class="frac"><span class="num">3</span><span class="den">5</span></span> mit 7.<br>
                   • Erweitere <span class="frac"><span class="num">4</span><span class="den">7</span></span> mit 5.<br>
-                  👉 <em>Schau dir die beiden neuen Zähler an: Murat hat nur auf die Stücke geachtet, aber was ist mit der Anzahl der Stücke (den Zählern)? Erkläre seinen Denkfehler auf dem Arbeitsblatt!</em>
+                  👉 <em>Schau dir die beiden neuen Zähler genau an: Murat hat nur auf die Stücke geachtet. Warum reicht das nicht? Was hat er vergessen? Erkläre seinen Denkfehler auf deinem Arbeitsblatt!</em>
                 </div>
               </div>
             </div>
@@ -268,7 +264,7 @@
           <div class="task-header">
             <div class="task-title-group">
               <span class="badge-task">Aufgabe 5</span>
-              <span class="task-title">Finde mehrere Lösungen</span>
+              <span class="task-title">Finde mehrere Lösungen (Zwischen 1 Halb und 3 Viertel)</span>
             </div>
             <span class="toggle-arrow">▼</span>
           </div>
@@ -338,7 +334,7 @@
                 </button>
                 <div class="hint-content">
                   Achte auf das Wort <strong>genau</strong>!<br>
-                  Es reicht nicht, dass <span class="frac"><span class="num">3</span><span class="den">4</span></span> irgendwo dazwischen liegt. Der Abstand von <span class="frac"><span class="num">2</span><span class="den">3</span></span> zu <span class="frac"><span class="num">3</span><span class="den">4</span></span> müsste <em>haargenau gleich groß</em> sein wie von <span class="frac"><span class="num">3</span><span class="den">4</span></span> zu <span class="frac"><span class="num">4</span><span class="den">5</span></span>!
+                  Es reicht nicht, dass der Bruch irgendwo dazwischen liegt. Der Abstand von <span class="frac"><span class="num">2</span><span class="den">3</span></span> zu <span class="frac"><span class="num">3</span><span class="den">4</span></span> müsste <em>haargenau gleich groß</em> sein wie von <span class="frac"><span class="num">3</span><span class="den">4</span></span> zu <span class="frac"><span class="num">4</span><span class="den">5</span></span>!
                 </div>
               </div>
 
@@ -355,7 +351,7 @@
                   • <span class="frac"><span class="num">2</span><span class="den">3</span></span> = <span class="frac"><span class="num">40</span><span class="den">60</span></span><br>
                   • <span class="frac"><span class="num">3</span><span class="den">4</span></span> = <span class="frac"><span class="num">45</span><span class="den">60</span></span><br>
                   • <span class="frac"><span class="num">4</span><span class="den">5</span></span> = <span class="frac"><span class="num">48</span><span class="den">60</span></span><br><br>
-                  👉 <em>Zähle jetzt die Abstände nach: Wie viele Schritte sind es von 40 zu 45? Und wie viele von 45 zu 48? Sind die Abstände gleich groß? Hat Luisa also recht?</em>
+                  👉 <em>Zähle jetzt die Abstände nach: Wie viele 60stel liegen zwischen 40 und 45? Und wie viele zwischen 45 und 48? Sind die beiden Abstände gleich groß? Hat Luisa also recht? Begründe auf deinem Arbeitsblatt!</em>
                 </div>
               </div>
             </div>
@@ -474,43 +470,6 @@
         </div>
 
         <div id="multiplesOutput"></div>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         TAB 4: WISSENSSPEICHER TO GO
-         ==================================================================== -->
-    <section id="tab-wissen" class="tab-pane">
-      <div style="background:#fff; border:1px solid var(--border); border-radius:14px; padding:1.5rem;">
-        <h2 style="font-size:1.3rem; margin-bottom:0.5rem; color:var(--primary);">📖 Wissensspeicher to go</h2>
-        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.25rem;">
-          Alle wichtigen Merksätze und Fachbegriffe auf einen Blick zum Wiederholen.
-        </p>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">1. Stückgröße</h3>
-            <p style="font-size:0.92rem;">
-              Der <strong>Nenner</strong> bestimmt die <strong>Größe der Stücke</strong>: Je größer der Nenner, desto kleiner ist jedes einzelne Teilstück, weil das Ganze in mehr Teile geteilt wird.
-            </p>
-          </div>
-
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">2. Gleicher Nenner (gleichnamig)</h3>
-            <p style="font-size:0.92rem;">
-              Haben zwei Brüche denselben Nenner, sind alle Stücke gleich groß. Es entscheidet allein die Anzahl: <strong>Der größere Zähler gewinnt!</strong>
-            </p>
-          </div>
-
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">3. Ungleichnamige Brüche vergleichen</h3>
-            <p style="font-size:0.92rem;">
-              1. <strong>Gemeinsamen Nenner finden</strong> (Vielfachenreihen).<br>
-              2. <strong>Erweitern</strong> (beide Brüche auf denselben Nenner bringen).<br>
-              3. <strong>Zähler vergleichen</strong>!
-            </p>
-          </div>
-        </div>
       </div>
     </section>
 
