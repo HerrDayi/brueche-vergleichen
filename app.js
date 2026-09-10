@@ -180,7 +180,9 @@ function initFractionLab() {
       }
 
       if (isSubdivided && factor1 > 1) {
-        strip1Info.innerHTML = `<span><strong>${formatFrac(n1, d1)}</strong> mit <strong>${factor1}</strong> erweitert = <strong>${formatFrac(expandedN1, commonDenom)}</strong></span> <span style="color:var(--danger); font-size:0.85rem;">(in ${commonDenom} Teile verfeinert)</span>`;
+        strip1Info.innerHTML = `<span style="display:inline-flex; align-items:center; gap:0.35rem; flex-wrap:wrap;"><strong>${formatFrac(n1, d1)}</strong><span class="math-eq">=</span><strong>${formatFrac(`${n1} · <span class="factor">${factor1}</span>`, `${d1} · <span class="factor">${factor1}</span>`)}</strong><span class="math-eq">=</span><strong>${formatFrac(expandedN1, commonDenom)}</strong> <span style="color:var(--danger); font-size:0.85rem; font-weight:700; margin-left:0.35rem;">(oben · ${factor1} und unten · ${factor1})</span></span>`;
+      } else if (isSubdivided && factor1 === 1) {
+        strip1Info.innerHTML = `<span>Bruch 1: <strong>${formatFrac(n1, d1)}</strong> = <strong>${formatFrac(expandedN1, commonDenom)}</strong> <span style="color:var(--text-muted); font-size:0.85rem;">(bereits in ${commonDenom} Teilen)</span></span>`;
       } else {
         strip1Info.innerHTML = `<span>Bruch 1: <strong>${formatFrac(n1, d1)}</strong> (${n1} von ${d1} Teilen gefärbt)</span>`;
       }
@@ -208,7 +210,9 @@ function initFractionLab() {
       }
 
       if (isSubdivided && factor2 > 1) {
-        strip2Info.innerHTML = `<span><strong>${formatFrac(n2, d2)}</strong> mit <strong>${factor2}</strong> erweitert = <strong>${formatFrac(expandedN2, commonDenom)}</strong></span> <span style="color:var(--danger); font-size:0.85rem;">(in ${commonDenom} Teile verfeinert)</span>`;
+        strip2Info.innerHTML = `<span style="display:inline-flex; align-items:center; gap:0.35rem; flex-wrap:wrap;"><strong>${formatFrac(n2, d2)}</strong><span class="math-eq">=</span><strong>${formatFrac(`${n2} · <span class="factor">${factor2}</span>`, `${d2} · <span class="factor">${factor2}</span>`)}</strong><span class="math-eq">=</span><strong>${formatFrac(expandedN2, commonDenom)}</strong> <span style="color:var(--danger); font-size:0.85rem; font-weight:700; margin-left:0.35rem;">(oben · ${factor2} und unten · ${factor2})</span></span>`;
+      } else if (isSubdivided && factor2 === 1) {
+        strip2Info.innerHTML = `<span>Bruch 2: <strong>${formatFrac(n2, d2)}</strong> = <strong>${formatFrac(expandedN2, commonDenom)}</strong> <span style="color:var(--text-muted); font-size:0.85rem;">(bereits in ${commonDenom} Teilen)</span></span>`;
       } else {
         strip2Info.innerHTML = `<span>Bruch 2: <strong>${formatFrac(n2, d2)}</strong> (${n2} von ${d2} Teilen gefärbt)</span>`;
       }
