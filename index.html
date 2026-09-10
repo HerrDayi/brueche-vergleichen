@@ -3,589 +3,401 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Digitale Hilfsumgebung: Brüche vergleichen (6D)</title>
+  <title>Lernhilfe: Brüche vergleichen (Klasse 6D)</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- App Header -->
+  <!-- Kopfzeile -->
   <header class="app-header">
     <div class="header-inner">
-      <div class="brand-title">
-        <span class="badge-tag">Mathe 6D</span>
-        <div>
-          <h1>Digitale Hilfsumgebung: Brüche vergleichen</h1>
-          <div class="brand-subtitle">Interaktive Begleitung zum Arbeitsblatt „Ungleichnamige Brüche“</div>
-        </div>
+      <div>
+        <span class="brand-badge">Mathematik 6D</span>
+        <h1>Digitale Lernhilfe: Brüche vergleichen</h1>
+        <div class="brand-subtitle">Ungleichnamige Brüche Schritt für Schritt lösen</div>
       </div>
     </div>
   </header>
 
-  <!-- Navigation Tabs -->
+  <!-- Navigation (Nur 2 klare Bereiche) -->
   <div class="nav-container">
     <nav class="nav-tabs">
       <button class="tab-btn active" data-tab="tab-hilfen">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        Gestufte Hilfen
+        💡 Tipps zu den Aufgaben
       </button>
       <button class="tab-btn" data-tab="tab-labor">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
-        Bruchstreifen-Labor
-      </button>
-      <button class="tab-btn" data-tab="tab-nenner">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        Nenner-Maschine
-      </button>
-      <button class="tab-btn" data-tab="tab-wissen">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
-        Wissensspeicher
+        🔬 Streifen-Labor (Ausprobieren)
       </button>
     </nav>
   </div>
 
-  <!-- Main Container -->
+  <!-- Hauptinhalt -->
   <main class="main-content">
 
-    <!-- TAB 1: GESTUFTE HILFEN -->
+    <!-- ====================================================================
+         BEREICH 1: GESTUFTE HILFEN (AUFGABEN 1 BIS 6)
+         ==================================================================== -->
     <section id="tab-hilfen" class="tab-pane active">
-      
-      <div class="info-banner">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-        <div>
-          <strong>So nutzt du die Hilfekarten:</strong> Versuche die Aufgaben auf deinem Arbeitsblatt zuerst selbst zu lösen. Wenn du feststeckst, öffne die passende Aufgabe und decke <em>Schritt für Schritt</em> die Tipps auf!
-        </div>
+
+      <div class="intro-banner">
+        <strong>So nutzt du die Tipps:</strong><br>
+        Versuche jede Aufgabe zuerst selbst auf deinem Arbeitsblatt zu lösen. Wenn du nicht weiterkommst, klicke auf die Aufgabe und decke <strong>Tipp 1</strong> auf. Erst wenn du noch mehr Hilfe brauchst, öffne <strong>Tipp 2</strong>!
       </div>
 
-      <div class="tasks-grid">
-
-        <!-- AUFGABE 1 -->
-        <article class="task-card open">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task">Aufgabe 1</span>
-              <span class="task-title">Wer ist weiter gelaufen? (Jonas vs. Amira)</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Jonas ist <strong>3/4</strong> gelaufen, Amira <strong>5/8</strong>. Amira behauptet: <em>„5 ist größer als 3, also bin ich weiter gelaufen!“</em>
-            </div>
-
-            <div class="hint-steps">
-              <!-- Stufe 1 -->
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Denkanstoß (Stückgröße)</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Schau dir deine beiden gezeichneten Streifen genau an:<br>
-                  In wie viele Teile ist der Streifen von Jonas geteilt ($4$ Teile)? Und der von Amira ($8$ Teile)?<br>
-                  👉 <em>Ist ein Viertel-Stück genauso lang wie ein Achtel-Stück?</em>
-                </div>
-              </div>
-
-              <!-- Stufe 2 -->
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Strategie-Hilfe (Verfeinern)</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Ein Viertel ist doppelt so lang wie ein Achtel ($1/4 = 2/8$).<br>
-                  Teile jedes der 4 Viertel bei Jonas in der Mitte noch einmal durch (mit einem Bleistift-Strich).<br>
-                  Wie viele Teile hat Jonas dann insgesamt? Und wie viele davon sind gefärbt?
-                </div>
-              </div>
-
-              <!-- Stufe 3 -->
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Lösungskontrolle</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Durch das Erweitern mit $2$ erhält Jonas:
-                  <div class="hint-math-box">$\frac{3 \cdot 2}{4 \cdot 2} = \frac{\mathbf{6}}{8}$</div><br>
-                  Nun vergleichst du: <strong>6/8 (Jonas)</strong> und <strong>5/8 (Amira)</strong>.<br>
-                  Da $6 > 5$ ist, ist <strong>Jonas weiter gelaufen</strong> ($3/4 > 5/8$). Amira hatte unrecht!
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- AUFGABE 2 -->
-        <article class="task-card">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task">Aufgabe 2</span>
-              <span class="task-title">Finde selbst einen passenden Weg</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Vergleiche die Brüche. Entscheide selbst, ob du einen oder beide Brüche erweitern musst.
-            </div>
-
-            <div class="hint-steps">
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Denkanstoß (Nenner prüfen)</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Frage dich bei jedem Paar:<br>
-                  <em>„Kann ich den kleineren Nenner durch Multiplikation direkt in den größeren Nenner verwandeln?“</em><br>
-                  Beispiel bei a: Kannst du aus $3$ durch Malnehmen eine $6$ machen? Ja, $3 \cdot 2 = 6$!
-                </div>
-              </div>
-
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Erweiterungszahlen</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Hier siehst du, mit welcher Zahl du erweitern musst:
-                  <ul style="margin-left: 1.25rem; margin-top: 0.5rem;">
-                    <li><strong>a)</strong> $2/3$ mit <strong>2</strong> erweitern auf Sechstel.</li>
-                    <li><strong>b)</strong> $1/2$ mit <strong>4</strong> erweitern auf Achtel.</li>
-                    <li><strong>c)</strong> $3/5$ mit <strong>2</strong> erweitern auf Zehntel.</li>
-                    <li><strong>d)</strong> $3/4$ mit <strong>3</strong> erweitern auf Zwölftel.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Lösungskontrolle</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  <strong>a)</strong> $4/6 < 5/6 \implies \mathbf{2/3 < 5/6}$<br>
-                  <strong>b)</strong> $4/8 > 3/8 \implies \mathbf{1/2 > 3/8}$<br>
-                  <strong>c)</strong> $6/10 < 7/10 \implies \mathbf{3/5 < 7/10}$<br>
-                  <strong>d)</strong> $9/12 > 7/12 \implies \mathbf{3/4 > 7/12}$
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- AUFGABE 3 -->
-        <article class="task-card">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task">Aufgabe 3</span>
-              <span class="task-title">Wenn keiner der Nenner passt (2/3 und 3/4)</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Hier passt 3 nicht in 4. Wir müssen einen gemeinsamen Nenner finden!
-            </div>
-
-            <div class="hint-steps">
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Vielfache aufschreiben</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Sage die 3er-Reihe und die 4er-Reihe auf:<br>
-                  3er-Reihe: 3, 6, 9, <strong>12</strong>, 15...<br>
-                  4er-Reihe: 4, 8, <strong>12</strong>, 16...<br>
-                  👉 Welche Zahl taucht als erstes in <em>beiden</em> Reihen auf?
-                </div>
-              </div>
-
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Beide Brüche erweitern</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Der gemeinsame Nenner ist <strong>12</strong>.<br>
-                  • $2/3$ muss mit <strong>4</strong> erweitert werden ($3 \cdot 4 = 12$).<br>
-                  • $3/4$ muss mit <strong>3</strong> erweitert werden ($4 \cdot 3 = 12$).
-                </div>
-              </div>
-
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Lösungskontrolle & Begründung</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  $2/3 = \mathbf{8/12}$ und $3/4 = \mathbf{9/12}$.<br>
-                  Da $8/12 < 9/12$ ist, gilt: <strong>2/3 < 3/4</strong>.<br><br>
-                  <em>Zu c):</em> Man muss beide erweitern, weil 4 kein Vielfaches von 3 ist (3 passt nicht glatt in 4).
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- AUFGABE 4 -->
-        <article class="task-card">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task">Aufgabe 4</span>
-              <span class="task-title">Fehler gesucht! (Murat)</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Murat behauptet: <em>„3/5 > 4/7, weil 5 kleiner als 7 ist. Ein kleinerer Nenner bedeutet größere Stücke.“</em>
-            </div>
-
-            <div class="hint-steps">
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Was stimmt an Murats Satz?</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Überlege: Wenn du eine Pizza in 5 Stücke teilst, sind die Stücke dann größer, als wenn du sie in 7 Stücke teilst?<br>
-                  👉 Ja! 1 Fünftel ist größer als 1 Siebtel ($1/5 > 1/7$). Dieser Teil von Murats Satz stimmt.
-                </div>
-              </div>
-
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Rechnerischer Vergleich</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Gemeinsamer Nenner von 5 und 7 ist <strong>35</strong>.<br>
-                  • $\frac{3 \cdot 7}{5 \cdot 7} = \frac{21}{35}$<br>
-                  • $\frac{4 \cdot 5}{7 \cdot 5} = \frac{20}{35}$<br>
-                  Vergleiche 21/35 und 20/35!
-                </div>
-              </div>
-
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Murats Denkfehler</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Zwar ist $21/35 > 20/35$ (sein Ergebnis stimmt also zufällig!), aber seine <strong>Begründung ist falsch</strong>:<br>
-                  Murat hat den <strong>Zähler ignoriert</strong>! 4 kleinere Teile können zusammen mehr sein als 3 größere (z. B. ist $1/5 < 6/7$, obwohl $5 < 7$). Nur wenn die Zähler gleich wären, würde allein der Nenner entscheiden.
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- AUFGABE 5 -->
-        <article class="task-card">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task">Aufgabe 5</span>
-              <span class="task-title">Finde mehrere Lösungen (Zwischen 1/2 und 3/4)</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Finde drei verschiedene Brüche, die zwischen 1/2 und 3/4 liegen.
-            </div>
-
-            <div class="hint-steps">
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Denkanstoß (Verfeinern)</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Als Viertel geschrieben ist $1/2 = 2/4$. Zwischen $2/4$ und $3/4$ passt mit ganzen Zählern kein Bruch mehr.<br>
-                  👉 <em>Was passiert, wenn du beide Brüche auf Achtel erweiterst?</em>
-                </div>
-              </div>
-
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Größere Nenner testen</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  • In <strong>Achteln</strong>: $1/2 = 4/8$ und $3/4 = 6/8$. Welche Zahl liegt zwischen 4 und 6?<br>
-                  • In <strong>Zwölfteln</strong>: $1/2 = 6/12$ und $3/4 = 9/12$. Welche Zahlen liegen zwischen 6 und 9?
-                </div>
-              </div>
-
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Mögliche Lösungen</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Drei passende Brüche sind zum Beispiel:<br>
-                  1. $\mathbf{5/8}$ (denn $4/8 < 5/8 < 6/8$)<br>
-                  2. $\mathbf{7/12}$ (denn $6/12 < 7/12 < 9/12$)<br>
-                  3. $\mathbf{2/3} = 8/12$ (oder $9/16, 10/16, 11/16$)
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- AUFGABE 6* -->
-        <article class="task-card">
-          <div class="task-header">
-            <div class="task-title-group">
-              <span class="badge-task badge-bonus">Aufgabe 6*</span>
-              <span class="task-title">Sprinter-Aufgabe: Luisas Behauptung</span>
-            </div>
-            <span class="toggle-arrow">▼</span>
-          </div>
-          <div class="task-body">
-            <div class="task-desc">
-              Luisa behauptet: <em>„3/4 liegt genau zwischen 2/3 und 4/5.“</em>
-            </div>
-
-            <div class="hint-steps">
-              <div class="hint-step step-1">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">1</span>
-                    <span>Stufe 1: Was bedeutet „genau zwischen“?</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Achte auf das Wort <strong>genau</strong>! Es reicht nicht, dass $3/4$ irgendwo dazwischen liegt. Der Abstand von $2/3$ zu $3/4$ müsste <em>haargenau gleich groß</em> sein wie von $3/4$ zu $4/5$!
-                </div>
-              </div>
-
-              <div class="hint-step step-2">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">2</span>
-                    <span>Stufe 2: Auf 60stel erweitern</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Erweitere alle drei Brüche auf den Nenner 60:<br>
-                  • $2/3 = \mathbf{40/60}$<br>
-                  • $3/4 = \mathbf{45/60}$<br>
-                  • $4/5 = \mathbf{48/60}$<br>
-                  Berechne jetzt die Abstände: $45 - 40 = ?$ und $48 - 45 = ?$
-                </div>
-              </div>
-
-              <div class="hint-step step-3">
-                <button class="hint-trigger">
-                  <div class="hint-meta">
-                    <span class="step-indicator">3</span>
-                    <span>Stufe 3: Die Entdeckung</span>
-                  </div>
-                  <span class="hint-btn-text">Aufdecken ▼</span>
-                </button>
-                <div class="hint-content">
-                  Der Abstand von $40/60$ zu $45/60$ beträgt <strong>5</strong> Sixtel.<br>
-                  Der Abstand von $45/60$ zu $48/60$ beträgt aber nur <strong>3</strong> Sixtel!<br>
-                  👉 <strong>Luisa hat nicht recht!</strong> $3/4$ liegt zwar dazwischen, aber näher an $4/5$ als an $2/3$. (Die exakte Mitte wäre $44/60$).
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- TAB 2: INTERAKTIVES BRUCHSTREIFEN-LABOR -->
-    <section id="tab-labor" class="tab-pane">
-      <div class="lab-container">
-        <h2 style="font-size:1.3rem; margin-bottom:0.5rem; color:var(--primary);">🔬 Interaktives Bruchstreifen-Labor</h2>
-        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.25rem;">
-          Wähle ein Beispiel vom Arbeitsblatt oder tippe eigene Brüche ein. Klicke auf <strong>„Gleichnamig machen“</strong>, um zu sehen, wie die Stücke zerschnitten werden!
-        </p>
-
-        <div class="lab-controls">
+      <!-- AUFGABE 1 -->
+      <article class="task-card open">
+        <div class="task-header">
           <div>
-            <label style="font-size:0.85rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:0.4rem;">Vorlage wählen:</label>
-            <select id="labPreset" style="padding:0.6rem; border:1.5px solid #cbd5e1; border-radius:8px; width:100%; font-size:0.95rem; font-weight:600;">
-              <option value="aufgabe1">Aufgabe 1: Jonas (3/4) vs. Amira (5/8)</option>
-              <option value="aufgabe2a">Aufgabe 2a: 2/3 vs. 5/6</option>
-              <option value="aufgabe3">Aufgabe 3: 2/3 vs. 3/4</option>
-              <option value="aufgabe4">Aufgabe 4: Murat (3/5) vs. 4/7</option>
-              <option value="aufgabe6">Aufgabe 6*: 3/4 vs. 4/5</option>
-              <option value="custom">Eigene Brüche eingeben...</option>
-            </select>
+            <span class="task-badge">Aufgabe 1</span>
+            <span class="task-title">Wer ist weiter gelaufen?</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-summary">
+            Jonas ist <span class="frac"><span class="num">3</span><span class="den">4</span></span> gelaufen, Amira <span class="frac"><span class="num">5</span><span class="den">8</span></span>. Amira sagt: <em>„5 ist mehr als 3, also bin ich weiter!“</em>
           </div>
 
-          <div class="fraction-inputs">
-            <div class="fraction-control-box" style="flex:1;">
-              <div class="control-title">Bruch 1 (Oben)</div>
-              <div style="display:flex; gap:0.5rem;">
-                <div class="input-group">
-                  <label>Zähler</label>
-                  <input type="number" id="labNum1" value="3" min="1" max="20">
-                </div>
-                <div class="input-group">
-                  <label>Nenner</label>
-                  <input type="number" id="labDen1" value="4" min="1" max="24">
-                </div>
-              </div>
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Denkanstoß (Stückgröße)</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Schau dir deine beiden gezeichneten Streifen genau an:<br>
+              Ein Teil bei Jonas ist ein Viertel (<span class="frac"><span class="num">1</span><span class="den">4</span></span>). Ein Teil bei Amira ist ein Achtel (<span class="frac"><span class="num">1</span><span class="den">8</span></span>).<br>
+              👉 <em>Überlege: Sind die Stücke gleich lang? Darf man einfach nur die Anzahl (die Zähler) vergleichen, wenn die Stücke verschieden groß sind?</em>
             </div>
+          </div>
 
-            <div class="fraction-control-box" style="flex:1;">
-              <div class="control-title">Bruch 2 (Unten)</div>
-              <div style="display:flex; gap:0.5rem;">
-                <div class="input-group">
-                  <label>Zähler</label>
-                  <input type="number" id="labNum2" value="5" min="1" max="20">
-                </div>
-                <div class="input-group">
-                  <label>Nenner</label>
-                  <input type="number" id="labDen2" value="8" min="1" max="24">
-                </div>
-              </div>
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: Den Streifen verfeinern</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Ein Viertel ist genau doppelt so lang wie ein Achtel.<br>
+              👉 <em>Teile jedes der 4 Viertel bei Jonas in der Mitte noch einmal durch (mit einem Bleistift-Strich). In wie viele Stücke ist sein Streifen jetzt geteilt? Wie viele davon sind gefärbt?</em>
             </div>
           </div>
         </div>
+      </article>
 
-        <div class="action-bar">
-          <button id="btnSubdivide" class="btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="14" y1="2" x2="14" y2="8"></line><line x1="14" y1="8" x2="20" y2="8"></line><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-            Gleichnamig machen (Verfeinern animieren) ✨
-          </button>
-          <button id="btnResetLab" class="btn-secondary">
-            Ursprüngliche Streifen
-          </button>
+      <!-- AUFGABE 2 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div>
+            <span class="task-badge">Aufgabe 2</span>
+            <span class="task-title">Finde selbst einen passenden Weg</span>
+          </div>
+          <span class="toggle-icon">▼</span>
         </div>
-
-        <!-- Strips Board -->
-        <div class="strips-board">
-          <div class="strip-item">
-            <div class="strip-label-row">
-              <span id="strip1Info"><strong>3/4</strong></span>
-              <span style="font-size:0.8rem; color:var(--text-muted);">Ganzes (Länge 100%)</span>
-            </div>
-            <div class="strip-wrapper" id="strip1"></div>
+        <div class="task-body">
+          <div class="task-summary">
+            Vergleiche die Brüche: 
+            a) <span class="frac"><span class="num">2</span><span class="den">3</span></span> und <span class="frac"><span class="num">5</span><span class="den">6</span></span> \quad
+            b) <span class="frac"><span class="num">1</span><span class="den">2</span></span> und <span class="frac"><span class="num">3</span><span class="den">8</span></span> \quad
+            c) <span class="frac"><span class="num">3</span><span class="den">5</span></span> und <span class="frac"><span class="num">7</span><span class="den">10</span></span> \quad
+            d) <span class="frac"><span class="num">3</span><span class="den">4</span></span> und <span class="frac"><span class="num">7</span><span class="den">12</span></span>
           </div>
 
-          <div class="strip-item">
-            <div class="strip-label-row">
-              <span id="strip2Info"><strong>5/8</strong></span>
-              <span style="font-size:0.8rem; color:var(--text-muted);">Ganzes (Länge 100%)</span>
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Nenner überprüfen</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Prüfe bei jeder Aufgabe zuerst:<br>
+              <em>„Passt der kleinere Nenner in den größeren?“</em><br>
+              Beispiel bei a: Mit welcher Zahl musst du 3 malnehmen, um auf 6 zu kommen?
             </div>
-            <div class="strip-wrapper" id="strip2"></div>
           </div>
 
-          <div id="comparisonResult" class="result-callout"></div>
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: So erweiterst du</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Erweitere den Bruch mit dem kleineren Nenner (oben und unten mit derselben Zahl malnehmen):<br>
+              • <strong>Zu a:</strong> Erweitere <span class="frac"><span class="num">2</span><span class="den">3</span></span> mit <strong>2</strong> auf Sechstel.<br>
+              • <strong>Zu b:</strong> Erweitere <span class="frac"><span class="num">1</span><span class="den">2</span></span> mit <strong>4</strong> auf Achtel.<br>
+              • <strong>Zu c:</strong> Erweitere <span class="frac"><span class="num">3</span><span class="den">5</span></span> mit <strong>2</strong> auf Zehntel.<br>
+              • <strong>Zu d:</strong> Erweitere <span class="frac"><span class="num">3</span><span class="den">4</span></span> mit <strong>3</strong> auf Zwölftel.<br>
+              👉 <em>Sobald beide Nenner gleich sind, vergleiche die Zähler!</em>
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
+
+      <!-- AUFGABE 3 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div>
+            <span class="task-badge">Aufgabe 3</span>
+            <span class="task-title">Wenn keiner der Nenner passt</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-summary">
+            Vergleiche <span class="frac"><span class="num">2</span><span class="den">3</span></span> und <span class="frac"><span class="num">3</span><span class="den">4</span></span>. Hier passt 3 nicht in 4!
+          </div>
+
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Reihen aufschreiben</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Schreibe die Malreihen der beiden Nenner auf:<br>
+              • 3er-Reihe: 3, 6, 9, 12, 15, 18...<br>
+              • 4er-Reihe: 4, 8, 12, 16, 20...<br>
+              👉 <em>Welche Zahl kommt als erstes in beiden Reihen vor? Das ist dein gemeinsamer Nenner!</em>
+            </div>
+          </div>
+
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: Beide Brüche auf 12 erweitern</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Der gemeinsame Nenner ist 12.<br>
+              • Erweitere <span class="frac"><span class="num">2</span><span class="den">3</span></span> mit <strong>4</strong> (denn $3 \cdot 4 = 12$).<br>
+              • Erweitere <span class="frac"><span class="num">3</span><span class="den">4</span></span> mit <strong>3</strong> (denn $4 \cdot 3 = 12$).<br>
+              👉 <em>Welcher Zähler ist nach dem Erweitern größer?</em>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- AUFGABE 4 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div>
+            <span class="task-badge">Aufgabe 4</span>
+            <span class="task-title">Fehler gesucht! (Murat)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-summary">
+            Murat behauptet: <em>„<span class="frac"><span class="num">3</span><span class="den">5</span></span> ist größer als <span class="frac"><span class="num">4</span><span class="den">7</span></span>, weil 5 kleiner als 7 ist. Ein kleinerer Nenner bedeutet größere Stücke.“</em>
+          </div>
+
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Was stimmt an Murats Satz?</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Denke an eine Pizza: Wenn du sie mit 5 Personen teilst, bekommt dann jeder ein größeres Stück, als wenn du sie mit 7 Personen teilst?<br>
+              👉 <em>Ja! Ein kleinerer Nenner bedeutet tatsächlich größere Stücke (<span class="frac"><span class="num">1</span><span class="den">5</span></span> ist größer als <span class="frac"><span class="num">1</span><span class="den">7</span></span>).</em>
+            </div>
+          </div>
+
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: Was hat Murat vergessen?</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Murat hat nur auf die Stücke geschaut, aber nicht darauf, <strong>wie viele Stücke</strong> da sind (auf den Zähler)!<br>
+              Bringe beide Brüche auf den gemeinsamen Nenner <strong>35</strong>:<br>
+              • Erweitere <span class="frac"><span class="num">3</span><span class="den">5</span></span> mit 7.<br>
+              • Erweitere <span class="frac"><span class="num">4</span><span class="den">7</span></span> mit 5.<br>
+              👉 <em>Vergleiche die beiden Zähler!</em>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- AUFGABE 5 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div>
+            <span class="task-badge">Aufgabe 5</span>
+            <span class="task-title">Finde mehrere Lösungen</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-summary">
+            Finde drei verschiedene Brüche, die zwischen <span class="frac"><span class="num">1</span><span class="den">2</span></span> und <span class="frac"><span class="num">3</span><span class="den">4</span></span> liegen.
+          </div>
+
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Zu feineren Stücken wechseln</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Als Viertel geschrieben ist <span class="frac"><span class="num">1</span><span class="den">2</span></span> = <span class="frac"><span class="num">2</span><span class="den">4</span></span>.<br>
+              Zwischen 2 und 3 gibt es keine ganze Zahl.<br>
+              👉 <em>Erweitere beide Brüche zu Achteln! Wie heißen die beiden Brüche dann?</em>
+            </div>
+          </div>
+
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: Noch mehr Möglichkeiten</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Du kannst auch andere Nenner wählen:<br>
+              • In <strong>Achteln</strong>: <span class="frac"><span class="num">4</span><span class="den">8</span></span> und <span class="frac"><span class="num">6</span><span class="den">8</span></span>. (Welche Zahl liegt zwischen 4 und 6?)<br>
+              • In <strong>Zwölfteln</strong>: <span class="frac"><span class="num">6</span><span class="den">12</span></span> und <span class="frac"><span class="num">9</span><span class="den">12</span></span>. (Welche Zahlen liegen zwischen 6 und 9?)<br>
+              • In <strong>Sechzehnteln</strong>: <span class="frac"><span class="num">8</span><span class="den">16</span></span> und <span class="frac"><span class="num">12</span><span class="den">16</span></span>.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- AUFGABE 6* -->
+      <article class="task-card">
+        <div class="task-header">
+          <div>
+            <span class="task-badge bonus">Aufgabe 6*</span>
+            <span class="task-title">Sprinter-Aufgabe: Luisas Behauptung</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-summary">
+            Luisa behauptet: <em>„<span class="frac"><span class="num">3</span><span class="den">4</span></span> liegt genau zwischen <span class="frac"><span class="num">2</span><span class="den">3</span></span> und <span class="frac"><span class="num">4</span><span class="den">5</span></span>.“</em>
+          </div>
+
+          <!-- Tipp 1 -->
+          <div class="hint-step step-1">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">1</span>
+                <span>Tipp 1: Genau hinsehen!</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Achte auf das Wort <strong>genau</strong>!<br>
+              Es reicht nicht, dass <span class="frac"><span class="num">3</span><span class="den">4</span></span> irgendwo dazwischen liegt. Es müsste <strong>haargenau in der Mitte</strong> liegen – also derselbe Abstand nach links und nach rechts!
+            </div>
+          </div>
+
+          <!-- Tipp 2 -->
+          <div class="hint-step step-2">
+            <button class="hint-button">
+              <span class="step-label">
+                <span class="badge-step">2</span>
+                <span>Tipp 2: Die Abstände vergleichen</span>
+              </span>
+              <span class="btn-toggle-text">Aufdecken ▼</span>
+            </button>
+            <div class="hint-box">
+              Erweitere alle drei Brüche auf den Nenner 60:<br>
+              • <span class="frac"><span class="num">2</span><span class="den">3</span></span> = <span class="frac"><span class="num">40</span><span class="den">60</span></span><br>
+              • <span class="frac"><span class="num">3</span><span class="den">4</span></span> = <span class="frac"><span class="num">45</span><span class="den">60</span></span><br>
+              • <span class="frac"><span class="num">4</span><span class="den">5</span></span> = <span class="frac"><span class="num">48</span><span class="den">60</span></span><br><br>
+              👉 <em>Zähle jetzt die Abstände nach:<br>
+              Wie viele Schritte sind es von 40 zu 45?<br>
+              Und wie viele von 45 zu 48?<br>
+              Sind die beiden Abstände gleich groß?</em>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </section>
 
-    <!-- TAB 3: NENNER-MASCHINE -->
-    <section id="tab-nenner" class="tab-pane">
-      <div class="multiples-finder">
-        <h2 style="font-size:1.3rem; margin-bottom:0.5rem; color:var(--primary);">📐 Gemeinsame-Nenner-Maschine</h2>
+
+    <!-- ====================================================================
+         BEREICH 2: INTERAKTIVES BRUCHSTREIFEN-LABOR
+         ==================================================================== -->
+    <section id="tab-labor" class="tab-pane">
+      <div class="lab-card">
+        <h2 style="color:var(--primary); font-size:1.2rem; margin-bottom:0.4rem;">🔬 Bruchstreifen-Labor</h2>
         <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.25rem;">
-          Wenn kein Nenner in den anderen passt: Gib hier die beiden Nenner ein. Die Maschine schreibt automatisch die Reihen auf und markiert die kleinste gemeinsame Zahl!
+          Wähle eine Aufgabe vom Arbeitsblatt aus und klicke auf <strong>„Gleichnamig machen“</strong>. Schau zu, wie die Stücke zerschnitten werden!
         </p>
 
-        <div style="display:flex; gap:1rem; max-width:400px; margin-bottom:1.5rem;">
-          <div class="input-group">
-            <label>Nenner 1:</label>
-            <input type="number" id="multDen1" value="3" min="2" max="30">
+        <div class="lab-selector">
+          <label style="font-weight:700; font-size:0.85rem; color:var(--text-muted); display:block; margin-bottom:0.3rem;">Aufgabe auswählen:</label>
+          <select id="selectPreset">
+            <option value="p1">Aufgabe 1: 3/4 und 5/8 (Jonas & Amira)</option>
+            <option value="p2">Aufgabe 2a: 2/3 und 5/6</option>
+            <option value="p3">Aufgabe 3: 2/3 und 3/4</option>
+            <option value="p4">Aufgabe 4: 3/5 und 4/7 (Murat)</option>
+          </select>
+        </div>
+
+        <div class="strips-container">
+          <!-- Streifen 1 -->
+          <div>
+            <div class="strip-label" id="label1">
+              Bruch 1: <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+            </div>
+            <div class="strip-bar" id="bar1"></div>
           </div>
-          <div class="input-group">
-            <label>Nenner 2:</label>
-            <input type="number" id="multDen2" value="4" min="2" max="30">
+
+          <!-- Streifen 2 -->
+          <div>
+            <div class="strip-label" id="label2">
+              Bruch 2: <span class="frac"><span class="num">5</span><span class="den">8</span></span>
+            </div>
+            <div class="strip-bar" id="bar2"></div>
           </div>
         </div>
 
-        <div id="multiplesOutput"></div>
-      </div>
-    </section>
+        <div>
+          <button id="btnVerfeinern" class="btn-action">
+            Gleichnamig machen (Verfeinern) ✨
+          </button>
+          <button id="btnReset" class="btn-secondary">
+            Zurücksetzen
+          </button>
+        </div>
 
-    <!-- TAB 4: WISSENSSPEICHER -->
-    <section id="tab-wissen" class="tab-pane">
-      <div style="background:#fff; border:1px solid var(--border); border-radius:14px; padding:1.5rem;">
-        <h2 style="font-size:1.3rem; margin-bottom:0.5rem; color:var(--primary);">📖 Wissensspeicher to go</h2>
-        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.25rem;">
-          Alle wichtigen Merksätze und Fachbegriffe auf einen Blick zum Wiederholen.
-        </p>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">1. Stückgröße</h3>
-            <p style="font-size:0.92rem;">
-              Der <strong>Nenner</strong> bestimmt die <strong>Größe der Stücke</strong>: Je größer der Nenner, desto kleiner ist jedes einzelne Teilstück, weil das Ganze in mehr Teile geteilt wird.
-            </p>
-          </div>
-
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">2. Gleicher Nenner (gleichnamig)</h3>
-            <p style="font-size:0.92rem;">
-              Haben zwei Brüche denselben Nenner, sind alle Stücke gleich groß. Es entscheidet allein die Anzahl: <strong>Der größere Zähler gewinnt!</strong>
-            </p>
-          </div>
-
-          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:1.1rem;">
-            <h3 style="color:var(--primary); font-size:1.05rem; margin-bottom:0.4rem;">3. Ungleichnamige Brüche vergleichen</h3>
-            <p style="font-size:0.92rem;">
-              1. <strong>Gemeinsamen Nenner finden</strong> (Vielfachenreihen).<br>
-              2. <strong>Erweitern</strong> (beide Brüche auf denselben Nenner bringen).<br>
-              3. <strong>Zähler vergleichen</strong>!
-            </p>
-          </div>
+        <div id="labHinweis" class="lab-explanation" style="margin-top:1.2rem;">
+          <!-- Wird dynamisch mit echtem Bruch-Layout befüllt -->
         </div>
       </div>
     </section>

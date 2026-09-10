@@ -1,16 +1,15 @@
 // ==========================================================================
-// Digitale Hilfsumgebung: Brüche vergleichen (Klasse 6D)
+// Digitale Lernhilfe: Brüche vergleichen (Klasse 6D)
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initHints();
-  initFractionLab();
-  initMultiplesFinder();
+  initLabor();
 });
 
 // --------------------------------------------------------------------------
-// 1. Navigation Tabs
+// 1. Einfache Tab-Umschaltung
 // --------------------------------------------------------------------------
 function initTabs() {
   const tabs = document.querySelectorAll('.tab-btn');
@@ -33,244 +32,138 @@ function initTabs() {
 }
 
 // --------------------------------------------------------------------------
-// 2. Gestufte Hilfen (Kaskadierende Aufklapp-Tipps)
+// 2. Klickbare Aufgaben & Tipps
 // --------------------------------------------------------------------------
 function initHints() {
-  // Accordion for Task Cards
-  const taskHeaders = document.querySelectorAll('.task-header');
-  taskHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const card = header.closest('.task-card');
+  // Aufgaben auf- und zuklappen
+  const headers = document.querySelectorAll('.task-header');
+  headers.forEach(h => {
+    h.addEventListener('click', () => {
+      const card = h.closest('.task-card');
       card.classList.toggle('open');
     });
   });
 
-  // Hints inside task cards
-  const hintTriggers = document.querySelectorAll('.hint-trigger');
-  hintTriggers.forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
+  // Einzelne Tipps aufdecken
+  const buttons = document.querySelectorAll('.hint-button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const step = trigger.closest('.hint-step');
+      const step = btn.closest('.hint-step');
       step.classList.toggle('unlocked');
-      
-      const btnText = trigger.querySelector('.hint-btn-text');
+
+      const toggleText = btn.querySelector('.btn-toggle-text');
       if (step.classList.contains('unlocked')) {
-        btnText.textContent = 'Verbergen ▲';
+        toggleText.textContent = 'Verbergen ▲';
       } else {
-        btnText.textContent = 'Aufdecken ▼';
+        toggleText.textContent = 'Aufdecken ▼';
       }
     });
   });
 }
 
 // --------------------------------------------------------------------------
-// 3. Interaktives Bruchstreifen-Labor
+// 3. Bruchstreifen-Labor
 // --------------------------------------------------------------------------
-function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
+function fracHtml(num, den) {
+  return `<span class="frac"><span class="num">${num}</span><span class="den">${den}</span></span>`;
 }
 
-function lcm(a, b) {
-  return (a * b) / gcd(a, b);
-}
-
-function initFractionLab() {
-  const presetSelect = document.getElementById('labPreset');
-  const num1Input = document.getElementById('labNum1');
-  const den1Input = document.getElementById('labDen1');
-  const num2Input = document.getElementById('labNum2');
-  const den2Input = document.getElementById('labDen2');
-
-  const btnSubdivide = document.getElementById('btnSubdivide');
-  const btnResetLab = document.getElementById('btnResetLab');
-
-  let isSubdivided = false;
+function initLabor() {
+  const select = document.getElementById('selectPreset');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+  const label1 = document.getElementById('label1');
+  const label2 = document.getElementById('label2');
+  const btnVerfeinern = document.getElementById('btnVerfeinern');
+  const btnReset = document.getElementById('btnReset');
+  const labHinweis = document.getElementById('labHinweis');
 
   const presets = {
-    'aufgabe1': { n1: 3, d1: 4, n2: 5, d2: 8, label1: 'Jonas', label2: 'Amira' },
-    'aufgabe2a': { n1: 2, d1: 3, n2: 5, d2: 6, label1: 'Bruch 1', label2: 'Bruch 2' },
-    'aufgabe3': { n1: 2, d1: 3, n2: 3, d2: 4, label1: 'Bruch 1', label2: 'Bruch 2' },
-    'aufgabe4': { n1: 3, d1: 5, n2: 4, d2: 7, label1: 'Murat', label2: 'Vergleich' },
-    'aufgabe6': { n1: 3, d1: 4, n2: 4, d2: 5, label1: 'Luisa 3/4', label2: 'Luisa 4/5' },
-    'custom': null
+    'p1': { n1: 3, d1: 4, n2: 5, d2: 8, name1: 'Jonas', name2: 'Amira', cd: 8, f1: 2, f2: 1 },
+    'p2': { n1: 2, d1: 3, n2: 5, d2: 6, name1: 'Bruch 1', name2: 'Bruch 2', cd: 6, f1: 2, f2: 1 },
+    'p3': { n1: 2, d1: 3, n2: 3, d2: 4, name1: 'Bruch 1', name2: 'Bruch 2', cd: 12, f1: 4, f2: 3 },
+    'p4': { n1: 3, d1: 5, n2: 4, d2: 7, name1: 'Murat', name2: 'Zweiter Bruch', cd: 35, f1: 7, f2: 5 }
   };
 
-  function updateFromInputs() {
-    isSubdivided = false;
-    renderStrips();
-  }
+  let currentSubdivided = false;
 
-  presetSelect.addEventListener('change', () => {
-    const val = presetSelect.value;
-    if (presets[val]) {
-      const p = presets[val];
-      num1Input.value = p.n1;
-      den1Input.value = p.d1;
-      num2Input.value = p.n2;
-      den2Input.value = p.d2;
-    }
-    updateFromInputs();
-  });
+  function render() {
+    const cur = presets[select.value];
+    if (!cur) return;
 
-  [num1Input, den1Input, num2Input, den2Input].forEach(inp => {
-    inp.addEventListener('input', () => {
-      presetSelect.value = 'custom';
-      updateFromInputs();
-    });
-  });
+    // Labels mit echtem Bruch-Layout (Zähler oben, Nenner unten)
+    label1.innerHTML = `${cur.name1}: ${fracHtml(cur.n1, cur.d1)}`;
+    label2.innerHTML = `${cur.name2}: ${fracHtml(cur.n2, cur.d2)}`;
 
-  btnSubdivide.addEventListener('click', () => {
-    isSubdivided = true;
-    renderStrips();
-  });
-
-  btnResetLab.addEventListener('click', () => {
-    isSubdivided = false;
-    renderStrips();
-  });
-
-  function renderStrips() {
-    const n1 = parseInt(num1Input.value) || 1;
-    const d1 = parseInt(den1Input.value) || 1;
-    const n2 = parseInt(num2Input.value) || 1;
-    const d2 = parseInt(den2Input.value) || 1;
-
-    const commonDenom = lcm(d1, d2);
-    const factor1 = commonDenom / d1;
-    const factor2 = commonDenom / d2;
-    const expandedN1 = n1 * factor1;
-    const expandedN2 = n2 * factor2;
-
-    // Render Strip 1
-    const strip1El = document.getElementById('strip1');
-    const strip1Info = document.getElementById('strip1Info');
-    strip1El.innerHTML = '';
-    
-    for (let i = 0; i < d1; i++) {
+    // Streifen 1 aufbauen
+    bar1.innerHTML = '';
+    for (let i = 0; i < cur.d1; i++) {
       const cell = document.createElement('div');
-      cell.className = `strip-cell ${i < n1 ? 'shaded' : ''}`;
+      cell.className = `cell ${i < cur.n1 ? 'colored' : ''}`;
       
-      // If subdivided, add dashed lines inside each cell
-      if (isSubdivided && factor1 > 1) {
-        for (let sub = 1; sub < factor1; sub++) {
-          const subLine = document.createElement('div');
-          subLine.className = 'subdivision-line visible';
-          subLine.style.left = `${(sub / factor1) * 100}%`;
-          cell.appendChild(subLine);
+      if (currentSubdivided && cur.f1 > 1) {
+        for (let s = 1; s < cur.f1; s++) {
+          const cut = document.createElement('div');
+          cut.className = 'cut-line show';
+          cut.style.left = `${(s / cur.f1) * 100}%`;
+          cell.appendChild(cut);
         }
       }
-      strip1El.appendChild(cell);
+      bar1.appendChild(cell);
     }
 
-    if (isSubdivided && factor1 > 1) {
-      strip1Info.innerHTML = `<span><strong>${n1}/${d1}</strong> mit <strong>${factor1}</strong> erweitert = <strong>${expandedN1}/${commonDenom}</strong></span> <span style="color:var(--danger); font-size:0.85rem;">(in ${commonDenom} Teile verfeinert)</span>`;
-    } else {
-      strip1Info.innerHTML = `<span><strong>${n1}/${d1}</strong> (${n1} von ${d1} Teilen gefärbt)</span>`;
-    }
-
-    // Render Strip 2
-    const strip2El = document.getElementById('strip2');
-    const strip2Info = document.getElementById('strip2Info');
-    strip2El.innerHTML = '';
-
-    for (let i = 0; i < d2; i++) {
+    // Streifen 2 aufbauen
+    bar2.innerHTML = '';
+    for (let i = 0; i < cur.d2; i++) {
       const cell = document.createElement('div');
-      cell.className = `strip-cell ${i < n2 ? 'shaded' : ''}`;
+      cell.className = `cell ${i < cur.n2 ? 'colored' : ''}`;
       
-      if (isSubdivided && factor2 > 1) {
-        for (let sub = 1; sub < factor2; sub++) {
-          const subLine = document.createElement('div');
-          subLine.className = 'subdivision-line visible';
-          subLine.style.left = `${(sub / factor2) * 100}%`;
-          cell.appendChild(subLine);
+      if (currentSubdivided && cur.f2 > 1) {
+        for (let s = 1; s < cur.f2; s++) {
+          const cut = document.createElement('div');
+          cut.className = 'cut-line show';
+          cut.style.left = `${(s / cur.f2) * 100}%`;
+          cell.appendChild(cut);
         }
       }
-      strip2El.appendChild(cell);
+      bar2.appendChild(cell);
     }
 
-    if (isSubdivided && factor2 > 1) {
-      strip2Info.innerHTML = `<span><strong>${n2}/${d2}</strong> mit <strong>${factor2}</strong> erweitert = <strong>${expandedN2}/${commonDenom}</strong></span> <span style="color:var(--danger); font-size:0.85rem;">(in ${commonDenom} Teile verfeinert)</span>`;
+    // Didaktischer Hinweis (OHNE die Lösung zu verraten!)
+    if (currentSubdivided) {
+      labHinweis.classList.add('show');
+      const exp1 = cur.n1 * cur.f1;
+      const exp2 = cur.n2 * cur.f2;
+      
+      let text = `✨ <strong>Jetzt haben beide Streifen die gleiche Einteilung (${cur.cd} Teile)!</strong><br>`;
+      if (cur.f1 > 1 && cur.f2 === 1) {
+        text += `Aus ${fracHtml(cur.n1, cur.d1)} sind durch Verfeinern mit ${cur.f1} genau ${fracHtml(exp1, cur.cd)} geworden.<br>`;
+      } else if (cur.f1 > 1 && cur.f2 > 1) {
+        text += `Aus ${fracHtml(cur.n1, cur.d1)} wurden ${fracHtml(exp1, cur.cd)} und aus ${fracHtml(cur.n2, cur.d2)} wurden ${fracHtml(exp2, cur.cd)}.<br>`;
+      }
+      text += `👉 <em>Weil alle Stücke jetzt gleich groß sind, kannst du die Zähler einfach vergleichen: Wer hat mehr gefärbte Teile?</em>`;
+      labHinweis.innerHTML = text;
     } else {
-      strip2Info.innerHTML = `<span><strong>${n2}/${d2}</strong> (${n2} von ${d2} Teilen gefärbt)</span>`;
+      labHinweis.classList.remove('show');
+      labHinweis.innerHTML = '';
     }
-
-    // Render Comparison Callout
-    const calloutEl = document.getElementById('comparisonResult');
-    const val1 = n1 / d1;
-    const val2 = n2 / d2;
-    let symbol = '=';
-    let text = 'Beide Brüche sind gleich groß!';
-
-    if (val1 > val2) {
-      symbol = '>';
-      text = `Da ${expandedN1} von ${commonDenom} Teilen mehr sind als ${expandedN2}, ist ${n1}/${d1} größer!`;
-    } else if (val1 < val2) {
-      symbol = '<';
-      text = `Da ${expandedN1} von ${commonDenom} Teilen weniger sind als ${expandedN2}, ist ${n1}/${d1} kleiner!`;
-    }
-
-    calloutEl.innerHTML = `
-      <div class="result-relation">
-        <span>${n1}/${d1}</span>
-        <span style="font-size:2rem; color:var(--primary); font-weight:800;">${symbol}</span>
-        <span>${n2}/${d2}</span>
-      </div>
-      <div style="font-size:0.95rem; font-weight:600; color:var(--text-muted);">${text}</div>
-    `;
   }
 
-  // Initial render
-  renderStrips();
-}
+  select.addEventListener('change', () => {
+    currentSubdivided = false;
+    render();
+  });
 
-// --------------------------------------------------------------------------
-// 4. Gemeinsame-Nenner-Maschine (Vielfachen-Finder)
-// --------------------------------------------------------------------------
-function initMultiplesFinder() {
-  const d1Input = document.getElementById('multDen1');
-  const d2Input = document.getElementById('multDen2');
-  const outputContainer = document.getElementById('multiplesOutput');
+  btnVerfeinern.addEventListener('click', () => {
+    currentSubdivided = true;
+    render();
+  });
 
-  function calculateMultiples() {
-    const d1 = parseInt(d1Input.value) || 1;
-    const d2 = parseInt(d2Input.value) || 1;
-    const common = lcm(d1, d2);
+  btnReset.addEventListener('click', () => {
+    currentSubdivided = false;
+    render();
+  });
 
-    const mults1 = [];
-    const mults2 = [];
-    const count = 10;
-
-    for (let i = 1; i <= count; i++) {
-      mults1.push(d1 * i);
-      mults2.push(d2 * i);
-    }
-
-    let html = `
-      <div class="multiples-row">
-        <div class="multiples-label">Reihe von ${d1}:</div>
-        <div class="multiples-numbers">
-          ${mults1.map(m => `<span class="number-chip ${m === common ? 'match' : ''}">${m}</span>`).join('')}
-        </div>
-      </div>
-      <div class="multiples-row">
-        <div class="multiples-label">Reihe von ${d2}:</div>
-        <div class="multiples-numbers">
-          ${mults2.map(m => `<span class="number-chip ${m === common ? 'match' : ''}">${m}</span>`).join('')}
-        </div>
-      </div>
-      <div style="margin-top:1rem; padding:0.85rem; background:#ecfdf5; border:1.5px solid #22c55e; border-radius:8px; font-weight:600; color:#15803d;">
-        🎯 <strong>Gemeinsamer Hauptnenner gefunden: ${common}</strong><br>
-        <span style="font-size:0.9rem; color:#166534;">
-          Erweitere den ersten Bruch mit <strong>${common / d1}</strong> (${d1} · ${common / d1} = ${common}) und den zweiten mit <strong>${common / d2}</strong> (${d2} · ${common / d2} = ${common}).
-        </span>
-      </div>
-    `;
-
-    outputContainer.innerHTML = html;
-  }
-
-  d1Input.addEventListener('input', calculateMultiples);
-  d2Input.addEventListener('input', calculateMultiples);
-
-  calculateMultiples();
+  render();
 }
