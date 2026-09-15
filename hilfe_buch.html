@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tippkarten: Buchübungen S. 219 – 221 | Mathe 6D</title>
+  <style>
+    :root {
+      --primary: #143264;
+      --primary-light: #1e40af;
+      --accent: #0284c7;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+
+      --lvl-green: #16a34a;
+      --lvl-green-bg: #dcfce7;
+      --lvl-green-border: #86efac;
+
+      --lvl-blue: #2563eb;
+      --lvl-blue-bg: #dbeafe;
+      --lvl-blue-border: #93c5fd;
+
+      --lvl-purple: #9333ea;
+      --lvl-purple-bg: #f3e8ff;
+      --lvl-purple-border: #d8b4fe;
+
+      --step1-bg: #fffbeb;
+      --step1-border: #fde68a;
+      --step1-text: #92400e;
+      --step1-badge: #f59e0b;
+
+      --step2-bg: #eff6ff;
+      --step2-border: #bfdbfe;
+      --step2-text: #1e40af;
+      --step2-badge: #3b82f6;
+
+      --step3-bg: #ecfdf5;
+      --step3-border: #a7f3d0;
+      --step3-text: #065f46;
+      --step3-badge: #10b981;
+
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      padding-bottom: 70px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%);
+      color: white;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    header h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.2rem; }
+    header p { font-size: 0.88rem; opacity: 0.9; }
+
+    .nav-toolbar {
+      max-width: 960px;
+      margin: 1rem auto 0.5rem;
+      padding: 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      background: #e2e8f0;
+      padding: 0.25rem;
+      border-radius: 10px;
+    }
+
+    .filter-btn {
+      border: none;
+      background: transparent;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .action-tools {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .tool-btn {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-main);
+    }
+    .tool-btn:hover { background: #f1f5f9; }
+
+    .container {
+      max-width: 960px;
+      margin: 0.5rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .level-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-top: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .section-header.lvl-1 { background: var(--lvl-green-bg); color: var(--lvl-green); border: 1.5px solid var(--lvl-green-border); }
+    .section-header.lvl-2 { background: var(--lvl-blue-bg); color: var(--lvl-blue); border: 1.5px solid var(--lvl-blue-border); }
+    .section-header.lvl-3 { background: var(--lvl-purple-bg); color: var(--lvl-purple); border: 1.5px solid var(--lvl-purple-border); }
+
+    .task-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s ease;
+    }
+    .task-card:hover { border-color: #94a3b8; }
+
+    .task-header {
+      padding: 0.85rem 1.15rem;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+    }
+    .task-card.open .task-header {
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .task-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex: 1;
+    }
+
+    .task-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .task-badge.lvl-1 { background: var(--lvl-green); }
+    .task-badge.lvl-2 { background: var(--lvl-blue); }
+    .task-badge.lvl-3 { background: var(--lvl-purple); }
+
+    .task-name {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--primary);
+    }
+
+    .toggle-icon {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-left: 0.5rem;
+    }
+    .task-card.open .toggle-icon { transform: rotate(180deg); color: var(--primary); }
+
+    .task-body {
+      display: none;
+      padding: 1rem 1.15rem;
+      background: #fafafa;
+    }
+    .task-card.open .task-body { display: block; }
+
+    .task-preview {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    /* 3-STUFEN SCAFFOLDING */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .step-box {
+      border-radius: 9px;
+      overflow: hidden;
+      border: 1.5px solid transparent;
+    }
+
+    .step-box.step-1 { border-color: var(--step1-border); }
+    .step-box.step-2 { border-color: var(--step2-border); }
+    .step-box.step-3 { border-color: var(--step3-border); }
+
+    .step-btn {
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border: none;
+      text-align: left;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.15s ease;
+    }
+
+    .step-box.step-1 .step-btn { background: var(--step1-bg); color: var(--step1-text); }
+    .step-box.step-2 .step-btn { background: var(--step2-bg); color: var(--step2-text); }
+    .step-box.step-3 .step-btn { background: var(--step3-bg); color: var(--step3-text); }
+
+    .step-btn:hover { filter: brightness(0.96); }
+
+    .step-badge-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .step-box.step-1 .step-num { background: var(--step1-badge); }
+    .step-box.step-2 .step-num { background: var(--step2-badge); }
+    .step-box.step-3 .step-num { background: var(--step3-badge); }
+
+    .step-content {
+      display: none;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      border-top: 1px solid;
+    }
+
+    .step-box.step-1 .step-content { border-top-color: var(--step1-border); color: #451a03; }
+    .step-box.step-2 .step-content { border-top-color: var(--step2-border); color: #172554; }
+    .step-box.step-3 .step-content { border-top-color: var(--step3-border); color: #022c22; }
+
+    .step-box.open .step-content { display: block; }
+    .step-box.open .step-btn span.step-toggle-text { opacity: 0.8; }
+
+    /* MATHEMATISCHE ELEMENTE */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: -0.45em;
+      text-align: center;
+      padding: 0 0.15em;
+      font-size: 0.95em;
+      line-height: 1;
+      font-weight: 800;
+      color: inherit;
+    }
+    .frac .num { border-bottom: 1.5px solid currentColor; padding-bottom: 0.1em; }
+    .frac .den { padding-top: 0.1em; }
+
+    .math-block {
+      background: #f8fafc;
+      border-left: 3px solid var(--accent);
+      padding: 0.4rem 0.75rem;
+      margin: 0.4rem 0;
+      border-radius: 0 6px 6px 0;
+      font-family: inherit;
+    }
+
+    .wortliste-box {
+      background: #fff;
+      border: 1px dashed var(--step3-badge);
+      border-radius: 6px;
+      padding: 0.4rem 0.7rem;
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+    }
+    .wortliste-box strong { color: var(--step3-text); }
+
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📖 Tippkarten: Buchübungen S. 219 – 221</h1>
+    <p>Mathematik Klasse 6D &bull; Gestufte Hilfen &bull; Brüche vergleichen</p>
+  </header>
+
+  <!-- Toolbar: Filter nach Sternen & Alle Aufklappen -->
+  <div class="nav-toolbar">
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all">Alle Aufgaben (12)</button>
+      <button class="filter-btn" data-filter="lvl-1">⭐ 1 Stern (Basis)</button>
+      <button class="filter-btn" data-filter="lvl-2">⭐⭐ 2 Sterne (Standard)</button>
+      <button class="filter-btn" data-filter="lvl-3">⭐⭐⭐ 3 Sterne (Profi)</button>
+    </div>
+    <div class="action-tools">
+      <button class="tool-btn" id="btnExpandAll">Alle öffnen ▾</button>
+      <button class="tool-btn" id="btnCollapseAll">Alle schließen ▴</button>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- ================================================================= -->
+    <!-- ANFORDERUNGSBEREICH 1: ⭐ 1 STERN (BASIS) -->
+    <!-- ================================================================= -->
+    <section class="level-section" data-level="lvl-1">
+      <div class="section-header lvl-1">
+        <span>⭐ 1 Stern: Basis & Einstieg</span>
+      </div>
+
+      <!-- S. 219, Nr. 1 -->
+      <article class="task-card open">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-1">S. 219, Nr. 1</span>
+            <span class="task-name">Welcher Bruch ist größer? Begründe.</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Vergleiche: a) <span class="frac"><span class="num">3</span><span class="den">5</span></span> und <span class="frac"><span class="num">1</span><span class="den">5</span></span> &bull; b) <span class="frac"><span class="num">1</span><span class="den">3</span></span> und <span class="frac"><span class="num">1</span><span class="den">2</span></span> &bull; c) <span class="frac"><span class="num">3</span><span class="den">4</span></span> und <span class="frac"><span class="num">4</span><span class="den">5</span></span> &bull; d) <span class="frac"><span class="num">2</span><span class="den">7</span></span> und <span class="frac"><span class="num">4</span><span class="den">10</span></span> &bull; e) <span class="frac"><span class="num">5</span><span class="den">6</span></span> und <span class="frac"><span class="num">7</span><span class="den">9</span></span> &bull; f) <span class="frac"><span class="num">2</span><span class="den">8</span></span> und <span class="frac"><span class="num">5</span><span class="den">8</span></span> &bull; g) <span class="frac"><span class="num">7</span><span class="den">12</span></span> und <span class="frac"><span class="num">8</span><span class="den">13</span></span>
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Strategie wählen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Schau dir jedes Paar genau an:
+                <br>&bull; <strong>Gleicher Nenner (wie bei a und f):</strong> Die Stücke sind gleich groß. Vergleiche einfach die Zähler: Mehr Stücke = größerer Bruch!
+                <br>&bull; <strong>Gleicher Zähler (wie bei b):</strong> Du hast gleich viele Stücke. Aber Achtung: Je <em>kleiner der Nenner</em>, desto <em>größer das einzelne Stück</em>!
+                <br>&bull; <strong>Verschiedene Nenner (wie bei c, d, e):</strong> Mache die Brüche gleichnamig (erweitern auf einen gemeinsamen Hauptnenner).
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe & Hauptnenner</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu c (<span class="frac"><span class="num">3</span><span class="den">4</span></span> und <span class="frac"><span class="num">4</span><span class="den">5</span></span>):</strong> Hauptnenner ist <strong>20</strong>.<br>
+                  <span class="frac"><span class="num">3 &middot; 5</span><span class="den">4 &middot; 5</span></span> = <span class="frac"><span class="num">15</span><span class="den">20</span></span> \quad und \quad <span class="frac"><span class="num">4 &middot; 4</span><span class="den">5 &middot; 4</span></span> = <span class="frac"><span class="num">16</span><span class="den">20</span></span>.<br>
+                  &bull; <strong>Zu d (<span class="frac"><span class="num">2</span><span class="den">7</span></span> und <span class="frac"><span class="num">4</span><span class="den">10</span></span>):</strong> Trick: Verdopple <span class="frac"><span class="num">2</span><span class="den">7</span></span> mit 2 zu <span class="frac"><span class="num">4</span><span class="den">14</span></span>. Nun haben beide Zähler 4!<br>
+                  &bull; <strong>Zu e (<span class="frac"><span class="num">5</span><span class="den">6</span></span> und <span class="frac"><span class="num">7</span><span class="den">9</span></span>):</strong> Hauptnenner ist <strong>18</strong> (6 &middot; 3 = 18 und 9 &middot; 2 = 18).
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Formulierungshilfe & Teillösungen</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <strong>Musterbegründungen für dein Heft:</strong><br>
+                &bull; Zu a: <em>„<span class="frac"><span class="num">3</span><span class="den">5</span></span> &gt; <span class="frac"><span class="num">1</span><span class="den">5</span></span>, weil bei gleichem Nenner 3 Fünftelstücke mehr sind als 1 Fünftelstück.“</em><br>
+                &bull; Zu b: <em>„<span class="frac"><span class="num">1</span><span class="den">2</span></span> &gt; <span class="frac"><span class="num">1</span><span class="den">3</span></span>, weil zwei gleich große Teile (Halbe) größer sind als drei gleich große Teile (Drittel).“</em><br>
+                &bull; Zu c: <em>„<span class="frac"><span class="num">4</span><span class="den">5</span></span> &gt; <span class="frac"><span class="num">3</span><span class="den">4</span></span>, denn erweitert auf Zwanzigstel ist <span class="frac"><span class="num">16</span><span class="den">20</span></span> &gt; <span class="frac"><span class="num">15</span><span class="den">20</span></span>.“</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 220, Nr. 6 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-1">S. 220, Nr. 6</span>
+            <span class="task-name">Belade die Lkw (Vergleich mit der Hälfte)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Belade Lkw 1 („weniger als <span class="frac"><span class="num">1</span><span class="den">2</span></span>“) und Lkw 2 („mehr als <span class="frac"><span class="num">1</span><span class="den">2</span></span>“) mit den 9 Kisten: (1) <span class="frac"><span class="num">1</span><span class="den">3</span></span>, (2) <span class="frac"><span class="num">59</span><span class="den">90</span></span>, (3) <span class="frac"><span class="num">43</span><span class="den">80</span></span>, (4) Streifen, (5) <span class="frac"><span class="num">7</span><span class="den">13</span></span>, (6) <span class="frac"><span class="num">3</span><span class="den">7</span></span>, (7) Streifen, (8) Dreieck, (9) <span class="frac"><span class="num">21</span><span class="den">43</span></span>.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Die Halbierungs-Strategie)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Du musst die Brüche <strong>nicht</strong> mühsam erweitern!<br>
+                Vergleiche einfach jeden Zähler mit der <strong>Hälfte des Nenners</strong>:<br>
+                &bull; Ist der Zähler <em>größer</em> als die Hälfte des Nenners? &rarr; <strong>Mehr als <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>!<br>
+                &bull; Ist der Zähler <em>kleiner</em> als die Hälfte des Nenners? &rarr; <strong>Weniger als <span class="frac"><span class="num">1</span><span class="den">2</span></span></strong>!
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Auch bei ungeraden Nennern)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu (3) <span class="frac"><span class="num">43</span><span class="den">80</span></span>:</strong> Nenner ist 80. Die Hälfte von 80 ist 40. Zähler 43 ist größer als 40 &rarr; mehr als <span class="frac"><span class="num">1</span><span class="den">2</span></span>.<br>
+                  &bull; <strong>Zu (5) <span class="frac"><span class="num">7</span><span class="den">13</span></span>:</strong> Die Hälfte von 13 ist 6,5. Zähler 7 ist größer als 6,5 &rarr; mehr als <span class="frac"><span class="num">1</span><span class="den">2</span></span>.<br>
+                  &bull; <strong>Zu (9) <span class="frac"><span class="num">21</span><span class="den">43</span></span>:</strong> Die Hälfte von 43 ist 21,5. Zähler 21 ist kleiner als 21,5 &rarr; weniger als <span class="frac"><span class="num">1</span><span class="den">2</span></span>.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Vollständige Zuordnung zur Selbstkontrolle</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>Lkw „weniger als <span class="frac"><span class="num">1</span><span class="den">2</span></span>“:</strong> (1) <span class="frac"><span class="num">1</span><span class="den">3</span></span>, (4) Streifen (3 von 8), (6) <span class="frac"><span class="num">3</span><span class="den">7</span></span>, (8) Dreieck (4 von 9), (9) <span class="frac"><span class="num">21</span><span class="den">43</span></span>.<br>
+                &bull; <strong>Lkw „mehr als <span class="frac"><span class="num">1</span><span class="den">2</span></span>“:</strong> (2) <span class="frac"><span class="num">59</span><span class="den">90</span></span>, (3) <span class="frac"><span class="num">43</span><span class="den">80</span></span>, (5) <span class="frac"><span class="num">7</span><span class="den">13</span></span>.<br>
+                <em>Hinweis zu (7):</em> Zeigt genau 5 von 10 (= genau <span class="frac"><span class="num">1</span><span class="den">2</span></span>) &ndash; passt auf keinen der beiden Lkw!
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 220, Nr. 7 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-1">S. 220, Nr. 7</span>
+            <span class="task-name">Teste dich! Welcher Bruch ist größer?</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> a) <span class="frac"><span class="num">3</span><span class="den">8</span></span> oder <span class="frac"><span class="num">5</span><span class="den">8</span></span> &bull; b) <span class="frac"><span class="num">3</span><span class="den">8</span></span> oder <span class="frac"><span class="num">3</span><span class="den">9</span></span> &bull; c) <span class="frac"><span class="num">3</span><span class="den">4</span></span> oder <span class="frac"><span class="num">5</span><span class="den">6</span></span> &bull; d) <span class="frac"><span class="num">5</span><span class="den">8</span></span> oder <span class="frac"><span class="num">41</span><span class="den">50</span></span> &bull; e) <span class="frac"><span class="num">3</span><span class="den">12</span></span> oder <span class="frac"><span class="num">1</span><span class="den">4</span></span> &bull; f) <span class="frac"><span class="num">9</span><span class="den">10</span></span> oder <span class="frac"><span class="num">89</span><span class="den">90</span></span>. Welche ist am einfachsten?
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Welche ist am leichtesten?)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>Am einfachsten:</strong> Schau auf Aufgabe <strong>a</strong>! Wenn die Nenner schon exakt gleich sind, musst du gar nichts rechnen, sondern kannst direkt vergleichen.<br>
+                &bull; <strong>Achtung bei e:</strong> Kürze zuerst <span class="frac"><span class="num">3</span><span class="den">12</span></span> mit 3!<br>
+                &bull; <strong>Trick bei f:</strong> Wie viel fehlt beiden Brüchen bis zur ganzen 1?
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe & Lücken-Strategie</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu c:</strong> Hauptnenner von 4 und 6 ist <strong>12</strong>: <span class="frac"><span class="num">9</span><span class="den">12</span></span> vs. <span class="frac"><span class="num">10</span><span class="den">12</span></span>.<br>
+                  &bull; <strong>Zu e:</strong> <span class="frac"><span class="num">3 : 3</span><span class="den">12 : 3</span></span> = <span class="frac"><span class="num">1</span><span class="den">4</span></span>! Die beiden Brüche sind <strong>gleich groß</strong>.<br>
+                  &bull; <strong>Zu f:</strong> Bei <span class="frac"><span class="num">9</span><span class="den">10</span></span> fehlt noch <span class="frac"><span class="num">1</span><span class="den">10</span></span> zum Ganzen. Bei <span class="frac"><span class="num">89</span><span class="den">90</span></span> fehlt nur noch <span class="frac"><span class="num">1</span><span class="den">90</span></span>. Da <span class="frac"><span class="num">1</span><span class="den">90</span></span> ein viel kleineres Fehlstück ist, ist <span class="frac"><span class="num">89</span><span class="den">90</span></span> näher an 1 und damit größer!
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Lösungen & Begründung</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <strong>Ergebnisse:</strong><br>
+                a) <span class="frac"><span class="num">5</span><span class="den">8</span></span> &gt; <span class="frac"><span class="num">3</span><span class="den">8</span></span> &bull; b) <span class="frac"><span class="num">3</span><span class="den">8</span></span> &gt; <span class="frac"><span class="num">3</span><span class="den">9</span></span> &bull; c) <span class="frac"><span class="num">5</span><span class="den">6</span></span> &gt; <span class="frac"><span class="num">3</span><span class="den">4</span></span> &bull; d) <span class="frac"><span class="num">41</span><span class="den">50</span></span> &gt; <span class="frac"><span class="num">5</span><span class="den">8</span></span> (0,82 &gt; 0,625) &bull; e) <span class="frac"><span class="num">3</span><span class="den">12</span></span> = <span class="frac"><span class="num">1</span><span class="den">4</span></span> &bull; f) <span class="frac"><span class="num">89</span><span class="den">90</span></span> &gt; <span class="frac"><span class="num">9</span><span class="den">10</span></span>.<br>
+                <em>Begründung für die einfachste Aufgabe:</em> Teilaufgabe a ist am einfachsten, da man bei gleichnamigen Brüchen nur 5 &gt; 3 vergleichen muss.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 220, Nr. 8 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-1">S. 220, Nr. 8</span>
+            <span class="task-name">Die Tortenstücke (4 von 12 vs. 6 von 16)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Eine Torte wird in 12 Stücke, eine andere in 16 Stücke geschnitten. Welcher Anteil ist größer: 4 Stücke der ersten oder 6 Stücke der zweiten Torte?
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Brüche notieren & kürzen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Schreibe beide Anteile sauber als Bruch auf:<br>
+                &bull; 1. Torte: 4 von 12 Stücken = <span class="frac"><span class="num">4</span><span class="den">12</span></span>.<br>
+                &bull; 2. Torte: 6 von 16 Stücken = <span class="frac"><span class="num">6</span><span class="den">16</span></span>.<br>
+                👉 <em>Kürze beide Brüche so weit wie möglich, bevor du erweiterst!</em>
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Hauptnenner 24)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; 1. Torte gekürzt mit 4: <span class="frac"><span class="num">4 : 4</span><span class="den">12 : 4</span></span> = <span class="frac"><span class="num">1</span><span class="den">3</span></span>.<br>
+                  &bull; 2. Torte gekürzt mit 2: <span class="frac"><span class="num">6 : 2</span><span class="den">16 : 2</span></span> = <span class="frac"><span class="num">3</span><span class="den">8</span></span>.<br>
+                  Bringe nun <span class="frac"><span class="num">1</span><span class="den">3</span></span> und <span class="frac"><span class="num">3</span><span class="den">8</span></span> auf den gemeinsamen Nenner <strong>24</strong>!
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Lösung & Antwortsatz</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Erweitert auf 24stel:<br>
+                &bull; 1. Torte: <span class="frac"><span class="num">1 &middot; 8</span><span class="den">3 &middot; 8</span></span> = <span class="frac"><span class="num">8</span><span class="den">24</span></span>.<br>
+                &bull; 2. Torte: <span class="frac"><span class="num">3 &middot; 3</span><span class="den">8 &middot; 3</span></span> = <span class="frac"><span class="num">9</span><span class="den">24</span></span>.<br>
+                <em>Antwortsatz:</em> <strong>6 Stücke der zweiten Torte</strong> ergeben den größeren Anteil, da <span class="frac"><span class="num">9</span><span class="den">24</span></span> &gt; <span class="frac"><span class="num">8</span><span class="den">24</span></span>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- ANFORDERUNGSBEREICH 2: ⭐⭐ 2 STERNE (STANDARD) -->
+    <!-- ================================================================= -->
+    <section class="level-section" data-level="lvl-2">
+      <div class="section-header lvl-2">
+        <span>⭐⭐ 2 Sterne: Standard & Sachaufgaben</span>
+      </div>
+
+      <!-- S. 220, Nr. 5 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-2">S. 220, Nr. 5</span>
+            <span class="task-name">Chor & kurze Hosen (Anteile in der 5. Klasse)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> a) Chorteilnehmer: 5a (12 von 30) vs. 5b (10 von 24). Wo ist der Anteil höher? &bull; b) Kurze Hosen: 5c (18 von 26) vs. 5b (20 von 28). Wo ist der Anteil höher?
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Brüche aufstellen & kürzen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Stelle die Brüche auf: <span class="frac"><span class="num">Merkmal</span><span class="den">Gesamtkinder</span></span>.<br>
+                Zu a: 5a hat <span class="frac"><span class="num">12</span><span class="den">30</span></span> und 5b hat <span class="frac"><span class="num">10</span><span class="den">24</span></span>.<br>
+                👉 <em>Kürze beide Brüche zuerst, bevor du einen gemeinsamen Nenner suchst!</em>
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Hauptnenner finden)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu a:</strong><br>
+                  5a: <span class="frac"><span class="num">12 : 6</span><span class="den">30 : 6</span></span> = <span class="frac"><span class="num">2</span><span class="den">5</span></span> &bull; 5b: <span class="frac"><span class="num">10 : 2</span><span class="den">24 : 2</span></span> = <span class="frac"><span class="num">5</span><span class="den">12</span></span>.<br>
+                  Hauptnenner von 5 und 12 ist <strong>60</strong>:<br>
+                  5a: <span class="frac"><span class="num">2 &middot; 12</span><span class="den">5 &middot; 12</span></span> = <span class="frac"><span class="num">24</span><span class="den">60</span></span> \quad vs. \quad 5b: <span class="frac"><span class="num">5 &middot; 5</span><span class="den">12 &middot; 5</span></span> = <span class="frac"><span class="num">25</span><span class="den">60</span></span>.<br><br>
+                  &bull; <strong>Zu b:</strong><br>
+                  5c: <span class="frac"><span class="num">18</span><span class="den">26</span></span> = <span class="frac"><span class="num">9</span><span class="den">13</span></span> &bull; 5b: <span class="frac"><span class="num">20</span><span class="den">28</span></span> = <span class="frac"><span class="num">5</span><span class="den">7</span></span>.<br>
+                  Hauptnenner: 13 &middot; 7 = <strong>91</strong>: <span class="frac"><span class="num">63</span><span class="den">91</span></span> vs. <span class="frac"><span class="num">65</span><span class="den">91</span></span>.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Antworten & Begründung</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>Zu a:</strong> In der <strong>Klasse 5b</strong> ist der Chorteilnehmer-Anteil höher (<span class="frac"><span class="num">25</span><span class="den">60</span></span> &gt; <span class="frac"><span class="num">24</span><span class="den">60</span></span>).<br>
+                &bull; <strong>Zu b:</strong> In der <strong>Klasse 5b</strong> ist der Anteil der Kinder mit kurzer Hose höher (<span class="frac"><span class="num">65</span><span class="den">91</span></span> &gt; <span class="frac"><span class="num">63</span><span class="den">91</span></span>).<br>
+                <em>Erklärung:</em> Obwohl 5a mehr Sänger in absoluten Zahlen hat (12 &gt; 10), ist der relative Anteil in 5b höher, weil die Klasse kleiner ist.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 220, Nr. 11 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-2">S. 220, Nr. 11</span>
+            <span class="task-name">Brüche der Größe nach ordnen</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> a) <span class="frac"><span class="num">50</span><span class="den">200</span></span>, <span class="frac"><span class="num">5</span><span class="den">200</span></span>, <span class="frac"><span class="num">5</span><span class="den">20</span></span>, <span class="frac"><span class="num">1</span><span class="den">2</span></span>, <span class="frac"><span class="num">20</span><span class="den">500</span></span>, <span class="frac"><span class="num">2</span><span class="den">50</span></span> der Größe nach ordnen.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Nicht sofort Hauptnenner rechnen!)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Ein Hauptnenner für 200, 20, 2, 500 und 50 wäre riesig!<br>
+                👉 <strong>Kürze zuerst jeden Bruch vollständig!</strong> Du wirst sehen, dass viele Brüche plötzlich Stammbrüche mit Zähler 1 werden.
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Gekürzte Brüche)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <span class="frac"><span class="num">50</span><span class="den">200</span></span> = <span class="frac"><span class="num">1</span><span class="den">4</span></span><br>
+                  &bull; <span class="frac"><span class="num">5</span><span class="den">200</span></span> = <span class="frac"><span class="num">1</span><span class="den">40</span></span><br>
+                  &bull; <span class="frac"><span class="num">5</span><span class="den">20</span></span> = <span class="frac"><span class="num">1</span><span class="den">4</span></span><br>
+                  &bull; <span class="frac"><span class="num">1</span><span class="den">2</span></span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span><br>
+                  &bull; <span class="frac"><span class="num">20</span><span class="den">500</span></span> = <span class="frac"><span class="num">1</span><span class="den">25</span></span><br>
+                  &bull; <span class="frac"><span class="num">2</span><span class="den">50</span></span> = <span class="frac"><span class="num">1</span><span class="den">25</span></span>
+                </div>
+                Sortiere nun die Stammbrüche: Welcher Nenner bedeutet das kleinste Stück?
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Fertige Lösung</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Da bei Zähler 1 der Bruch mit dem größten Nenner am kleinsten ist:<br>
+                <span class="frac"><span class="num">1</span><span class="den">40</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">25</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">4</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">2</span></span>.<br><br>
+                <strong>Mit den Originalbrüchen aufgeschrieben:</strong><br>
+                <span class="frac"><span class="num">5</span><span class="den">200</span></span> &lt; <span class="frac"><span class="num">20</span><span class="den">500</span></span> = <span class="frac"><span class="num">2</span><span class="den">50</span></span> &lt; <span class="frac"><span class="num">50</span><span class="den">200</span></span> = <span class="frac"><span class="num">5</span><span class="den">20</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">2</span></span>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 220, Nr. 12 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-2">S. 220, Nr. 12</span>
+            <span class="task-name">Finde den Fehler! (Fachbegriffe anwenden)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Beschreibe, was falsch gemacht wurde. Verwende die Fachbegriffe: <em>der Zähler, der Nenner, erweitern mit, der Wert</em>.<br>
+            a) <span class="frac"><span class="num">1</span><span class="den">4</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">5</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">3</span></span> &bull; b) <span class="frac"><span class="num">1</span><span class="den">7</span></span> &lt; <span class="frac"><span class="num">3</span><span class="den">7</span></span> &lt; <span class="frac"><span class="num">5</span><span class="den">8</span></span> &bull; c) <span class="frac"><span class="num">2</span><span class="den">5</span></span> &lt; <span class="frac"><span class="num">9</span><span class="den">15</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">5</span></span> &bull; d) <span class="frac"><span class="num">4</span><span class="den">5</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">6</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">7</span></span>.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Die Denkfehler entlarven)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Schau dir bei a und d die Zahlen an:<br>
+                Wurden hier einfach nur die Nenner von klein nach groß wie normale Zahlen sortiert (4 &lt; 5 &lt; 6 &lt; 7)?<br>
+                👉 <em>Was bedeutet der Nenner wirklich? Überlege mit einer Geburtstagstorte: Wird ein Stück größer oder kleiner, wenn 7 Kinder mitessen statt 5?</em>
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Strukturhilfe (Erweitern zur Überprüfung)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu a:</strong> Bring alle auf 60: <span class="frac"><span class="num">15</span><span class="den">60</span></span>, <span class="frac"><span class="num">12</span><span class="den">60</span></span>, <span class="frac"><span class="num">20</span><span class="den">60</span></span>. 12 ist kleiner als 15!<br>
+                  &bull; <strong>Zu c:</strong> Erweitere <span class="frac"><span class="num">2</span><span class="den">5</span></span> mit 3 zu <span class="frac"><span class="num">6</span><span class="den">15</span></span> und <span class="frac"><span class="num">4</span><span class="den">5</span></span> zu <span class="frac"><span class="num">12</span><span class="den">15</span></span>. Hier gilt <span class="frac"><span class="num">6</span><span class="den">15</span></span> &lt; <span class="frac"><span class="num">9</span><span class="den">15</span></span> &lt; <span class="frac"><span class="num">12</span><span class="den">15</span></span> &ndash; die Reihe ist bereits richtig geordnet!
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Korrektur & Textbausteine mit Fachbegriffen</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <strong>Formulierungsbeispiel für dein Heft:</strong><br>
+                <em>„Bei Teilaufgabe a hat die Person nur auf die <strong>Nenner</strong> geschaut. Bei gleichem <strong>Zähler</strong> bedeutet ein größerer Nenner aber kleinere Stücke, wodurch der <strong>Wert</strong> sinkt. Richtig ist: <span class="frac"><span class="num">1</span><span class="den">5</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">4</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">3</span></span>.“</em><br><br>
+                <em>„Bei Teilaufgabe d stehen die Zeichen falsch herum: 4 Fünftelstücke sind mehr als 4 Siebtelstücke. Richtig ist: <span class="frac"><span class="num">4</span><span class="den">7</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">6</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">5</span></span>.“</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 221, Nr. 16 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-2">S. 221, Nr. 16</span>
+            <span class="task-name">Teste dich! Ordne 4 Brüche der Größe nach</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Beginne mit dem kleinsten Bruch: a) <span class="frac"><span class="num">1</span><span class="den">2</span></span>, <span class="frac"><span class="num">3</span><span class="den">4</span></span>, <span class="frac"><span class="num">3</span><span class="den">8</span></span>, <span class="frac"><span class="num">4</span><span class="den">6</span></span> &bull; b) <span class="frac"><span class="num">12</span><span class="den">15</span></span>, <span class="frac"><span class="num">23</span><span class="den">30</span></span>, <span class="frac"><span class="num">4</span><span class="den">5</span></span>, <span class="frac"><span class="num">2</span><span class="den">3</span></span>.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Hauptnenner von 4 Zahlen finden)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Nimm den <strong>größten Nenner</strong> und prüfe seine Vielfachenreihe:<br>
+                &bull; Zu a (Nenner 2, 4, 8, 6): Größter Nenner ist 8.<br>
+                8? (6 passt nicht). 16? (6 passt nicht). <strong>24?</strong> (2, 4, 8 und 6 passen alle in 24!).<br>
+                Gemeinsamer Hauptnenner ist <strong>24</strong>!
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Alle erweitern)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu a (auf 24stel):</strong><br>
+                  <span class="frac"><span class="num">1</span><span class="den">2</span></span> = <span class="frac"><span class="num">12</span><span class="den">24</span></span> &bull; <span class="frac"><span class="num">3</span><span class="den">4</span></span> = <span class="frac"><span class="num">18</span><span class="den">24</span></span> &bull; <span class="frac"><span class="num">3</span><span class="den">8</span></span> = <span class="frac"><span class="num">9</span><span class="den">24</span></span> &bull; <span class="frac"><span class="num">4</span><span class="den">6</span></span> = <span class="frac"><span class="num">16</span><span class="den">24</span></span>.<br><br>
+                  &bull; <strong>Zu b (auf 30stel):</strong><br>
+                  <span class="frac"><span class="num">12</span><span class="den">15</span></span> = <span class="frac"><span class="num">24</span><span class="den">30</span></span> &bull; <span class="frac"><span class="num">23</span><span class="den">30</span></span> = <span class="frac"><span class="num">23</span><span class="den">30</span></span> &bull; <span class="frac"><span class="num">4</span><span class="den">5</span></span> = <span class="frac"><span class="num">24</span><span class="den">30</span></span> &bull; <span class="frac"><span class="num">2</span><span class="den">3</span></span> = <span class="frac"><span class="num">20</span><span class="den">30</span></span>.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Geordnete Lösung</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Vergleiche die Zähler und schreibe die Originalbrüche auf:<br>
+                &bull; <strong>a)</strong> <span class="frac"><span class="num">3</span><span class="den">8</span></span> &lt; <span class="frac"><span class="num">1</span><span class="den">2</span></span> &lt; <span class="frac"><span class="num">4</span><span class="den">6</span></span> &lt; <span class="frac"><span class="num">3</span><span class="den">4</span></span><br>
+                &bull; <strong>b)</strong> <span class="frac"><span class="num">2</span><span class="den">3</span></span> &lt; <span class="frac"><span class="num">23</span><span class="den">30</span></span> &lt; <span class="frac"><span class="num">12</span><span class="den">15</span></span> = <span class="frac"><span class="num">4</span><span class="den">5</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- ANFORDERUNGSBEREICH 3: ⭐⭐⭐ 3 STERNE (PROFIS / HERAUSFORDERUNG) -->
+    <!-- ================================================================= -->
+    <section class="level-section" data-level="lvl-3">
+      <div class="section-header lvl-3">
+        <span>⭐⭐⭐ 3 Sterne: Profis & Begründen</span>
+      </div>
+
+      <!-- S. 221, Nr. 13 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-3">S. 221, Nr. 13</span>
+            <span class="task-name">Gilt immer &ndash; gilt nie &ndash; es kommt darauf an</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Begründe: a) Addiert man oben und unten dieselbe Zahl, ändert sich der Wert nicht. &bull; b) Ist der Nenner kleiner, so ist der Bruch größer. &bull; c) Ist der Zähler größer, so ist der Bruch größer.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Finde Gegenbeispiele!)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Um zu zeigen, dass eine Regel <strong>nicht immer</strong> gilt, reicht ein einziges <strong>Gegenbeispiel</strong>!<br>
+                &bull; Zu a: Was passiert, wenn du bei <span class="frac"><span class="num">1</span><span class="den">2</span></span> oben und unten 1 addierst? Ergibt <span class="frac"><span class="num">2</span><span class="den">3</span></span> denselben Wert wie ein halber Kuchen?<br>
+                &bull; Zu b und c: Überlege: Wann gilt die Aussage? Fehlt eine wichtige Bedingung (z. B. gleicher Zähler oder gleicher Nenner)?
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Strukturhilfe (Gegenbeispiele durchrechnen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Zu b:</strong> Nimm <span class="frac"><span class="num">1</span><span class="den">2</span></span> und <span class="frac"><span class="num">10</span><span class="den">3</span></span>. Der Nenner 2 ist kleiner als 3. Ist <span class="frac"><span class="num">1</span><span class="den">2</span></span> deshalb größer als <span class="frac"><span class="num">10</span><span class="den">3</span></span>? Nein, <span class="frac"><span class="num">1</span><span class="den">2</span></span> = 0,5 und <span class="frac"><span class="num">10</span><span class="den">3</span></span> = 3,33!<br>
+                  &bull; <strong>Zu c:</strong> Nimm <span class="frac"><span class="num">2</span><span class="den">100</span></span> und <span class="frac"><span class="num">1</span><span class="den">2</span></span>. Der Zähler 2 ist größer als 1. Aber 2 Hundertstel sind viel kleiner als ein Halbes!
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Mathematisch exakte Begründungen</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>a) Gilt nie:</strong> Nur beim <em>Multiplizieren</em> (Erweitern) bleibt der Wert gleich. Beim Addieren verändert sich das Verhältnis grundlegend.<br>
+                &bull; <strong>b) Es kommt darauf an:</strong> Gilt <strong>nur bei gleichem Zähler</strong> (z. B. <span class="frac"><span class="num">3</span><span class="den">4</span></span> &gt; <span class="frac"><span class="num">3</span><span class="den">8</span></span>). Bei unterschiedlichen Zählern gilt es nicht immer.<br>
+                &bull; <strong>c) Es kommt darauf an:</strong> Gilt <strong>nur bei gleichem Nenner</strong> (z. B. <span class="frac"><span class="num">5</span><span class="den">7</span></span> &gt; <span class="frac"><span class="num">2</span><span class="den">7</span></span>).
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 221, Nr. 14 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-3">S. 221, Nr. 14</span>
+            <span class="task-name">Fußball-Anteile: Piet vs. Anika</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> In der 5c sind 16 Mädchen und 12 Jungen. 8 Jungen und 4 Mädchen spielen Fußball. Piet: „Der Anteil der Jungen ist größer.“ Anika: „Es sind doch mehr Mädchen in der Klasse...“ Formuliere so, dass beide recht haben.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Anteil vs. absolute Anzahl)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Hier liegt ein klassisches Missverständnis vor:<br>
+                &bull; <strong>Piet</strong> meint den <em>relativen Anteil</em> (Bruch innerhalb der Gruppe).<br>
+                &bull; <strong>Anika</strong> meint die <em>absolute Anzahl</em> (wer sind mehr Personen in der ganzen Klasse?).
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Anteile berechnen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Fußball-Anteil bei den Jungen:</strong> 8 von 12 &rarr; <span class="frac"><span class="num">8</span><span class="den">12</span></span> = <span class="frac"><span class="num">2</span><span class="den">3</span></span> (rund 67 % aller Jungen spielen Fußball).<br>
+                  &bull; <strong>Fußball-Anteil bei den Mädchen:</strong> 4 von 16 &rarr; <span class="frac"><span class="num">4</span><span class="den">16</span></span> = <span class="frac"><span class="num">1</span><span class="den">4</span></span> (nur 25 % aller Mädchen spielen Fußball).<br>
+                  Vergleich: <span class="frac"><span class="num">2</span><span class="den">3</span></span> ist eindeutig größer als <span class="frac"><span class="num">1</span><span class="den">4</span></span>!
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Formulierungshilfe für beide Aussagen</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>So hat Piet recht:</strong> <em>„Der Anteil der Fußballer <u>unter den Jungen</u> (<span class="frac"><span class="num">2</span><span class="den">3</span></span>) ist viel größer als der Anteil der Fußballerinnen <u>unter den Mädchen</u> (<span class="frac"><span class="num">1</span><span class="den">4</span></span>).“</em><br>
+                &bull; <strong>So hat Anika recht:</strong> <em>„In der Klasse gibt es insgesamt mehr Mädchen als Jungen (16 &gt; 12), und die Gruppe der Mädchen, die <u>nicht</u> Fußball spielen, ist mit 12 Kindern viel größer als bei den Jungen (4).“</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 221, Nr. 15 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-3">S. 221, Nr. 15</span>
+            <span class="task-name">Das Konfitüren-Rätsel (80 % vs. 3:1)</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Gekaufte Konfitüre: 80 g Frucht auf 100 g Konfitüre. Selbstgemacht: Gelierzucker 3:1 (3 Teile Frucht auf 1 Teil Zucker). Welche Konfitüre hat einen höheren Fruchtanteil?
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Was ist das Ganze?)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Stelle für beide Konfitüren den Bruch auf: <span class="frac"><span class="num">Frucht</span><span class="den">Gesamte Konfitüre</span></span>.<br>
+                👉 <strong>Falle bei 3:1:</strong> 3 Teile Frucht und 1 Teil Zucker ergeben zusammen <strong>3 + 1 = 4 Teile</strong> im Topf! Der Nenner ist also 4, nicht 3!
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Rechenhilfe (Vergleich auf Zwanzigstel)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  &bull; <strong>Gekaufte Konfitüre:</strong> <span class="frac"><span class="num">80</span><span class="den">100</span></span> = gekürzt mit 20 = <span class="frac"><span class="num">4</span><span class="den">5</span></span>.<br>
+                  &bull; <strong>Selbstgemachte Konfitüre:</strong> 3 von 4 Teilen sind Frucht = <span class="frac"><span class="num">3</span><span class="den">4</span></span>.<br><br>
+                  Erweitere beide Brüche auf den Hauptnenner <strong>20</strong>:<br>
+                  &bull; Gekauft: <span class="frac"><span class="num">4 &middot; 4</span><span class="den">5 &middot; 4</span></span> = <span class="frac"><span class="num">16</span><span class="den">20</span></span> (= 80 %)<br>
+                  &bull; Selbstgemacht: <span class="frac"><span class="num">3 &middot; 5</span><span class="den">4 &middot; 5</span></span> = <span class="frac"><span class="num">15</span><span class="den">20</span></span> (= 75 %)
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Antwortsatz</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <em>Antwortsatz:</em> Die <strong>gekaufte Konfitüre</strong> hat den höheren Fruchtanteil, da <span class="frac"><span class="num">16</span><span class="den">20</span></span> &gt; <span class="frac"><span class="num">15</span><span class="den">20</span></span> (80 % Frucht gegenüber 75 % bei der selbstgemachten 3:1-Konfitüre).
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- S. 221, Nr. 20 -->
+      <article class="task-card">
+        <div class="task-header">
+          <div class="task-title-wrap">
+            <span class="task-badge lvl-3">S. 221, Nr. 20</span>
+            <span class="task-name">Das Muster 1/2, 2/3, 3/4, 4/5 ...</span>
+          </div>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="task-body">
+          <div class="task-preview">
+            <strong>Aufgabe:</strong> Betrachte <span class="frac"><span class="num">1</span><span class="den">2</span></span>, <span class="frac"><span class="num">2</span><span class="den">3</span></span>, <span class="frac"><span class="num">3</span><span class="den">4</span></span>, <span class="frac"><span class="num">4</span><span class="den">5</span></span>, <span class="frac"><span class="num">5</span><span class="den">6</span></span> ... a) Beschreibe das Muster. b) Begründe, warum die Brüche immer größer werden, aber keiner den Wert 1 erreicht.
+          </div>
+          <div class="steps-container">
+            <div class="step-box step-1">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">1</span> Stufe 1: Denkanstoß (Die Lücke zur 1 untersuchen)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                Überlege bei b: Wie viel fehlt jedem Bruch bis zu einer ganzen Pizza (= 1)?<br>
+                &bull; Von <span class="frac"><span class="num">1</span><span class="den">2</span></span> bis 1 fehlt: <span class="frac"><span class="num">1</span><span class="den">2</span></span>.<br>
+                &bull; Von <span class="frac"><span class="num">2</span><span class="den">3</span></span> bis 1 fehlt: <span class="frac"><span class="num">1</span><span class="den">3</span></span>.<br>
+                &bull; Von <span class="frac"><span class="num">3</span><span class="den">4</span></span> bis 1 fehlt: <span class="frac"><span class="num">1</span><span class="den">4</span></span>.<br>
+                👉 <em>Was passiert mit dem Fehlstück, wenn der Nenner wächst?</em>
+              </div>
+            </div>
+
+            <div class="step-box step-2">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">2</span> Stufe 2: Strukturhilfe (Stammbrüche werden kleiner)</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                <div class="math-block">
+                  Die Fehlstücke sind Stammbrüche: <span class="frac"><span class="num">1</span><span class="den">2</span></span>, <span class="frac"><span class="num">1</span><span class="den">3</span></span>, <span class="frac"><span class="num">1</span><span class="den">4</span></span>, <span class="frac"><span class="num">1</span><span class="den">5</span></span>, <span class="frac"><span class="num">1</span><span class="den">6</span></span>, ..., <span class="frac"><span class="num">1</span><span class="den">100</span></span> ...<br>
+                  Je größer der Nenner, desto kleiner ist das Fehlstück!<br>
+                  Wenn das, was zum Ganzen fehlt, immer kleiner wird, muss der Bruch selbst immer **näher an 1** heranrücken und wird somit immer **größer**.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-box step-3">
+              <button class="step-btn">
+                <span class="step-badge-icon"><span class="step-num">3</span> Stufe 3: Vollständige mathematische Begründung</span>
+                <span class="step-toggle-text">Tipp aufdecken ▼</span>
+              </button>
+              <div class="step-content">
+                &bull; <strong>Zu a (Musterbeschreibung):</strong> Der Zähler wächst bei jedem Schritt um 1. Der Nenner ist immer genau um 1 größer als der Zähler.<br>
+                &bull; <strong>Zu b (Begründung):</strong> Jeder Bruch hat die Form 1 minus <span class="frac"><span class="num">1</span><span class="den">Nenner</span></span>. Da die Lücke <span class="frac"><span class="num">1</span><span class="den">Nenner</span></span> immer kleiner wird, werden die Brüche stetig größer. Keiner erreicht aber jemals den Wert 1, da der Zähler immer um 1 kleiner als der Nenner bleibt &ndash; es bleibt immer ein winziger Rest übrig.
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    Mathematik Klasse 6D &bull; Herr Dayi &bull; Gesamtschule &bull; Lehrwerk Mathematik 6
+  </footer>
+
+  <script>
+    // Accordion für Task Cards
+    document.querySelectorAll('.task-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.closest('.task-card').classList.toggle('open');
+      });
+    });
+
+    // Hints aufdecken (Einzelauswahl)
+    document.querySelectorAll('.step-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const step = btn.closest('.step-box');
+        const isOpen = step.classList.toggle('open');
+        const textSpan = btn.querySelector('.step-toggle-text');
+        if (textSpan) {
+          textSpan.textContent = isOpen ? 'Zuklappen ▲' : 'Tipp aufdecken ▼';
+        }
+      });
+    });
+
+    // Filter Buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+
+        document.querySelectorAll('.level-section').forEach(sec => {
+          if (filter === 'all' || sec.getAttribute('data-level') === filter) {
+            sec.style.display = 'flex';
+          } else {
+            sec.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Alle Aufklappen / Zuklappen
+    document.getElementById('btnExpandAll').addEventListener('click', () => {
+      document.querySelectorAll('.task-card').forEach(c => c.classList.add('open'));
+      document.querySelectorAll('.step-box').forEach(s => {
+        s.classList.add('open');
+        let t = s.querySelector('.step-toggle-text');
+        if (t) t.textContent = 'Zuklappen ▲';
+      });
+    });
+
+    document.getElementById('btnCollapseAll').addEventListener('click', () => {
+      document.querySelectorAll('.task-card').forEach(c => c.classList.remove('open'));
+      document.querySelectorAll('.step-box').forEach(s => {
+        s.classList.remove('open');
+        let t = s.querySelector('.step-toggle-text');
+        if (t) t.textContent = 'Tipp aufdecken ▼';
+      });
+    });
+  </script>
+
+</body>
+</html>

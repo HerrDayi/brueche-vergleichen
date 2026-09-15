@@ -1,0 +1,695 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{fontspec}
+\setmainfont{Libertinus Serif}
+
+\usepackage[a4paper,margin=1.0cm,top=0.7cm,bottom=0.7cm]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fontawesome5}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+
+% Farben
+\definecolor{primaryBlue}{HTML}{143264}
+\definecolor{lvlGreen}{HTML}{166534}
+\definecolor{lvlBlue}{HTML}{1E40AF}
+\definecolor{lvlPurple}{HTML}{6B21A8}
+
+% Stufen-Farben
+\definecolor{step1Bg}{HTML}{FFFBEB}
+\definecolor{step1Border}{HTML}{FDE68A}
+\definecolor{step1Text}{HTML}{92400E}
+
+\definecolor{step2Bg}{HTML}{EFF6FF}
+\definecolor{step2Border}{HTML}{BFDBFE}
+\definecolor{step2Text}{HTML}{1E40AF}
+
+\definecolor{step3Bg}{HTML}{ECFDF5}
+\definecolor{step3Border}{HTML}{A7F3D0}
+\definecolor{step3Text}{HTML}{065F46}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\mFrac}[2]{\frac{#1}{#2}}
+
+% Trennlinie zum Schneiden
+\newcommand{\cutline}{%
+  \vspace{1.5mm}
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[dashed, line width=0.8pt, gray!60] (0,0) -- (0.96\linewidth,0);
+      \node[fill=white, text=gray!70, font=\tiny\bfseries] at (0.48\linewidth,0) {\faCut\enskip HIER SCHNEIDEN};
+    \end{tikzpicture}
+  \end{center}
+  \vspace{1.5mm}
+}
+
+\begin{document}
+
+% ==============================================================================
+% SEITE 1: 1 STERN – S. 219 Nr. 1 & S. 220 Nr. 6
+% ==============================================================================
+
+% --- KARTE 1: S. 219, Nr. 1 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlGreen}\textbf{\faStar\enskip 1 STERN (BASIS)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 219, Nr. 1}}\quad Welcher Bruch ist größer?}\\[1mm]
+        {\footnotesize\textit{Vergleiche: a) $\mFrac{3}{5}$ u. $\mFrac{1}{5}$ \quad b) $\mFrac{1}{3}$ u. $\mFrac{1}{2}$ \quad c) $\mFrac{3}{4}$ u. $\mFrac{4}{5}$ \quad d) $\mFrac{2}{7}$ u. $\mFrac{4}{10}$ \quad e) $\mFrac{5}{6}$ u. $\mFrac{7}{9}$ \quad f) $\mFrac{2}{8}$ u. $\mFrac{5}{8}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Strategie wählen)}\\[0.8mm]
+        {\small
+        Schau dir jedes Paar genau an:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Gleicher Nenner (wie bei a und f):} Die Teile sind gleich groß. Vergleiche einfach die Zähler: Mehr Stücke bedeuten den größeren Bruch!
+            \item \textbf{Gleicher Zähler (wie bei b):} Gleiche Stückzahl! Aber: Je \textit{kleiner der Nenner}, desto \textit{größer das einzelne Stück}!
+            \item \textbf{Verschiedene Nenner (wie bei c, d, e):} Erweitere auf einen gemeinsamen Hauptnenner.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe \& Hauptnenner}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu c ($\mFrac{3}{4}$ und $\mFrac{4}{5}$):} Hauptnenner ist \textbf{20}: $\mFrac{3\cdot 5}{4\cdot 5} = \mFrac{15}{20}$ und $\mFrac{4\cdot 4}{5\cdot 4} = \mFrac{16}{20}$.
+            \item \textbf{Zu d ($\mFrac{2}{7}$ und $\mFrac{4}{10}$):} Zähler angleichen: Erweitere $\mFrac{2}{7}$ mit 2 zu $\mFrac{4}{14}$. Jetzt haben beide Zähler 4!
+            \item \textbf{Zu e ($\mFrac{5}{6}$ und $\mFrac{7}{9}$):} Hauptnenner ist \textbf{18} ($6\cdot 3 = 18$ und $9\cdot 2 = 18$).
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Formulierungshilfe \& Musterlösung}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zu a: \textit{„$\mFrac{3}{5} > \mFrac{1}{5}$, weil bei gleichem Nenner 3 Fünftelstücke mehr sind als 1 Fünftelstück.“}
+            \item Zu b: \textit{„$\mFrac{1}{2} > \mFrac{1}{3}$, weil zwei gleich große Teile (Halbe) größer sind als Drittel.“}
+            \item Zu c: \textit{„$\mFrac{4}{5} > \mFrac{3}{4}$, denn auf Zwanzigstel erweitert gilt: $\mFrac{16}{20} > \mFrac{15}{20}$.“}
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 2: S. 220, Nr. 6 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlGreen}\textbf{\faStar\enskip 1 STERN (BASIS)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 6}}\quad Belade die Lkw (Vergleich mit der Hälfte)}\\[1mm]
+        {\footnotesize\textit{Lkw 1 („weniger als $\mFrac{1}{2}$“) und Lkw 2 („mehr als $\mFrac{1}{2}$“) mit den 9 Kisten beladen: (1) $\mFrac{1}{3}$, (2) $\mFrac{59}{90}$, (3) $\mFrac{43}{80}$, (5) $\mFrac{7}{13}$, (6) $\mFrac{3}{7}$, (9) $\mFrac{21}{43}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Die Halbierungs-Strategie)}\\[0.8mm]
+        {\small
+        Du musst die Brüche \textbf{nicht} mühsam erweitern! Vergleiche jeden Zähler mit der \textbf{Hälfte des Nenners}:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zähler \textit{größer} als die Nennerhälfte? $\rightarrow$ \textbf{Mehr als $\mFrac{1}{2}$}!
+            \item Zähler \textit{kleiner} als die Nennerhälfte? $\rightarrow$ \textbf{Weniger als $\mFrac{1}{2}$}!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Ungerade Nenner)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu (3) $\mFrac{43}{80}$:} Die Hälfte von 80 ist 40. Zähler 43 ist größer als 40 $\rightarrow$ \textbf{mehr als $\mFrac{1}{2}$}.
+            \item \textbf{Zu (5) $\mFrac{7}{13}$:} Die Hälfte von 13 ist 6,5. Zähler 7 ist größer als 6,5 $\rightarrow$ \textbf{mehr als $\mFrac{1}{2}$}.
+            \item \textbf{Zu (9) $\mFrac{21}{43}$:} Die Hälfte von 43 ist 21,5. Zähler 21 ist kleiner als 21,5 $\rightarrow$ \textbf{weniger als $\mFrac{1}{2}$}.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Vollständige Zuordnung zur Selbstkontrolle}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Lkw „weniger als $\mFrac{1}{2}$“:} (1) $\mFrac{1}{3}$, (4) Streifen ($\mFrac{3}{8}$), (6) $\mFrac{3}{7}$, (8) Dreieck ($\mFrac{4}{9}$), (9) $\mFrac{21}{43}$.
+            \item \textbf{Lkw „mehr als $\mFrac{1}{2}$“:} (2) $\mFrac{59}{90}$, (3) $\mFrac{43}{80}$, (5) $\mFrac{7}{13}$.
+            \item \textit{Achtung bei (7):} Streifen zeigt $5$ von $10$ ($=\mFrac{1}{2}$) $\rightarrow$ passt auf \textbf{keinen} der beiden Lkw!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+% ==============================================================================
+% SEITE 2: 1 STERN – S. 220 Nr. 7 & S. 220 Nr. 8
+% ==============================================================================
+
+% --- KARTE 3: S. 220, Nr. 7 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlGreen}\textbf{\faStar\enskip 1 STERN (BASIS)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 7}}\quad Teste dich! Welcher Bruch ist größer?}\\[1mm]
+        {\footnotesize\textit{a) $\mFrac{3}{8}$ od. $\mFrac{5}{8}$ \quad b) $\mFrac{3}{8}$ od. $\mFrac{3}{9}$ \quad c) $\mFrac{3}{4}$ od. $\mFrac{5}{6}$ \quad d) $\mFrac{5}{8}$ od. $\mFrac{41}{50}$ \quad e) $\mFrac{3}{12}$ od. $\mFrac{1}{4}$ \quad f) $\mFrac{9}{10}$ od. $\mFrac{89}{90}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Welche ist am leichtesten?)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Am einfachsten:} Schau auf Aufgabe \textbf{a}! Bei gleichem Nenner musst du nichts umrechnen.
+            \item \textbf{Achtung bei e:} Kürze zuerst $\mFrac{3}{12}$ mit der Zahl 3!
+            \item \textbf{Trick bei f:} Wie viel fehlt den beiden Brüchen jeweils bis zum Ganzen (1)?
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe \& Lücken-Strategie}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu c:} Hauptnenner von 4 und 6 ist \textbf{12}: $\mFrac{3\cdot 3}{4\cdot 3} = \mFrac{9}{12}$ und $\mFrac{5\cdot 2}{6\cdot 2} = \mFrac{10}{12}$.
+            \item \textbf{Zu e:} $\mFrac{3 : 3}{12 : 3} = \mFrac{1}{4}$! Beide Brüche haben denselben Wert.
+            \item \textbf{Zu f:} Bei $\mFrac{9}{10}$ fehlt $\mFrac{1}{10}$ zum Ganzen. Bei $\mFrac{89}{90}$ fehlt nur $\mFrac{1}{90}$. Da $\mFrac{1}{90}$ viel kleiner ist, fehlt weniger $\rightarrow$ $\mFrac{89}{90}$ ist näher an 1!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Lösungen \& Begründung}\\[0.8mm]
+        {\small
+        \textbf{Ergebnisse:} a) $\mFrac{5}{8} > \mFrac{3}{8}$ \quad b) $\mFrac{3}{8} > \mFrac{3}{9}$ \quad c) $\mFrac{5}{6} > \mFrac{3}{4}$ \quad d) $\mFrac{41}{50} > \mFrac{5}{8}$ \quad e) $\mFrac{3}{12} = \mFrac{1}{4}$ \quad f) $\mFrac{89}{90} > \mFrac{9}{10}$.\\[1mm]
+        \textit{Begründung:} Teilaufgabe a ist am leichtesten, da man bei gleichem Nenner nur die Zähler $5 > 3$ vergleichen muss.
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 4: S. 220, Nr. 8 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlGreen}\textbf{\faStar\enskip 1 STERN (BASIS)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 8}}\quad Die Tortenstücke vergleichen}\\[1mm]
+        {\footnotesize\textit{Eine Torte in 12 Teile, die andere in 16 Teile geschnitten. Welcher Anteil ist größer: 4 Stücke der ersten oder 6 Stücke der zweiten Torte?}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Brüche notieren \& kürzen)}\\[0.8mm]
+        {\small
+        Schreibe beide Anteile sauber als Bruch auf:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item 1. Torte: 4 von 12 Stücken = $\mFrac{4}{12}$.
+            \item 2. Torte: 6 von 16 Stücken = $\mFrac{6}{16}$.
+        \end{itemize}
+        {\color{step1Text}\faHandPointRight}\enskip \textit{Tipp: Kürze beide Brüche so weit wie möglich, bevor du erweiterst!}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Hauptnenner 24)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item 1. Torte gekürzt mit 4: $\mFrac{4 : 4}{12 : 4} = \mFrac{1}{3}$.
+            \item 2. Torte gekürzt mit 2: $\mFrac{6 : 2}{16 : 2} = \mFrac{3}{8}$.
+        \end{itemize}
+        Bringe nun $\mFrac{1}{3}$ und $\mFrac{3}{8}$ auf den gemeinsamen Hauptnenner \textbf{24}!
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Lösung \& Antwortsatz}\\[0.8mm]
+        {\small
+        Auf 24stel erweitert:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item 1. Torte: $\mFrac{1\cdot 8}{3\cdot 8} = \mFrac{8}{24}$. \qquad 2. Torte: $\mFrac{3\cdot 3}{8\cdot 3} = \mFrac{9}{24}$.
+        \end{itemize}
+        \textit{Antwortsatz:} \textbf{6 Stücke der zweiten Torte} ergeben den größeren Anteil, da $\mFrac{9}{24} > \mFrac{8}{24}$ ist.
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+% ==============================================================================
+% SEITE 3: 2 STERNE – S. 220 Nr. 5 & S. 220 Nr. 11
+% ==============================================================================
+
+% --- KARTE 5: S. 220, Nr. 5 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlBlue}\textbf{\faStar\faStar\enskip 2 STERNE (STANDARD)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 5}}\quad Schulchor \& kurze Hosen}\\[1mm]
+        {\footnotesize\textit{a) Chor: 5a (12 von 30) vs. 5b (10 von 24). \quad b) Kurze Hosen: 5c (18 von 26) vs. 5b (20 von 28). Wo ist der Anteil höher?}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Brüche aufstellen \& kürzen)}\\[0.8mm]
+        {\small
+        Stelle die Brüche auf: $\mFrac{\text{Merkmal}}{\text{Gesamte Schüler}}$.
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zu a: In der 5a sind es $\mFrac{12}{30}$, in der 5b sind es $\mFrac{10}{24}$.
+        \end{itemize}
+        {\color{step1Text}\faHandPointRight}\enskip \textit{Kürze beide Brüche zuerst, bevor du den Hauptnenner suchst!}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Hauptnenner 60 und 91)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu a:} 5a: $\mFrac{12:6}{30:6} = \mFrac{2}{5}$ \quad 5b: $\mFrac{10:2}{24:2} = \mFrac{5}{12}$. Hauptnenner ist \textbf{60}:\\
+            5a: $\mFrac{2\cdot 12}{5\cdot 12} = \mFrac{24}{60}$ \quad vs. \quad 5b: $\mFrac{5\cdot 5}{12\cdot 5} = \mFrac{25}{60}$.
+            \item \textbf{Zu b:} 5c: $\mFrac{18}{26} = \mFrac{9}{13}$ \quad 5b: $\mFrac{20}{28} = \mFrac{5}{7}$. Hauptnenner: $13\cdot 7 = \textbf{91}$:\\
+            5c: $\mFrac{9\cdot 7}{13\cdot 7} = \mFrac{63}{91}$ \quad vs. \quad 5b: $\mFrac{5\cdot 13}{7\cdot 13} = \mFrac{65}{91}$.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Antworten \& Begründung}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zu a: In der \textbf{Klasse 5b} ist der Chor-Anteil höher ($\mFrac{25}{60} > \mFrac{24}{60}$).
+            \item Zu b: In der \textbf{Klasse 5b} ist der Anteil mit kurzer Hose höher ($\mFrac{65}{91} > \mFrac{63}{91}$).
+        \end{itemize}
+        \textit{Hinweis:} Obwohl 5a mehr Sänger in absoluten Zahlen hat ($12 > 10$), ist der relative Anteil in 5b höher, weil die Klasse kleiner ist.
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 6: S. 220, Nr. 11 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlBlue}\textbf{\faStar\faStar\enskip 2 STERNE (STANDARD)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 11}}\quad Brüche der Größe nach ordnen}\\[1mm]
+        {\footnotesize\textit{Ordne der Größe nach: $\mFrac{50}{200}$, $\mFrac{5}{200}$, $\mFrac{5}{20}$, $\mFrac{1}{2}$, $\mFrac{20}{500}$, $\mFrac{2}{50}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Kürzen statt Riesen-Hauptnenner!)}\\[0.8mm]
+        {\small
+        Ein gemeinsamer Hauptnenner für 200, 20, 2, 500 und 50 wäre viel zu groß!\\
+        {\color{step1Text}\faHandPointRight}\enskip \textbf{Kürze zuerst jeden einzelnen Bruch vollständig!} Du wirst sehen, dass fast alle Brüche Stammbrüche mit Zähler 1 werden.
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Vollständig gekürzt)}\\[0.8mm]
+        {\small
+        \[
+            \mFrac{50}{200} = \mFrac{1}{4} \quad
+            \mFrac{5}{200} = \mFrac{1}{40} \quad
+            \mFrac{5}{20} = \mFrac{1}{4} \quad
+            \mFrac{1}{2} = \mFrac{1}{2} \quad
+            \mFrac{20}{500} = \mFrac{1}{25} \quad
+            \mFrac{2}{50} = \mFrac{1}{25}
+        \]
+        Sortiere nun die Stammbrüche: Welcher Nenner bedeutet das kleinste Stück?
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Fertige Lösung \& Begründung}\\[0.8mm]
+        {\small
+        Bei Zähler 1 ist der Bruch mit dem größten Nenner am kleinsten:
+        \[
+            \mFrac{1}{40} < \mFrac{1}{25} < \mFrac{1}{4} < \mFrac{1}{2}
+        \]
+        \textbf{Mit den Originalbrüchen aus dem Buch aufgeschrieben:}
+        \[
+            \mFrac{5}{200} < \mFrac{20}{500} = \mFrac{2}{50} < \mFrac{50}{200} = \mFrac{5}{20} < \mFrac{1}{2}
+        \]
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+% ==============================================================================
+% SEITE 4: 2 STERNE – S. 220 Nr. 12 & S. 221 Nr. 16
+% ==============================================================================
+
+% --- KARTE 7: S. 220, Nr. 12 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlBlue}\textbf{\faStar\faStar\enskip 2 STERNE (STANDARD)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 220, Nr. 12}}\quad Finde den Fehler! (Fachsprache)}\\[1mm]
+        {\footnotesize\textit{Beschreibe die Fehler mit den Fachbegriffen: \textbf{der Zähler, der Nenner, erweitern mit, der Wert}.\newline
+        a) $\mFrac{1}{4} < \mFrac{1}{5} < \mFrac{1}{3}$ \quad b) $\mFrac{1}{7} < \mFrac{3}{7} < \mFrac{5}{8}$ \quad c) $\mFrac{2}{5} < \mFrac{9}{15} < \mFrac{4}{5}$ \quad d) $\mFrac{4}{5} < \mFrac{4}{6} < \mFrac{4}{7}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Denkfehler erkennen)}\\[0.8mm]
+        {\small
+        Schau dir bei a und d die Zahlen an: Wurden hier einfach die Nenner wie natürliche Zahlen der Reihe nach geordnet ($4 < 5 < 6 < 7$)?\\
+        {\color{step1Text}\faHandPointRight}\enskip \textit{Erinnere dich: Was bewirkt ein größerer Nenner bei einer Torte? Werden die Stücke größer oder kleiner?}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Strukturhilfe (Erweitern zur Kontrolle)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu a:} Bringe alle auf 60: $\mFrac{15}{60}, \mFrac{12}{60}, \mFrac{20}{60}$. 12 ist kleiner als 15!
+            \item \textbf{Zu c:} Erweitere $\mFrac{2}{5}$ mit 3 zu $\mFrac{6}{15}$ und $\mFrac{4}{5}$ zu $\mFrac{12}{15}$. Es gilt $\mFrac{6}{15} < \mFrac{9}{15} < \mFrac{12}{15}$ $\rightarrow$ Diese Reihe ist bereits fehlerfrei!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Korrektur mit Fachbegriffen}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textit{„Bei Teilaufgabe a wurde nur auf den \textbf{Nenner} geschaut. Bei gleichem \textbf{Zähler} bedeutet ein größerer Nenner aber kleinere Stücke, wodurch der \textbf{Wert} sinkt. Richtig ist: $\mFrac{1}{5} < \mFrac{1}{4} < \mFrac{1}{3}$.“}
+            \item \textit{„Bei Teilaufgabe d stehen die Relationszeichen falsch herum: 4 Fünftel sind mehr als 4 Siebtel. Richtig ist: $\mFrac{4}{7} < \mFrac{4}{6} < \mFrac{4}{5}$.“}
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 8: S. 221, Nr. 16 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlBlue}\textbf{\faStar\faStar\enskip 2 STERNE (STANDARD)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 221, Nr. 16}}\quad Teste dich! 4 Brüche ordnen}\\[1mm]
+        {\footnotesize\textit{Beginne mit dem kleinsten Bruch: \quad a) $\mFrac{1}{2}, \mFrac{3}{4}, \mFrac{3}{8}, \mFrac{4}{6}$ \qquad b) $\mFrac{12}{15}, \mFrac{23}{30}, \mFrac{4}{5}, \mFrac{2}{3}$}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Hauptnenner von 4 Zahlen)}\\[0.8mm]
+        {\small
+        Nimm den \textbf{größten Nenner} und gehe seine Vielfachenreihe durch:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zu a (Nenner 2, 4, 8, 6): Größter Nenner ist 8. 8? (6 passt nicht). 16? (6 passt nicht). \textbf{24!} (2, 4, 8 und 6 teilen alle die 24!). Hauptnenner = \textbf{24}.
+            \item Zu b (Nenner 15, 30, 5, 3): Größter Nenner ist \textbf{30}. Passen 15, 5 und 3 in 30? Ja!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Alle 4 erweitern)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu a (auf 24stel):} $\mFrac{1}{2} = \mFrac{12}{24}$, \quad $\mFrac{3}{4} = \mFrac{18}{24}$, \quad $\mFrac{3}{8} = \mFrac{9}{24}$, \quad $\mFrac{4}{6} = \mFrac{16}{24}$.
+            \item \textbf{Zu b (auf 30stel):} $\mFrac{12}{15} = \mFrac{24}{30}$, \quad $\mFrac{23}{30} = \mFrac{23}{30}$, \quad $\mFrac{4}{5} = \mFrac{24}{30}$, \quad $\mFrac{2}{3} = \mFrac{20}{30}$.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Geordnete Lösung}\\[0.8mm]
+        {\small
+        Vergleiche die Zähler und schreibe die Ausgangsbrüche auf:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{a)} $\mFrac{3}{8} < \mFrac{1}{2} < \mFrac{4}{6} < \mFrac{3}{4}$
+            \item \textbf{b)} $\mFrac{2}{3} < \mFrac{23}{30} < \mFrac{12}{15} = \mFrac{4}{5}$
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+% ==============================================================================
+% SEITE 5: 3 STERNE – S. 221 Nr. 13 & S. 221 Nr. 14
+% ==============================================================================
+
+% --- KARTE 9: S. 221, Nr. 13 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlPurple}\textbf{\faStar\faStar\faStar\enskip 3 STERNE (PROFI)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 221, Nr. 13}}\quad Gilt immer / nie / es kommt darauf an}\\[1mm]
+        {\footnotesize\textit{a) Oben \& unten gleiche Zahl addieren $\rightarrow$ Wert bleibt gleich. \quad b) Ist Nenner kleiner, so ist Bruch größer. \quad c) Ist Zähler größer, so ist Bruch größer.}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Finde Gegenbeispiele!)}\\[0.8mm]
+        {\small
+        Um eine mathematische Aussage zu widerlegen, reicht ein einziges \textbf{Gegenbeispiel}!
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Zu a: Addiere bei $\mFrac{1}{2}$ oben und unten 1. Ist $\mFrac{2}{3}$ genauso groß wie $\mFrac{1}{2}$?
+            \item Zu b und c: Überlege: Wann gilt die Regel? Fehlt eine Bedingung (gleicher Zähler / Nenner)?
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Strukturhilfe (Gegenbeispiele)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu b:} Nimm $\mFrac{1}{2}$ und $\mFrac{10}{3}$. Der Nenner 2 ist kleiner als 3. Ist $\mFrac{1}{2}$ größer als $\mFrac{10}{3}$? Nein, $\mFrac{1}{2} = 0,5$ und $\mFrac{10}{3} = 3\mFrac{1}{3}$!
+            \item \textbf{Zu c:} Nimm $\mFrac{2}{100}$ und $\mFrac{1}{2}$. Der Zähler 2 ist größer als 1, aber $\mFrac{2}{100}$ ist viel kleiner als $\mFrac{1}{2}$!
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Exakte Begründungen}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{a) Gilt nie:} Nur beim \textit{Multiplizieren} (Erweitern) bleibt das Verhältnis gleich.
+            \item \textbf{b) Es kommt darauf an:} Gilt \textbf{nur bei gleichem Zähler} (z.\,B. $\mFrac{3}{4} > \mFrac{3}{8}$).
+            \item \textbf{c) Es kommt darauf an:} Gilt \textbf{nur bei gleichem Nenner} (z.\,B. $\mFrac{5}{7} > \mFrac{2}{7}$).
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 10: S. 221, Nr. 14 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlPurple}\textbf{\faStar\faStar\faStar\enskip 3 STERNE (PROFI)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 221, Nr. 14}}\quad Fußball-Anteile: Piet vs. Anika}\\[1mm]
+        {\footnotesize\textit{In der 5c: 16 Mädchen, 12 Jungen. 8 Jungen und 4 Mädchen spielen Fußball. Piet: „Anteil der Jungen ist größer.“ Anika: „Es sind doch mehr Mädchen in der Klasse...“ Wer hat recht?}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Relativer vs. absoluter Anteil)}\\[0.8mm]
+        {\small
+        Hier liegt ein klassisches Missverständnis vor:
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Piet} meint den \textit{relativen Anteil} (Bruch innerhalb der eigenen Gruppe).
+            \item \textbf{Anika} meint die \textit{absolute Gesamtzahl} an Personen in der Klasse.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Anteile vergleichen)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Fußballer bei den Jungen:} 8 von 12 $\rightarrow$ $\mFrac{8}{12} = \mFrac{2}{3}$ (ca. 67\,\%).
+            \item \textbf{Fußballerinnen bei den Mädchen:} 4 von 16 $\rightarrow$ $\mFrac{4}{16} = \mFrac{1}{4}$ (25\,\%).
+        \end{itemize}
+        Vergleich: $\mFrac{2}{3}$ ist eindeutig größer als $\mFrac{1}{4}$!
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Formulierungshilfe}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Piet hat recht:} \textit{„Der relative Anteil der Fußballer \underline{unter den Jungen} ($\mFrac{2}{3}$) ist viel höher als der Anteil der Fußballerinnen \underline{unter den Mädchen} ($\mFrac{1}{4}$).“}
+            \item \textbf{Anika hat recht:} \textit{„In der Klasse gibt es insgesamt mehr Mädchen als Jungen ($16 > 12$), und es gibt 12 Mädchen, die \underline{nicht} Fußball spielen, aber nur 4 solcher Jungen.“}
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\newpage
+
+% ==============================================================================
+% SEITE 6: 3 STERNE – S. 221 Nr. 15 & S. 221 Nr. 20
+% ==============================================================================
+
+% --- KARTE 11: S. 221, Nr. 15 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlPurple}\textbf{\faStar\faStar\faStar\enskip 3 STERNE (PROFI)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 221, Nr. 15}}\quad Das Konfitüren-Rätsel (80\,\% vs. 3:1)}\\[1mm]
+        {\footnotesize\textit{Gekauft: 80\,g Frucht auf 100\,g Konfitüre. Selbstgemacht: Gelierzucker 3:1 (3 Teile Frucht auf 1 Teil Zucker). Welche Konfitüre hat den höheren Fruchtanteil?}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Was ist das Ganze?)}\\[0.8mm]
+        {\small
+        Stelle für beide Konfitüren den Bruch auf: $\mFrac{\text{Frucht}}{\text{Gesamtmenge}}$.\\
+        {\color{step1Text}\faHandPointRight}\enskip \textbf{Achtung bei 3:1:} 3 Teile Frucht und 1 Teil Zucker ergeben zusammen \textbf{$3 + 1 = 4$ Teile} im Topf! Der Nenner ist also 4, nicht 3!
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Rechenhilfe (Vergleich auf Zwanzigstel)}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Gekaufte Konfitüre:} $\mFrac{80}{100} = \mFrac{4}{5}$. Auf 20stel erweitert: $\mFrac{4\cdot 4}{5\cdot 4} = \mFrac{16}{20}$ ($= 80\,\%$).
+            \item \textbf{Selbstgemachte Konfitüre:} 3 von 4 Teilen = $\mFrac{3}{4}$. Auf 20stel: $\mFrac{3\cdot 5}{4\cdot 5} = \mFrac{15}{20}$ ($= 75\,\%$).
+        \end{itemize}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Antwortsatz}\\[0.8mm]
+        {\small
+        \textit{Antwortsatz:} Die \textbf{gekaufte Konfitüre} hat den höheren Fruchtanteil, da $\mFrac{16}{20} > \mFrac{15}{20}$ (80\,\% Fruchtanteil gegenüber 75\,\% bei der 3:1-Mischung).
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\cutline
+
+% --- KARTE 12: S. 221, Nr. 20 ---
+\begin{tcolorbox}[
+    enhanced, colback=white, colframe=primaryBlue, arc=3mm, boxrule=1.2pt,
+    left=4.5mm, right=4.5mm, top=2.5mm, bottom=2.5mm, height=12.9cm
+]
+    \begin{center}
+        {\color{lvlPurple}\textbf{\faStar\faStar\faStar\enskip 3 STERNE (PROFI)}}\quad
+        {\color{primaryBlue}\large\bfseries \fbox{\rule[-0.6mm]{0pt}{3.4mm}\textbf{S. 221, Nr. 20}}\quad Das Muster $\mFrac{1}{2}, \mFrac{2}{3}, \mFrac{3}{4}, \mFrac{4}{5}\dots$}\\[1mm]
+        {\footnotesize\textit{a) Beschreibe das Muster. \quad b) Begründe, warum die Brüche immer größer werden, aber keiner den Wert 1 erreicht.}}
+    \end{center}
+    \vspace{0.5mm}
+
+    % Stufe 1
+    \begin{tcolorbox}[colback=step1Bg, colframe=step1Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step1Text}\bfseries\faLightbulb\enskip Stufe 1: Denkanstoß (Die Lücke zum Ganzen)}\\[0.8mm]
+        {\small
+        Wie viel fehlt jedem Bruch bis zu einer ganzen Pizza ($= 1$)?
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item Von $\mFrac{1}{2}$ bis 1 fehlt: $\mFrac{1}{2}$. \quad Von $\mFrac{2}{3}$ bis 1 fehlt: $\mFrac{1}{3}$. \quad Von $\mFrac{3}{4}$ bis 1 fehlt: $\mFrac{1}{4}$.
+        \end{itemize}
+        {\color{step1Text}\faHandPointRight}\enskip \textit{Was passiert mit dem Fehlstück, wenn der Nenner immer größer wird?}
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 2
+    \begin{tcolorbox}[colback=step2Bg, colframe=step2Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step2Text}\bfseries\faSearch\enskip Stufe 2: Strukturhilfe (Stammbrüche schrumpfen)}\\[0.8mm]
+        {\small
+        Die Fehlstücke sind Stammbrüche: $\mFrac{1}{2}, \mFrac{1}{3}, \mFrac{1}{4}, \mFrac{1}{5}, \dots, \mFrac{1}{100}$.\\
+        Je größer der Nenner, desto winziger wird das Fehlstück! Wenn das Stück, was zum Ganzen fehlt, immer kleiner wird, muss der Bruch selbst immer \textbf{näher an 1} heranrücken und wird folglich immer \textbf{größer}.
+        }
+    \end{tcolorbox}
+    \vspace{0.8mm}
+
+    % Stufe 3
+    \begin{tcolorbox}[colback=step3Bg, colframe=step3Border, arc=2mm, boxrule=0.7pt, left=3mm, right=3mm, top=1.8mm, bottom=1.8mm]
+        {\color{step3Text}\bfseries\faCheckCircle\enskip Stufe 3: Vollständige Begründung}\\[0.8mm]
+        {\small
+        \begin{itemize}[leftmargin=4mm, itemsep=0.2pt, topsep=1pt]
+            \item \textbf{Zu a (Muster):} Der Zähler wächst in jedem Schritt um 1. Der Nenner ist immer genau um 1 größer als der Zähler ($\mFrac{n}{n+1}$).
+            \item \textbf{Zu b (Begründung):} Das Fehlstück $\mFrac{1}{n+1}$ wird für wachsende $n$ immer kleiner, erreicht aber nie 0. Deshalb wachsen die Brüche streng monoton gegen 1, erreichen die 1 jedoch nie.
+        \end{itemize}
+        }
+    \end{tcolorbox}
+\end{tcolorbox}
+
+\end{document}
