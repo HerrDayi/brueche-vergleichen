@@ -1,5 +1,6 @@
 // ==========================================================================
-// SPORTFEST-STATIONSDUELL - Game Hub & Mini-Games (Klasse 6D)
+// SPORTFEST-STATIONSDUELL - Game Hub & 4 Varied Mini-Games (Klasse 6D)
+// 100% Offline, Touch- & iPad-optimiert, Synthesized Audio
 // ==========================================================================
 
 // --- AUDIO SYNTHESIS (Zero External Audio Files) ---
@@ -30,6 +31,13 @@ function playSound(type) {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
     osc.start(now);
     osc.stop(now + 0.05);
+  } else if (type === 'flip') {
+    osc.frequency.setValueAtTime(600, now);
+    osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+    osc.start(now);
+    osc.stop(now + 0.08);
   } else if (type === 'correct') {
     osc.frequency.setValueAtTime(523.25, now); // C5
     osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
@@ -42,10 +50,35 @@ function playSound(type) {
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(220, now);
     osc.frequency.setValueAtTime(164.81, now + 0.12);
+    gain.gain.setValueAtTime(0.14, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+    osc.start(now);
+    osc.stop(now + 0.28);
+  } else if (type === 'thud') {
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(40, now + 0.18);
+    gain.gain.setValueAtTime(0.25, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  } else if (type === 'whoosh') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(280, now);
+    osc.frequency.exponentialRampToValueAtTime(750, now + 0.15);
+    osc.frequency.exponentialRampToValueAtTime(320, now + 0.3);
     gain.gain.setValueAtTime(0.15, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
     osc.start(now);
     osc.stop(now + 0.3);
+  } else if (type === 'lupe') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, now);
+    osc.frequency.setValueAtTime(1174.66, now + 0.08);
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    osc.start(now);
+    osc.stop(now + 0.25);
   } else if (type === 'fanfare') {
     const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
     notes.forEach((freq, idx) => {
@@ -54,10 +87,10 @@ function playSound(type) {
       o.connect(g);
       g.connect(audioCtx.destination);
       o.frequency.setValueAtTime(freq, now + idx * 0.12);
-      g.gain.setValueAtTime(0.15, now + idx * 0.12);
-      g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
+      g.gain.setValueAtTime(0.16, now + idx * 0.12);
+      g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.45);
       o.start(now + idx * 0.12);
-      o.stop(now + idx * 0.12 + 0.4);
+      o.stop(now + idx * 0.12 + 0.45);
     });
   }
 }
@@ -71,8 +104,7 @@ const state = {
     3: { unlocked: false, completed: false },
     4: { unlocked: false, completed: false }
   },
-  currentStation: null,
-  activeGame: null
+  currentStation: null
 };
 
 function saveState() {
@@ -172,7 +204,7 @@ const unlockConfigs = {
       const clean = val.toLowerCase().replace(/[\s%]/g, '');
       return clean === '50' || clean === '1/2';
     },
-    hint: 'Tipp: 10 von 20 ist genau die Hälfte!'
+    hint: 'Tipp: 10 von 20 ist genau die Hälfte (50 %)!'
   },
   2: {
     title: '🔄 Station 2: Bruch-Zwillinge',
@@ -181,7 +213,7 @@ const unlockConfigs = {
       const clean = val.toLowerCase().replace(/[^\d]/g, '');
       return clean === '3';
     },
-    hint: 'Tipp: 3 mal wie viel ist 9?'
+    hint: 'Tipp: 3 mal 3 ist 9, und 5 mal 3 ist 15!'
   },
   3: {
     title: '⚖️ Station 3: Wer war besser?',
@@ -190,7 +222,7 @@ const unlockConfigs = {
       const clean = val.replace(/\s+/g, '');
       return clean === '5/11';
     },
-    hint: 'Tipp: Gleicher Zähler! Wo sind die Stücke größer?'
+    hint: 'Tipp: Gleicher Zähler! 11tel-Stücke sind größer als 12tel-Stücke!'
   },
   4: {
     title: '⏱️ Station 4: Sportfest-Zeitplan',
@@ -199,7 +231,7 @@ const unlockConfigs = {
       const clean = val.toLowerCase().replace(/[^\d]/g, '');
       return clean === '45';
     },
-    hint: 'Tipp: 60 : 4 = 15, und 15 mal 3 = ?'
+    hint: 'Tipp: 60 : 4 = 15, und 15 mal 3 = 45 min!'
   }
 };
 
@@ -237,7 +269,7 @@ function verifyUnlock() {
     setTimeout(() => {
       closeUnlockModal();
       startStationGame(pendingStation);
-    }, 800);
+    }, 700);
   } else {
     playSound('wrong');
     feedback.className = 'feedback-msg error';
@@ -246,7 +278,7 @@ function verifyUnlock() {
 }
 
 // ==========================================================================
-// GAME ARENA LOGIK
+// GAME ARENA ROUTING
 // ==========================================================================
 function startStationGame(stationId) {
   playSound('click');
@@ -267,22 +299,24 @@ function returnToHub() {
   updateUI();
 }
 
-// --- SPIEL 1: PROZENT-TREFFER ---
+// ==========================================================================
+// 1. SPIEL 🎯 PROZENT-TREFFER (INTERAKTIVER ZIELSCHEIBEN-SCHÜTZE)
+// ==========================================================================
 function initGame1() {
   document.getElementById('arenaTitle').textContent = '🎯 Station 1: Prozent-Treffer';
   let score = 0;
-  const targetScore = 5;
-  const tasks = [
-    { frac: '1/2', ans: '50 %', opts: ['50 %', '25 %', '20 %', '75 %'] },
-    { frac: '1/4', ans: '25 %', opts: ['25 %', '40 %', '50 %', '10 %'] },
-    { frac: '3/4', ans: '75 %', opts: ['75 %', '34 %', '50 %', '80 %'] },
-    { frac: '2/5', ans: '40 %', opts: ['40 %', '25 %', '50 %', '20 %'] },
-    { frac: '4/5', ans: '80 %', opts: ['80 %', '45 %', '90 %', '75 %'] },
-    { frac: '1/10', ans: '10 %', opts: ['10 %', '1 %', '20 %', '50 %'] },
-    { frac: '7/10', ans: '70 %', opts: ['70 %', '7 %', '75 %', '80 %'] }
+  const targetScore = 4;
+
+  const rounds = [
+    { frac: '1/2', num: 1, den: 2, percent: 50, ans: '50 %', opts: ['50 %', '25 %', '20 %', '75 %'] },
+    { frac: '1/4', num: 1, den: 4, percent: 25, ans: '25 %', opts: ['25 %', '40 %', '50 %', '10 %'] },
+    { frac: '3/4', num: 3, den: 4, percent: 75, ans: '75 %', opts: ['75 %', '34 %', '50 %', '80 %'] },
+    { frac: '2/5', num: 2, den: 5, percent: 40, ans: '40 %', opts: ['40 %', '25 %', '50 %', '20 %'] },
+    { frac: '4/5', num: 4, den: 5, percent: 80, ans: '80 %', opts: ['80 %', '45 %', '90 %', '75 %'] },
+    { frac: '7/10', num: 7, den: 10, percent: 70, ans: '70 %', opts: ['70 %', '7 %', '75 %', '80 %'] }
   ];
-  let currentIdx = 0;
-  tasks.sort(() => Math.random() - 0.5);
+  rounds.sort(() => Math.random() - 0.5);
+  let roundIdx = 0;
 
   function renderRound() {
     document.getElementById('arenaScore').textContent = `Treffer: ${score} / ${targetScore}`;
@@ -291,228 +325,441 @@ function initGame1() {
       return;
     }
 
-    const t = tasks[currentIdx % tasks.length];
-    const [num, den] = t.frac.split('/');
-
+    const cur = rounds[roundIdx % rounds.length];
     const content = document.getElementById('arenaContent');
+
+    // SVG Pie Slice
+    const circumference = 2 * Math.PI * 40; // r=40 -> ~251.3
+    const dashLength = (cur.percent / 100) * circumference;
+    const dashOffset = circumference * 0.25; // Rotate to 12 o'clock
+
     content.innerHTML = `
-      <div class="quiz-box">
-        <div class="quiz-prompt">Welcher Prozentwert gehört zu diesem Bruch?</div>
-        <div class="fraction-display">
-          <span class="num">${num}</span>
-          <span class="den">${den}</span>
-        </div>
-        <div class="options-grid" id="optGrid"></div>
-      </div>
-    `;
-
-    const grid = document.getElementById('optGrid');
-    t.opts.sort(() => Math.random() - 0.5).forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = opt;
-      btn.onclick = () => {
-        if (opt === t.ans) {
-          playSound('correct');
-          btn.classList.add('correct');
-          score++;
-          currentIdx++;
-          setTimeout(renderRound, 600);
-        } else {
-          playSound('wrong');
-          btn.classList.add('wrong');
-          setTimeout(() => btn.classList.remove('wrong'), 500);
-        }
-      };
-      grid.appendChild(btn);
-    });
-  }
-  renderRound();
-}
-
-// --- SPIEL 2: ZWILLINGS-DETEKTIV ---
-function initGame2() {
-  document.getElementById('arenaTitle').textContent = '🔄 Station 2: Der Zwillings-Detektiv';
-  let score = 0;
-  const targetScore = 4;
-  const tasks = [
-    { target: '3/5', correct: '9/15', opts: ['9/15', '6/15', '3/10', '5/3'], note: 'Erweitert mit 3' },
-    { target: '2/3', correct: '6/9', opts: ['6/9', '4/9', '5/6', '3/2'], note: 'Erweitert mit 3' },
-    { target: '15/20', correct: '3/4', opts: ['3/4', '5/4', '1/2', '4/5'], note: 'Gekürzt durch 5' },
-    { target: '1/4', correct: '25/100', opts: ['25/100', '10/40', '4/100', '14/100'], note: 'Erweitert mit 25' },
-    { target: '14/35', correct: '2/5', opts: ['2/5', '7/5', '1/5', '4/10'], note: 'Gekürzt durch 7' }
-  ];
-  tasks.sort(() => Math.random() - 0.5);
-  let idx = 0;
-
-  function renderRound() {
-    document.getElementById('arenaScore').textContent = `Zwillinge: ${score} / ${targetScore}`;
-    if (score >= targetScore) {
-      winStation(2, '🔄', 'Bruch-Zwillinge-Meister!');
-      return;
-    }
-
-    const t = tasks[idx % tasks.length];
-    const [num, den] = t.target.split('/');
-
-    const content = document.getElementById('arenaContent');
-    content.innerHTML = `
-      <div class="quiz-box">
-        <div class="quiz-prompt">Finde den echten Bruch-Zwilling (gleichwertig)!</div>
-        <div>
-          <span>Gesucht wird ein Zwilling zu:</span>
-          <div class="fraction-display">
-            <span class="num">${num}</span>
-            <span class="den">${den}</span>
+      <div class="target-arena">
+        <div class="target-visual-board">
+          <svg class="pie-chart-wrap" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="#e2e8f0" />
+            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#22c55e" stroke-width="80"
+                    stroke-dasharray="${dashLength} ${circumference}"
+                    stroke-dashoffset="${dashOffset}" />
+            <circle cx="50" cy="50" r="16" fill="white" />
+          </svg>
+          <div class="target-mission">
+            <span class="target-mission-badge">Sportfest-Treffer</span>
+            <div class="target-mission-text">Welche Zielscheibe trifft den Anteil?</div>
+            <div class="fraction-display" style="margin: 4px 0;">
+              <span class="num">${cur.num}</span>
+              <span class="den">${cur.den}</span>
+            </div>
           </div>
         </div>
-        <div class="options-grid" id="optGrid"></div>
+
+        <div style="font-size:0.95rem; font-weight:700; color:var(--text-muted);">
+          🎯 Tippe auf die passende Zielscheibe:
+        </div>
+
+        <div class="targets-row" id="targetsRow"></div>
       </div>
     `;
 
-    const grid = document.getElementById('optGrid');
-    t.opts.sort(() => Math.random() - 0.5).forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = opt;
-      btn.onclick = () => {
-        if (opt === t.correct) {
+    const row = document.getElementById('targetsRow');
+    const shuffledOpts = [...cur.opts].sort(() => Math.random() - 0.5);
+
+    shuffledOpts.forEach(opt => {
+      const disc = document.createElement('div');
+      disc.className = 'target-disc';
+      disc.innerHTML = `<div class="disc-inner">${opt}</div>`;
+
+      disc.onclick = () => {
+        if (opt === cur.ans) {
           playSound('correct');
-          btn.classList.add('correct');
+          disc.classList.add('pop');
           score++;
-          idx++;
-          setTimeout(renderRound, 600);
+          roundIdx++;
+          setTimeout(renderRound, 500);
         } else {
           playSound('wrong');
-          btn.classList.add('wrong');
-          setTimeout(() => btn.classList.remove('wrong'), 500);
+          disc.classList.add('shake');
+          setTimeout(() => disc.classList.remove('shake'), 450);
         }
       };
-      grid.appendChild(btn);
+
+      row.appendChild(disc);
     });
   }
+
   renderRound();
 }
 
-// --- SPIEL 3: BRUCH-EXPEDITION (VERGLEICHEN) ---
+// ==========================================================================
+// 2. SPIEL 🔄 BRUCH-ZWILLINGE (SPEED-MEMORY)
+// ==========================================================================
+function initGame2() {
+  document.getElementById('arenaTitle').textContent = '🔄 Station 2: Bruch-Zwillinge Memory';
+  let matchedPairs = 0;
+  const targetPairs = 4;
+  let flippedCards = [];
+  let isLocked = false;
+
+  // 4 Paare (Zwillinge)
+  const cardPairs = [
+    { id: 1, frac: '3/5', num: 3, den: 5, val: 3/5, pairId: 1, note: '3/5 = 9/15 (erweitert mit 3)' },
+    { id: 2, frac: '9/15', num: 9, den: 15, val: 3/5, pairId: 1, note: '9/15 = 3/5 (gekürzt durch 3)' },
+    { id: 3, frac: '15/20', num: 15, den: 20, val: 3/4, pairId: 2, note: '15/20 = 3/4 (gekürzt durch 5)' },
+    { id: 4, frac: '3/4', num: 3, den: 4, val: 3/4, pairId: 2, note: '3/4 = 15/20 (erweitert mit 5)' },
+    { id: 5, frac: '14/35', num: 14, den: 35, val: 2/5, pairId: 3, note: '14/35 = 2/5 (gekürzt durch 7)' },
+    { id: 6, frac: '2/5', num: 2, den: 5, val: 2/5, pairId: 3, note: '2/5 = 14/35 (erweitert mit 7)' },
+    { id: 7, frac: '1/2', num: 1, den: 2, val: 1/2, pairId: 4, note: '1/2 = 12/24 (vollständig gekürzt)' },
+    { id: 8, frac: '12/24', num: 12, den: 24, val: 1/2, pairId: 4, note: '12/24 = 1/2 (vollständig gekürzt)' }
+  ];
+
+  const deck = [...cardPairs].sort(() => Math.random() - 0.5);
+
+  const content = document.getElementById('arenaContent');
+  content.innerHTML = `
+    <div class="memory-arena">
+      <div class="memory-header-info">
+        Deck aufdecken & Zwillinge (gleichwertige Brüche) verbinden!
+      </div>
+      <div class="memory-factor-banner" id="memBanner">
+        Finde das erste Zwillings-Paar!
+      </div>
+      <div class="memory-grid" id="memGrid"></div>
+    </div>
+  `;
+
+  document.getElementById('arenaScore').textContent = `Paare: 0 / ${targetPairs}`;
+  const grid = document.getElementById('memGrid');
+
+  deck.forEach((card, index) => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'mem-card';
+    cardEl.dataset.index = index;
+
+    cardEl.innerHTML = `
+      <div class="mem-card-face mem-card-back">
+        <div class="card-logo">🔄</div>
+        <div class="card-label">Zwilling</div>
+      </div>
+      <div class="mem-card-face mem-card-front">
+        <div class="fraction-display">
+          <span class="num">${card.num}</span>
+          <span class="den">${card.den}</span>
+        </div>
+      </div>
+    `;
+
+    cardEl.onclick = () => handleCardClick(cardEl, card);
+    grid.appendChild(cardEl);
+  });
+
+  function handleCardClick(cardEl, card) {
+    if (isLocked) return;
+    if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+
+    playSound('flip');
+    cardEl.classList.add('flipped');
+    flippedCards.push({ el: cardEl, card: card });
+
+    if (flippedCards.length === 2) {
+      isLocked = true;
+      const [c1, c2] = flippedCards;
+
+      if (c1.card.pairId === c2.card.pairId) {
+        // MATCH!
+        playSound('correct');
+        c1.el.classList.add('matched');
+        c2.el.classList.add('matched');
+        matchedPairs++;
+        document.getElementById('arenaScore').textContent = `Paare: ${matchedPairs} / ${targetPairs}`;
+        document.getElementById('memBanner').innerHTML = `🎉 <strong>Treffer!</strong> ${c1.card.note}`;
+
+        flippedCards = [];
+        isLocked = false;
+
+        if (matchedPairs >= targetPairs) {
+          setTimeout(() => {
+            winStation(2, '🔄', 'Bruch-Zwillinge Meister!');
+          }, 800);
+        }
+      } else {
+        // NO MATCH
+        playSound('wrong');
+        document.getElementById('memBanner').textContent = '❌ Keine Zwillinge! Schau genau auf Zähler & Nenner...';
+        setTimeout(() => {
+          c1.el.classList.remove('flipped');
+          c2.el.classList.remove('flipped');
+          flippedCards = [];
+          isLocked = false;
+        }, 900);
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// 3. SPIEL ⚖️ BRUCH-BALKENWAAGE (INTERACTIVE SCALE)
+// ==========================================================================
 function initGame3() {
-  document.getElementById('arenaTitle').textContent = '⚖️ Station 3: Bruch-Duell';
+  document.getElementById('arenaTitle').textContent = '⚖️ Station 3: Die Bruch-Balkenwaage';
   let score = 0;
   const targetScore = 5;
-  const pairs = [
-    { f1: '5/11', f2: '5/12', greater: '5/11', tip: 'Gleicher Zähler: 11tel sind größer als 12tel!' },
-    { f1: '5/16', f2: '7/16', greater: '7/16', tip: 'Gleicher Nenner: 7 ist mehr als 5!' },
-    { f1: '7/9', f2: '8/12', greater: '7/9', tip: '8/12 = 2/3 = 6/9. 7/9 ist größer!' },
-    { f1: '15/18', f2: '19/16', greater: '19/16', tip: '19/16 ist größer als 1 (echter vs. unechter Bruch)!' },
-    { f1: '3/4', f2: '5/8', greater: '3/4', tip: '3/4 = 6/8. 6/8 ist größer als 5/8!' },
-    { f1: '2/5', f2: '1/2', greater: '1/2', tip: '1/2 = 5/10, 2/5 = 4/10!' }
-  ];
-  pairs.sort(() => Math.random() - 0.5);
-  let idx = 0;
 
-  function renderRound() {
+  const duels = [
+    {
+      f1: { num: 5, den: 11, val: 5/11, text: '5/11' },
+      f2: { num: 5, den: 12, val: 5/12, text: '5/12' },
+      correct: '>',
+      lupe: 'Gleicher Zähler (5)! 11tel-Stücke sind größer als 12tel-Stücke.'
+    },
+    {
+      f1: { num: 8, den: 20, val: 8/20, text: '8/20' },
+      f2: { num: 8, den: 30, val: 8/30, text: '8/30' },
+      correct: '>',
+      lupe: 'Gleicher Zähler (8)! 20stel sind größer als 30stel.'
+    },
+    {
+      f1: { num: 15, den: 18, val: 15/18, text: '15/18' },
+      f2: { num: 19, den: 16, val: 19/16, text: '19/16' },
+      correct: '<',
+      lupe: 'Stützzahl 1! 15/18 ist kleiner als 1, 19/16 ist größer als 1!'
+    },
+    {
+      f1: { num: 13, den: 14, val: 13/14, text: '13/14' },
+      f2: { num: 8, den: 9, val: 8/9, text: '8/9' },
+      correct: '>',
+      lupe: 'Rest zu 1! Bei 13/14 fehlt nur 1/14, bei 8/9 fehlt 1/9 (größere Lücke!).'
+    },
+    {
+      f1: { num: 3, den: 4, val: 3/4, text: '3/4' },
+      f2: { num: 6, den: 8, val: 6/8, text: '6/8' },
+      correct: '=',
+      lupe: 'Bruch-Zwillinge! 3/4 erweitert mit 2 ergibt exakt 6/8.'
+    },
+    {
+      f1: { num: 2, den: 5, val: 2/5, text: '2/5' },
+      f2: { num: 1, den: 2, val: 1/2, text: '1/2' },
+      correct: '<',
+      lupe: 'Stützzahl 1/2! 2/5 = 4/10 ist weniger als die Hälfte (5/10).'
+    }
+  ];
+
+  duels.sort(() => Math.random() - 0.5);
+  let duelIdx = 0;
+
+  function renderDuel() {
     document.getElementById('arenaScore').textContent = `Duelle: ${score} / ${targetScore}`;
     if (score >= targetScore) {
-      winStation(3, '⚖️', 'Vergleichs-Profi!');
+      winStation(3, '⚖️', 'Vergleichs-Profi an der Balkenwaage!');
       return;
     }
 
-    const p = pairs[idx % pairs.length];
-    const [n1, d1] = p.f1.split('/');
-    const [n2, d2] = p.f2.split('/');
-
+    const d = duels[duelIdx % duels.length];
     const content = document.getElementById('arenaContent');
+
     content.innerHTML = `
-      <div class="quiz-box">
-        <div class="quiz-prompt">Welcher Bruch ist GRÖSSER? Klicke darauf!</div>
-        <div style="display:flex; justify-content:center; align-items:center; gap:28px; margin:10px 0;">
-          <button class="choice-btn" id="btnF1" style="font-size:1.8rem; padding:18px 26px;">
-            <div class="fraction-display"><span class="num">${n1}</span><span class="den">${d1}</span></div>
-          </button>
-          <span style="font-weight:900; font-size:1.4rem; color:var(--text-muted);">VS</span>
-          <button class="choice-btn" id="btnF2" style="font-size:1.8rem; padding:18px 26px;">
-            <div class="fraction-display"><span class="num">${n2}</span><span class="den">${d2}</span></div>
-          </button>
+      <div class="scale-arena">
+        <div class="scale-stage">
+          <div class="scale-beam" id="scaleBeam">
+            <!-- Left Pan -->
+            <div class="scale-pan-wrap pan-left">
+              <div class="scale-chain"></div>
+              <div class="scale-pan">
+                <div class="fraction-display">
+                  <span class="num">${d.f1.num}</span>
+                  <span class="den">${d.f1.den}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Pan -->
+            <div class="scale-pan-wrap pan-right">
+              <div class="scale-chain"></div>
+              <div class="scale-pan">
+                <div class="fraction-display">
+                  <span class="num">${d.f2.num}</span>
+                  <span class="den">${d.f2.den}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scale-pivot-ball"></div>
+          <div class="scale-fulcrum"></div>
         </div>
-        <div style="font-size:0.88rem; color:var(--text-muted);">🔍 Hauptnenner-Lupe: Denkt an gleiche Stücke!</div>
+
+        <div class="scale-controls">
+          <button class="scale-btn" id="btnLess" title="Rechts ist schwerer">&lt;</button>
+          <button class="scale-btn" id="btnEqual" title="Beide sind gleich schwer">=</button>
+          <button class="scale-btn" id="btnGreater" title="Links ist schwerer">&gt;</button>
+        </div>
+
+        <div class="lupe-bar">
+          <button class="lupe-btn" id="lupeBtn">🔍 Hauptnenner-Lupe</button>
+          <div class="lupe-reveal" id="lupeReveal" style="display:none;">${d.lupe}</div>
+        </div>
       </div>
     `;
 
-    document.getElementById('btnF1').onclick = () => checkChoice(p.f1, p);
-    document.getElementById('btnF2').onclick = () => checkChoice(p.f2, p);
+    document.getElementById('lupeBtn').onclick = () => {
+      playSound('lupe');
+      const rev = document.getElementById('lupeReveal');
+      rev.style.display = rev.style.display === 'none' ? 'block' : 'none';
+    };
+
+    document.getElementById('btnLess').onclick = () => handleChoice('<', d);
+    document.getElementById('btnEqual').onclick = () => handleChoice('=', d);
+    document.getElementById('btnGreater').onclick = () => handleChoice('>', d);
   }
 
-  function checkChoice(choice, p) {
-    if (choice === p.greater) {
+  function handleChoice(symbol, d) {
+    const beam = document.getElementById('scaleBeam');
+    playSound('thud');
+
+    if (symbol === '<') beam.className = 'scale-beam tilt-right';
+    else if (symbol === '>') beam.className = 'scale-beam tilt-left';
+    else beam.className = 'scale-beam balanced';
+
+    if (symbol === d.correct) {
       playSound('correct');
       score++;
-      idx++;
-      setTimeout(renderRound, 500);
+      duelIdx++;
+      setTimeout(renderDuel, 850);
     } else {
       playSound('wrong');
-      alert(`Hoppla! ${p.tip}`);
+      const rev = document.getElementById('lupeReveal');
+      rev.style.display = 'block';
+      setTimeout(() => {
+        beam.className = 'scale-beam';
+      }, 1000);
     }
   }
 
-  renderRound();
+  renderDuel();
 }
 
-// --- SPIEL 4: SPORTFEST-SPRINT (OPERATOR) ---
+// ==========================================================================
+// 4. SPIEL ⏱️ SPORTFEST-HINDERNISLAUF (HURDLE RUNNER)
+// ==========================================================================
 function initGame4() {
-  document.getElementById('arenaTitle').textContent = '⏱️ Station 4: Der Sportfest-Sprint';
-  let score = 0;
-  const targetScore = 4;
-  const tasks = [
-    { q: '1/2 von 7 m = ?', ans: '3,5 m', opts: ['3,5 m', '3 m', '4 m', '35 cm'] },
-    { q: '2/5 von 1000 g = ?', ans: '400 g', opts: ['400 g', '200 g', '500 g', '250 g'] },
-    { q: '3/4 von 60 min = ?', ans: '45 min', opts: ['45 min', '30 min', '15 min', '40 min'] },
-    { q: '25 % von 80 € = ?', ans: '20 €', opts: ['20 €', '25 €', '40 €', '10 €'] },
-    { q: '3/5 von 3 € (300 ct) = ?', ans: '1,80 €', opts: ['1,80 €', '1,50 €', '2,10 €', '0,60 €'] }
-  ];
-  tasks.sort(() => Math.random() - 0.5);
-  let idx = 0;
+  document.getElementById('arenaTitle').textContent = '⏱️ Station 4: Der Sportfest-Hindernislauf';
+  let hurdleIdx = 0;
+  const totalHurdles = 4;
 
-  function renderRound() {
-    document.getElementById('arenaScore').textContent = `Aufgaben: ${score} / ${targetScore}`;
-    if (score >= targetScore) {
-      winStation(4, '⏱️', 'Rechen-Champion Größen!');
+  const hurdles = [
+    {
+      q: 'Hürde 1: 1/2 von 7 m = ?',
+      ans: '3,5 m',
+      opts: ['3,5 m', '3 m', '35 cm'],
+      pos: 20,
+      tip: '7 m durch 2 teilen = 3,5 m (oder 350 cm)!'
+    },
+    {
+      q: 'Hürde 2: 2/5 von 1000 g = ?',
+      ans: '400 g',
+      opts: ['400 g', '200 g', '500 g'],
+      pos: 42,
+      tip: '1000 g : 5 = 200 g, und 200 g · 2 = 400 g!'
+    },
+    {
+      q: 'Hürde 3: 3/4 von 60 min Pause = ?',
+      ans: '45 min',
+      opts: ['45 min', '30 min', '15 min'],
+      pos: 64,
+      tip: '60 min : 4 = 15 min, und 15 min · 3 = 45 min!'
+    },
+    {
+      q: 'Hürde 4: 25 % von 80 € Budget = ?',
+      ans: '20 €',
+      opts: ['20 €', '25 €', '40 €'],
+      pos: 84,
+      tip: '25 % ist 1/4! 80 € : 4 = 20 €!'
+    }
+  ];
+
+  function renderTrack() {
+    document.getElementById('arenaScore').textContent = `Hürden: ${hurdleIdx} / ${totalHurdles}`;
+    if (hurdleIdx >= totalHurdles) {
+      winStation(4, '⏱️', 'Sprint-Champion beim Sportfest-Lauf!');
       return;
     }
 
-    const t = tasks[idx % tasks.length];
+    const cur = hurdles[hurdleIdx];
+    const runnerLeft = hurdleIdx === 0 ? 4 : hurdles[hurdleIdx - 1].pos;
+    const progressPercent = (hurdleIdx / totalHurdles) * 100;
+
     const content = document.getElementById('arenaContent');
     content.innerHTML = `
-      <div class="quiz-box">
-        <div class="quiz-prompt">Berechne die Sportfest-Größe:</div>
-        <div style="font-size:2rem; font-weight:800; color:var(--primary-blue); margin:12px 0;">
-          ${t.q}
+      <div class="runner-arena">
+        <div class="tartan-track" id="track">
+          <div class="track-lane"></div>
+          <div class="track-finish-line"></div>
+
+          <!-- Runner -->
+          <div class="runner-avatar" id="runner" style="left: ${runnerLeft}%;">🏃</div>
+
+          <!-- Hurdles -->
+          ${hurdles.map((h, i) => `
+            <div class="hurdle-post ${i < hurdleIdx ? 'cleared' : ''}" style="left: ${h.pos}%;"></div>
+          `).join('')}
         </div>
-        <div class="options-grid" id="optGrid"></div>
+
+        <div class="track-progress-bar">
+          <div class="track-progress-fill" style="width: ${progressPercent}%;"></div>
+        </div>
+
+        <div class="hurdle-prompt-card">
+          <div style="font-size:0.85rem; font-weight:800; color:var(--lvl-orange); text-transform:uppercase;">
+            Sportfest-Hindernis ${hurdleIdx + 1}
+          </div>
+          <div class="hurdle-prompt-q">${cur.q}</div>
+        </div>
+
+        <div class="sprint-pads-grid" id="padsGrid"></div>
       </div>
     `;
 
-    const grid = document.getElementById('optGrid');
-    t.opts.sort(() => Math.random() - 0.5).forEach(opt => {
+    const padsGrid = document.getElementById('padsGrid');
+    const shuffledOpts = [...cur.opts].sort(() => Math.random() - 0.5);
+
+    shuffledOpts.forEach(opt => {
       const btn = document.createElement('button');
-      btn.className = 'choice-btn';
+      btn.className = 'sprint-pad-btn';
       btn.textContent = opt;
+
       btn.onclick = () => {
-        if (opt === t.ans) {
-          playSound('correct');
+        const runner = document.getElementById('runner');
+
+        if (opt === cur.ans) {
+          playSound('whoosh');
           btn.classList.add('correct');
-          score++;
-          idx++;
-          setTimeout(renderRound, 600);
+          runner.classList.add('jump');
+
+          setTimeout(() => {
+            playSound('correct');
+            runner.style.left = `${cur.pos + 4}%`;
+          }, 350);
+
+          setTimeout(() => {
+            runner.classList.remove('jump');
+            hurdleIdx++;
+            renderTrack();
+          }, 750);
         } else {
           playSound('wrong');
           btn.classList.add('wrong');
-          setTimeout(() => btn.classList.remove('wrong'), 500);
+          runner.classList.add('stumble');
+          setTimeout(() => {
+            btn.classList.remove('wrong');
+            runner.classList.remove('stumble');
+          }, 500);
         }
       };
-      grid.appendChild(btn);
+
+      padsGrid.appendChild(btn);
     });
   }
-  renderRound();
+
+  renderTrack();
 }
 
 // ==========================================================================
