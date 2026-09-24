@@ -1064,25 +1064,79 @@ body {
   color: var(--text-dark);
 }
 
-.input-wrap {
+.modal-inputs-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 10px;
+  margin: 12px 0;
 }
 
-#unlockInput {
-  padding: 12px 14px;
-  border: 2px solid var(--border-color);
+.subtask-row {
+  background: #f8fafc;
+  border: 1.5px solid var(--border-color);
   border-radius: var(--radius-sm);
-  font-size: 1.15rem;
-  font-weight: 700;
-  text-align: center;
-  outline: none;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.2s ease;
 }
 
-#unlockInput:focus {
+.subtask-row.correct {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.subtask-row.wrong {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.subtask-label {
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  flex: 1;
+}
+
+.subtask-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subtask-input {
+  width: 52px;
+  padding: 8px 6px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-align: center;
+  color: var(--primary-blue);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.subtask-input:focus {
   border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(20, 80, 160, 0.15);
+}
+
+.subtask-input-wrap .unit {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 14px;
+}
+
+.subtask-status-icon {
+  font-size: 1.1rem;
+  min-width: 22px;
+  text-align: center;
 }
 
 .confirm-btn {
@@ -1190,3 +1244,738 @@ body {
   }
 }
 
+
+/* ==========================================================================
+   GAME 1 🎯 BRÜCHE VERGLEICHEN – IFRAME WRAPPER
+   ========================================================================== */
+.iframe-game-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  flex: 1;
+}
+
+.iframe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ebf5ff;
+  border-bottom: 2px solid #93c5fd;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+}
+
+.iframe-win-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.iframe-win-btn:active { transform: scale(0.96); }
+
+.game-iframe {
+  flex: 1;
+  width: 100%;
+  min-height: 380px;
+  border: none;
+  display: block;
+}
+
+.iframe-fallback {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.iframe-fallback-link {
+  background: var(--accent-blue);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   GAME 4 🁣 BRUCH-DOMINO
+   ========================================================================== */
+.domino-arena {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.dom-chain-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dom-step-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.dom-placed-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dom-arrow {
+  font-size: 1.5rem;
+  color: var(--primary-blue);
+  font-weight: 900;
+}
+
+/* A domino tile */
+.dom-tile {
+  display: flex;
+  align-items: stretch;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #cbd5e1;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.2s;
+}
+
+.dom-tile-option {
+  min-width: 160px;
+}
+.dom-tile-option:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  border-color: var(--accent-blue);
+}
+
+.dom-tile-placed {
+  opacity: 0.7;
+  cursor: default;
+  border-color: #94a3b8;
+}
+
+.dom-tile-next {
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 12px rgba(20,80,160,0.2);
+}
+
+.dom-tile-start {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.dom-tile-correct {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.3) !important;
+  transform: scale(1.04);
+}
+
+.dom-tile-wrong {
+  border-color: #ef4444 !important;
+  animation: domShake 0.35s ease;
+}
+
+@keyframes domShake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* A domino cell (one half of a tile) */
+.dom-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 8px 10px;
+  gap: 2px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+
+.dom-cell-open {
+  background: #f0fdf4;
+}
+
+.dom-cell-question {
+  font-size: 1.6rem;
+  color: #94a3b8;
+  background: #f8fafc;
+}
+
+.dom-divider {
+  width: 3px;
+  background: #cbd5e1;
+  align-self: stretch;
+}
+
+/* Fraction inside domino */
+.dom-fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.dom-num {
+  font-size: 1.15rem;
+  font-weight: 900;
+  border-bottom: 2.5px solid currentColor;
+  padding-bottom: 1px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.dom-den {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding-top: 1px;
+  text-align: center;
+}
+
+.dom-ext-label {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Percent cell */
+.dom-pct {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #7c3aed;
+}
+
+/* Bar chart image cell */
+.dom-img {
+  padding: 6px 8px;
+}
+
+.dom-bar-svg {
+  display: block;
+}
+
+/* Options grid */
+.dom-options-grid {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dom-hint {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #dc2626;
+  min-height: 20px;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   GAME 3 🔍 WELCHER PASST NICHT? (ODD-ONE-OUT)
+   ========================================================================== */
+.oon-arena {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.oon-question {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  text-align: center;
+  background: #eff6ff;
+  border: 2px solid #93c5fd;
+  border-radius: 10px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.oon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.oon-card {
+  background: white;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+  min-height: 100px;
+  justify-content: center;
+}
+
+.oon-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.oon-type-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.oon-value {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fraction inside oon card */
+.oon-frac {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.oon-num {
+  font-size: 1.4rem;
+  font-weight: 900;
+  border-bottom: 2.5px solid var(--primary-blue);
+  padding-bottom: 1px;
+  min-width: 22px;
+  text-align: center;
+}
+.oon-den {
+  font-size: 1.3rem;
+  font-weight: 800;
+  padding-top: 2px;
+  text-align: center;
+}
+
+.oon-card.oon-correct {
+  border-color: #22c55e;
+  background: #f0fdf4;
+  transform: scale(1.04);
+}
+
+.oon-card.oon-wrong {
+  border-color: #ef4444;
+  background: #fef2f2;
+  animation: oonShake 0.35s ease;
+}
+
+.oon-card.oon-highlight {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.3);
+}
+
+@keyframes oonShake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.oon-feedback {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  min-height: 22px;
+  color: var(--text-dark);
+  padding: 4px 0;
+}
+
+/* ==========================================================================
+   DOMINO STARTSTEIN BADGE
+   ========================================================================== */
+.dom-tile-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dom-startbadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #16a34a;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+}
+
+
+/* ==========================================================================
+   LIVES PILL & GAME OVER MODAL
+   ========================================================================== */
+.lives-pill {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #ef4444;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.game-over-card {
+  border-color: #ef4444 !important;
+  background: #fff5f5 !important;
+}
+
+.game-over-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  animation: shakeHeart 1s infinite alternate;
+}
+
+@keyframes shakeHeart {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(-6deg); }
+  100% { transform: scale(1.05) rotate(6deg); }
+}
+
+.game-over-msg {
+  color: #7f1d1d;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 10px 0 16px;
+  line-height: 1.4;
+}
+
+.restart-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* ==========================================================================
+   DIDAKTISCHES ERKLÄRUNGS-MODAL (STATION 1)
+   ========================================================================== */
+.explanation-card {
+  max-width: 520px !important;
+  background: white !important;
+}
+
+.comp-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.comp-card {
+  flex: 1;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.comp-card small {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.comp-frac-big {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--primary-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.comp-frac-big .bar {
+  width: 24px;
+  height: 2.5px;
+  background: currentColor;
+  margin: 2px 0;
+}
+
+.expansion-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 100%;
+}
+
+.comp-sign {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ef4444;
+}
+
+.didactic-conclusion {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin: 12px 0 16px;
+  text-align: left;
+}
+
+/* ==========================================================================
+   STATION 1: BRUCH-EXPEDITION (SVG PFAD-SPIEL)
+   ========================================================================== */
+.expedition-arena {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.expedition-instruction {
+  background: #eff6ff;
+  border: 1.5px solid #93c5fd;
+  color: var(--primary-blue);
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+}
+
+.expedition-instruction strong {
+  color: #1d4ed8;
+}
+
+.board-wrapper {
+  width: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#boardSvg {
+  width: 100%;
+  max-height: 440px;
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.edge-line {
+  stroke: #cbd5e1;
+  stroke-width: 2.5;
+  stroke-dasharray: 4, 4;
+}
+
+.edge-team-path {
+  stroke: #10b981;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+
+.edge-candidate {
+  stroke: #0284c7;
+  stroke-width: 3.5;
+  stroke-dasharray: 4, 3;
+}
+
+.node-g {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.node-g text,
+.node-g line {
+  pointer-events: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.node-base-circle {
+  fill: #ffffff;
+  stroke: #94a3b8;
+  stroke-width: 2.5;
+  transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
+}
+
+.node-g.is-candidate .node-base-circle {
+  fill: #f0f9ff;
+  stroke: #0284c7;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.45));
+}
+
+.node-g.is-start .node-base-circle {
+  fill: #ecfdf5;
+  stroke: #10b981;
+  stroke-width: 3.5;
+}
+
+.node-g.is-goal .node-base-circle {
+  fill: #fffbeb;
+  stroke: #f59e0b;
+  stroke-width: 4;
+}
+
+.node-g.pos-team .node-base-circle {
+  stroke: #10b981;
+  stroke-width: 5;
+  fill: #ecfdf5;
+}
+
+.node-txt {
+  font-family: inherit;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #0f172a;
+}
+
+.node-txt.num { font-size: 14px; }
+.node-txt.den { font-size: 14px; }
+.node-txt.single { font-size: 16px; font-weight: 900; }
+.node-frac-bar { stroke: #0f172a; stroke-width: 1.8; stroke-linecap: round; }
+
+.team-token {
+  font-size: 26px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   MEMORY GEMISCHTE DARSTELLUNGEN (STATION 2)
+   ========================================================================== */
+.mem-card-type-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+}
+
+.badge-quotient {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-prozent {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.badge-bruch {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.mem-value-quotient {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #b45309;
+  letter-spacing: 1px;
+}
+
+.mem-value-pct {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #7c3aed;
+}
+
+
+/* ==========================================================================
+   SINGLE UNLOCK INPUT
+   ========================================================================== */
+.single-input-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.single-unlock-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 12px 16px;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--primary-blue);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.single-unlock-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 4px rgba(20, 80, 160, 0.15);
+}

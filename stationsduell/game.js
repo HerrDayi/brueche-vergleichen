@@ -192,46 +192,50 @@ function updateUI() {
 }
 
 // ==========================================================================
-// UNLOCK LOGIK (PFLICHTAUFGABEN-PRÜFUNG)
+// UNLOCK LOGIK (PFLICHTAUFGABEN-PRÜFUNG: ERGEBNIS DER LETZTEN TEILAUFGABE)
 // ==========================================================================
 let pendingStation = null;
 
 const unlockConfigs = {
   1: {
-    title: '🎯 Station 1: Anteile & Prozente',
-    prompt: 'Löst <strong>Buch S. 232, Nr. 1a</strong>:<br>Welcher <strong>Prozentwert</strong> gehört zu dem gefärbten Anteil (10 von 20 Feldern)?',
-    validator: (val) => {
-      const clean = val.toLowerCase().replace(/[\s%]/g, '');
-      return clean === '50' || clean === '1/2';
+    title: '🧭 Station 1: Anteile & Prozente',
+    intro: 'Löst <strong>Buch S. 32, Nr. 1 (a–c)</strong> im Heft.<br>Gebt das Ergebnis der letzten Pflichtaufgabe <strong>1c</strong> ein (7 von 28 = ? %):',
+    placeholder: 'z. B. 25',
+    answer: v => {
+      const c = v.trim().replace(/\s|%/g, '');
+      return c === '25' || c === '1/4';
     },
-    hint: 'Tipp: 10 von 20 ist genau die Hälfte (50 %)!'
+    hint: 'Tipp: 7 von 28 ist 1/4 = 25 %!'
   },
   2: {
     title: '🔄 Station 2: Bruch-Zwillinge',
-    prompt: 'Löst <strong>Buch S. 232, Nr. 4a</strong>:<br>Mit welcher Zahl wurde bei <strong>3/5 = 9/15</strong> erweitert?',
-    validator: (val) => {
-      const clean = val.toLowerCase().replace(/[^\d]/g, '');
-      return clean === '3';
+    intro: 'Löst <strong>Buch S. 32, Nr. 4 (a, b, d)</strong> im Heft.<br>Gebt das Ergebnis der letzten Pflichtaufgabe <strong>4d</strong> ein (14/35 = ?/5 &rarr; gekürzt durch welche Zahl?):',
+    placeholder: 'z. B. 7',
+    answer: v => {
+      const c = v.trim().replace(/\s/g, '');
+      return c === '7';
     },
-    hint: 'Tipp: 3 mal 3 ist 9, und 5 mal 3 ist 15!'
+    hint: 'Tipp: Welche Zahl teilt 14 und 35? 14 ÷ 7 = 2!'
   },
   3: {
-    title: '⚖️ Station 3: Wer war besser?',
-    prompt: 'Löst <strong>Buch S. 233, Nr. 11a</strong>:<br>Welcher Bruch ist größer: <strong>5/11</strong> oder <strong>5/12</strong>?<br>(Tippe den größeren Bruch ein!)',
-    validator: (val) => {
-      const clean = val.replace(/\s+/g, '');
-      return clean === '5/11';
+    title: '🔍 Station 3: Wer war besser?',
+    intro: 'Löst <strong>Buch S. 33, Nr. 11 (a–c)</strong> im Heft.<br>Gebt den <strong>größeren Bruch aus 11c</strong> (15/18 oder 19/16) ein:',
+    placeholder: 'z. B. 19/16',
+    answer: v => {
+      const c = v.trim().replace(/\s/g, '');
+      return c === '19/16';
     },
-    hint: 'Tipp: Gleicher Zähler! 11tel-Stücke sind größer als 12tel-Stücke!'
+    hint: 'Tipp: 15/18 ist kleiner als 1, 19/16 ist größer als 1!'
   },
   4: {
-    title: '⏱️ Station 4: Sportfest-Zeitplan',
-    prompt: 'Löst <strong>Buch S. 232, Nr. 6 / Pause</strong>:<br>Wie viele <strong>Minuten</strong> dauert eine Pause von <strong>3/4 einer Stunde (60 min)</strong>?',
-    validator: (val) => {
-      const clean = val.toLowerCase().replace(/[^\d]/g, '');
-      return clean === '45';
+    title: '🁣 Station 4: Größen berechnen',
+    intro: 'Löst <strong>Buch S. 32, Nr. 6</strong> im Heft.<br>Gebt das Ergebnis der letzten Pflichtaufgabe ein (z. B. 2/5 von 1 kg oder Pause: 3/4 von 60 min):',
+    placeholder: 'z. B. 400 oder 45',
+    answer: v => {
+      const c = v.trim().replace(/\s|g|min/g, '');
+      return c === '400' || c === '45';
     },
-    hint: 'Tipp: 60 : 4 = 15, und 15 mal 3 = 45 min!'
+    hint: 'Tipp: 2/5 von 1000 g = 400 g oder 3/4 von 60 min = 45 min!'
   }
 };
 
@@ -240,13 +244,24 @@ function openUnlockModal(stationId) {
   pendingStation = stationId;
   const config = unlockConfigs[stationId];
   document.getElementById('modalTitle').textContent = config.title;
-  document.getElementById('modalPrompt').innerHTML = config.prompt;
-  const input = document.getElementById('unlockInput');
-  input.value = '';
-  document.getElementById('modalFeedback').textContent = '';
-  document.getElementById('modalFeedback').className = 'feedback-msg';
+  document.getElementById('modalPrompt').innerHTML = config.intro;
+
+  const inp = document.getElementById('unlockSingleInput');
+  inp.value = '';
+  inp.placeholder = config.placeholder;
+  
+  inp.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      verifyUnlock();
+    }
+  };
+
+  const fb = document.getElementById('modalFeedback');
+  fb.textContent = '';
+  fb.className = 'feedback-msg';
+
   document.getElementById('unlockModal').style.display = 'flex';
-  setTimeout(() => input.focus(), 100);
+  setTimeout(() => inp.focus(), 150);
 }
 
 function closeUnlockModal() {
@@ -257,10 +272,11 @@ function closeUnlockModal() {
 function verifyUnlock() {
   if (!pendingStation) return;
   const config = unlockConfigs[pendingStation];
-  const inputVal = document.getElementById('unlockInput').value.trim();
+  const inp = document.getElementById('unlockSingleInput');
+  const val = (inp?.value || '').trim();
   const feedback = document.getElementById('modalFeedback');
 
-  if (config.validator(inputVal)) {
+  if (config.answer(val)) {
     playSound('correct');
     feedback.className = 'feedback-msg success';
     feedback.textContent = '🎉 Richtig! Station ist freigeschaltet!';
@@ -269,12 +285,74 @@ function verifyUnlock() {
     setTimeout(() => {
       closeUnlockModal();
       startStationGame(pendingStation);
-    }, 700);
+    }, 600);
   } else {
     playSound('wrong');
     feedback.className = 'feedback-msg error';
-    feedback.textContent = `❌ Nicht ganz! ${config.hint}`;
+    feedback.textContent = `❌ Noch nicht ganz! ${config.hint}`;
   }
+}
+
+
+
+// ==========================================================================
+// GAME LIVES & GAME OVER SYSTEM
+// ==========================================================================
+let currentStationRestartFn = null;
+
+function getHeartString(lives, max = 3) {
+  let str = '';
+  for (let i = 0; i < max; i++) {
+    str += i < lives ? '❤️' : '🤍';
+  }
+  return str;
+}
+
+function showGameOver(title, msg, restartFn) {
+  playSound('wrong');
+  currentStationRestartFn = restartFn;
+  const modal = document.getElementById('gameOverModal');
+  const titleEl = document.getElementById('gameOverTitle');
+  const msgEl = document.getElementById('gameOverMsg');
+  if (titleEl) titleEl.textContent = title || 'KEINE LEBEN MEHR!';
+  if (msgEl) msgEl.innerHTML = msg || 'Du hast alle 3 Leben verloren. Du musst mit neuen Aufgaben von vorne anfangen!';
+  if (modal) modal.style.display = 'flex';
+}
+
+function handleGameOverRestart() {
+  playSound('click');
+  const modal = document.getElementById('gameOverModal');
+  if (modal) modal.style.display = 'none';
+  if (currentStationRestartFn) {
+    currentStationRestartFn();
+  }
+}
+
+function showExplanation(title, html) {
+  const modal = document.getElementById('explanationModal');
+  const t = document.getElementById('expTitle');
+  const c = document.getElementById('expContent');
+  if (t) t.textContent = title;
+  if (c) c.innerHTML = html;
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeExplanationModal() {
+  playSound('click');
+  const modal = document.getElementById('explanationModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function gcd(a, b) {
+  a = Math.abs(Math.round(a));
+  b = Math.abs(Math.round(b));
+  while (b) { let t = b; b = a % b; a = t; }
+  return a || 1;
+}
+
+function lcm(a, b) {
+  if (!a || !b) return 1;
+  return Math.abs(Math.round((a * b) / gcd(a, b)));
 }
 
 // ==========================================================================
@@ -300,134 +378,481 @@ function returnToHub() {
 }
 
 // ==========================================================================
-// 1. SPIEL 🎯 PROZENT-TREFFER (INTERAKTIVER ZIELSCHEIBEN-SCHÜTZE)
+// 1. SPIEL 🧭 BRUCH-EXPEDITION: DER PFAD DES KLEINEREN BRUCHS
+// Aus "Brüche vergleichen 2" – angepasst:
+// - Immer den KLEINEREN Bruch wählen!
+// - Nur Brüche <= 1 (keine unechten Brüche)
+// - 3 Leben! Bei 0 Leben -> Neustart mit neuen Brüchen
 // ==========================================================================
 function initGame1() {
-  document.getElementById('arenaTitle').textContent = '🎯 Station 1: Prozent-Treffer';
-  let score = 0;
-  const targetScore = 4;
+  document.getElementById('arenaTitle').textContent = '🧭 Station 1: Bruch-Expedition';
+  const livesEl = document.getElementById('arenaLives');
+  const scoreEl = document.getElementById('arenaScore');
+  livesEl.style.display = 'inline-flex';
 
-  const rounds = [
-    { frac: '1/2', num: 1, den: 2, percent: 50, ans: '50 %', opts: ['50 %', '25 %', '20 %', '75 %'] },
-    { frac: '1/4', num: 1, den: 4, percent: 25, ans: '25 %', opts: ['25 %', '40 %', '50 %', '10 %'] },
-    { frac: '3/4', num: 3, den: 4, percent: 75, ans: '75 %', opts: ['75 %', '34 %', '50 %', '80 %'] },
-    { frac: '2/5', num: 2, den: 5, percent: 40, ans: '40 %', opts: ['40 %', '25 %', '50 %', '20 %'] },
-    { frac: '4/5', num: 4, den: 5, percent: 80, ans: '80 %', opts: ['80 %', '45 %', '90 %', '75 %'] },
-    { frac: '7/10', num: 7, den: 10, percent: 70, ans: '70 %', opts: ['70 %', '7 %', '75 %', '80 %'] }
+  let lives = 3;
+  livesEl.textContent = getHeartString(lives);
+  scoreEl.textContent = 'Schritte: 0 / 5';
+
+  const POOL = [
+    { num: 1, den: 12, val: 1/12, str: '1/12' },
+    { num: 1, den: 10, val: 1/10, str: '1/10' },
+    { num: 1, den: 8,  val: 1/8,  str: '1/8' },
+    { num: 1, den: 6,  val: 1/6,  str: '1/6' },
+    { num: 1, den: 5,  val: 1/5,  str: '1/5' },
+    { num: 1, den: 4,  val: 1/4,  str: '1/4' },
+    { num: 3, den: 10, val: 3/10, str: '3/10' },
+    { num: 1, den: 3,  val: 1/3,  str: '1/3' },
+    { num: 3, den: 8,  val: 3/8,  str: '3/8' },
+    { num: 2, den: 5,  val: 2/5,  str: '2/5' },
+    { num: 1, den: 2,  val: 1/2,  str: '1/2' },
+    { num: 3, den: 5,  val: 3/5,  str: '3/5' },
+    { num: 5, den: 8,  val: 5/8,  str: '5/8' },
+    { num: 2, den: 3,  val: 2/3,  str: '2/3' },
+    { num: 7, den: 10, val: 7/10, str: '7/10' },
+    { num: 3, den: 4,  val: 3/4,  str: '3/4' },
+    { num: 4, den: 5,  val: 4/5,  str: '4/5' },
+    { num: 5, den: 6,  val: 5/6,  str: '5/6' },
+    { num: 7, den: 8,  val: 7/8,  str: '7/8' },
+    { num: 9, den: 10, val: 9/10, str: '9/10' },
+    { num: 1, den: 1,  val: 1,    str: '1' }
   ];
-  rounds.sort(() => Math.random() - 0.5);
-  let roundIdx = 0;
 
-  function renderRound() {
-    document.getElementById('arenaScore').textContent = `Treffer: ${score} / ${targetScore}`;
-    if (score >= targetScore) {
-      winStation(1, '🎯', 'Treffsicher bei Anteilen & Prozenten!');
+  const NODES = {
+    'start':  { id: 'start',  col: 0, x: 80,  y: 240, isStart: true },
+    'c1_top': { id: 'c1_top', col: 1, x: 245, y: 145 },
+    'c1_bot': { id: 'c1_bot', col: 1, x: 245, y: 335 },
+    'c2_top': { id: 'c2_top', col: 2, x: 410, y: 95 },
+    'c2_mid': { id: 'c2_mid', col: 2, x: 410, y: 240 },
+    'c2_bot': { id: 'c2_bot', col: 2, x: 410, y: 385 },
+    'c3_top': { id: 'c3_top', col: 3, x: 575, y: 145 },
+    'c3_bot': { id: 'c3_bot', col: 3, x: 575, y: 335 },
+    'c4_top': { id: 'c4_top', col: 4, x: 740, y: 145 },
+    'c4_bot': { id: 'c4_bot', col: 4, x: 740, y: 335 },
+    'goal':   { id: 'goal',   col: 5, x: 890, y: 240, isGoal: true }
+  };
+
+  const EDGES = [
+    ['start', 'c1_top'], ['start', 'c1_bot'],
+    ['c1_top', 'c2_top'], ['c1_top', 'c2_mid'],
+    ['c1_bot', 'c2_mid'], ['c1_bot', 'c2_bot'],
+    ['c2_top', 'c3_top'], ['c2_mid', 'c3_top'], ['c2_mid', 'c3_bot'], ['c2_bot', 'c3_bot'],
+    ['c3_top', 'c4_top'], ['c3_bot', 'c4_top'], ['c3_bot', 'c4_bot'],
+    ['c4_top', 'goal'], ['c4_bot', 'goal']
+  ];
+
+  const ADJ = {};
+  Object.keys(NODES).forEach(id => ADJ[id] = []);
+  EDGES.forEach(([u, v]) => {
+    if (NODES[u].col < NODES[v].col) ADJ[u].push(v);
+    else ADJ[v].push(u);
+  });
+
+  const CHORDLESS_PATHS = [
+    ['start', 'c1_top', 'c2_top', 'c3_top', 'c4_top', 'goal'],
+    ['start', 'c1_top', 'c2_mid', 'c3_top', 'c4_top', 'goal'],
+    ['start', 'c1_top', 'c2_mid', 'c3_bot', 'c4_bot', 'goal'],
+    ['start', 'c1_bot', 'c2_mid', 'c3_top', 'c4_top', 'goal'],
+    ['start', 'c1_bot', 'c2_mid', 'c3_bot', 'c4_bot', 'goal'],
+    ['start', 'c1_bot', 'c2_bot', 'c3_bot', 'c4_bot', 'goal']
+  ];
+
+  let chosenPath = CHORDLESS_PATHS[Math.floor(Math.random() * CHORDLESS_PATHS.length)];
+  let pathNodes = chosenPath.slice(0, -1); // 5 Knoten ohne 'goal'
+
+  // Wähle 5 echt absteigende Brüche (immer kleinerer Bruch!)
+  let maxIdx = Math.floor(Math.random() * 7) + 14; // Index zwischen 14 und 20
+  let sampleIndices = [];
+  while (sampleIndices.length < 4) {
+    let r = Math.floor(Math.random() * maxIdx);
+    if (!sampleIndices.includes(r)) sampleIndices.push(r);
+  }
+  sampleIndices.sort((a, b) => a - b);
+  let sorted5 = [maxIdx, sampleIndices[3], sampleIndices[2], sampleIndices[1], sampleIndices[0]];
+
+  let nodeFracs = {};
+  pathNodes.forEach((nodeId, i) => {
+    nodeFracs[nodeId] = POOL[sorted5[i]];
+  });
+
+  // Distraktoren: An jeder Verzweigung muss der falsche Weg >= dem aktuellen Bruch sein
+  pathNodes.forEach((u, i) => {
+    let nextNode = chosenPath[i + 1];
+    let uVal = nodeFracs[u].val;
+    for (let v of ADJ[u]) {
+      if (v === 'goal' || v === nextNode || nodeFracs[v]) continue;
+      let geItems = POOL.filter(item => item.val >= uVal);
+      nodeFracs[v] = geItems.length > 0
+        ? geItems[Math.floor(Math.random() * geItems.length)]
+        : POOL[POOL.length - 1];
+    }
+  });
+
+  // Restliche Hintergrund-Knoten auffüllen
+  Object.keys(NODES).forEach(nodeId => {
+    if (nodeId === 'goal') {
+      NODES[nodeId].frac = { num: 0, den: 1, val: 0, str: 'Ziel' };
+      return;
+    }
+    if (!nodeFracs[nodeId]) {
+      nodeFracs[nodeId] = POOL[Math.floor(Math.random() * POOL.length)];
+    }
+    NODES[nodeId].frac = nodeFracs[nodeId];
+  });
+
+  let currentNode = 'start';
+  let visitedPath = ['start'];
+  let steps = 0;
+
+  const content = document.getElementById('arenaContent');
+  content.style.padding = '12px';
+  content.style.alignItems = 'center';
+
+  content.innerHTML = `
+    <div class="expedition-arena">
+      <div class="expedition-instruction">
+        🧭 <strong>Regel:</strong> Wählt immer einen <strong>kleineren</strong> Bruch nach rechts!
+      </div>
+      <div class="board-wrapper">
+        <svg id="boardSvg" viewBox="0 0 980 480" preserveAspectRatio="xMidYMid meet">
+          <g id="edgesLayer"></g>
+          <g id="teamPathLayer"></g>
+          <g id="nodesLayer"></g>
+          <g id="tokensLayer"></g>
+        </svg>
+      </div>
+    </div>
+  `;
+
+  function renderBoard() {
+    scoreEl.textContent = `Schritte: ${steps} / 5`;
+    livesEl.textContent = getHeartString(lives);
+
+    const edgesLayer = document.getElementById('edgesLayer');
+    const teamPathLayer = document.getElementById('teamPathLayer');
+    const nodesLayer = document.getElementById('nodesLayer');
+    const tokensLayer = document.getElementById('tokensLayer');
+
+    edgesLayer.innerHTML = '';
+    teamPathLayer.innerHTML = '';
+    nodesLayer.innerHTML = '';
+    tokensLayer.innerHTML = '';
+
+    let candidateIds = ADJ[currentNode] || [];
+
+    // 1. Kanten
+    EDGES.forEach(([u, v]) => {
+      let nU = NODES[u];
+      let nV = NODES[v];
+      let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', nU.x);
+      line.setAttribute('y1', nU.y);
+      line.setAttribute('x2', nV.x);
+      line.setAttribute('y2', nV.y);
+
+      let isCandidateEdge = (u === currentNode && candidateIds.includes(v)) ||
+                            (v === currentNode && candidateIds.includes(u));
+
+      line.setAttribute('class', isCandidateEdge ? 'edge-line edge-candidate' : 'edge-line');
+      edgesLayer.appendChild(line);
+    });
+
+    // 2. Pfad
+    if (visitedPath.length >= 2) {
+      for (let i = 0; i < visitedPath.length - 1; i++) {
+        let u = NODES[visitedPath[i]];
+        let v = NODES[visitedPath[i + 1]];
+        let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', u.x);
+        line.setAttribute('y1', u.y);
+        line.setAttribute('x2', v.x);
+        line.setAttribute('y2', v.y);
+        line.setAttribute('class', 'edge-line edge-team-path');
+        teamPathLayer.appendChild(line);
+      }
+    }
+
+    // 3. Knoten
+    Object.values(NODES).forEach(node => {
+      let g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('transform', `translate(${node.x}, ${node.y})`);
+      g.setAttribute('id', `node_${node.id}`);
+
+      let cls = ['node-g'];
+      if (node.isStart) cls.push('is-start');
+      if (node.isGoal) cls.push('is-goal');
+      if (candidateIds.includes(node.id)) cls.push('is-candidate');
+      if (currentNode === node.id) cls.push('pos-team');
+      g.setAttribute('class', cls.join(' '));
+
+      g.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleNodeClick(node.id);
+      });
+
+      let c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('r', '32');
+      c.setAttribute('class', 'node-base-circle');
+      g.appendChild(c);
+
+      // Textbeschriftung
+      if (node.isStart) {
+        let tStart = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        tStart.setAttribute('class', 'node-txt');
+        tStart.setAttribute('y', '-13');
+        tStart.setAttribute('style', 'font-size: 11px; fill: #059669; font-weight: 800;');
+        tStart.textContent = 'START';
+        g.appendChild(tStart);
+
+        drawNodeFraction(g, node.frac, 5);
+      } else if (node.isGoal) {
+        let tGoal = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        tGoal.setAttribute('class', 'node-txt single');
+        tGoal.setAttribute('y', '2');
+        tGoal.setAttribute('style', 'fill: #b45309; font-size: 15px; font-weight: 900;');
+        tGoal.textContent = 'ZIEL 🏁';
+        g.appendChild(tGoal);
+      } else {
+        drawNodeFraction(g, node.frac, 0);
+      }
+
+      nodesLayer.appendChild(g);
+    });
+
+    // 4. Spielfigur
+    let activeNode = NODES[currentNode];
+    if (activeNode) {
+      let token = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      token.setAttribute('x', activeNode.x);
+      token.setAttribute('y', activeNode.y - 32);
+      token.setAttribute('class', 'team-token');
+      token.setAttribute('text-anchor', 'middle');
+      token.setAttribute('dominant-baseline', 'central');
+      token.textContent = '🧭';
+      tokensLayer.appendChild(token);
+    }
+  }
+
+  function drawNodeFraction(g, frac, yOffset) {
+    if (!frac.den || frac.den === 1) {
+      let tInt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      tInt.setAttribute('class', 'node-txt single');
+      tInt.setAttribute('y', `${yOffset + 2}`);
+      tInt.textContent = frac.str;
+      g.appendChild(tInt);
       return;
     }
 
-    const cur = rounds[roundIdx % rounds.length];
-    const content = document.getElementById('arenaContent');
+    let tNum = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    tNum.setAttribute('class', 'node-txt num');
+    tNum.setAttribute('y', `${yOffset - 9}`);
+    tNum.textContent = frac.num;
+    g.appendChild(tNum);
 
-    // SVG Pie Slice
-    const circumference = 2 * Math.PI * 40; // r=40 -> ~251.3
-    const dashLength = (cur.percent / 100) * circumference;
-    const dashOffset = circumference * 0.25; // Rotate to 12 o'clock
+    let bar = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    bar.setAttribute('x1', '-14');
+    bar.setAttribute('x2', '14');
+    bar.setAttribute('y1', `${yOffset - 2}`);
+    bar.setAttribute('y2', `${yOffset - 2}`);
+    bar.setAttribute('class', 'node-frac-bar');
+    g.appendChild(bar);
 
-    content.innerHTML = `
-      <div class="target-arena">
-        <div class="target-visual-board">
-          <svg class="pie-chart-wrap" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" fill="#e2e8f0" />
-            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#22c55e" stroke-width="80"
-                    stroke-dasharray="${dashLength} ${circumference}"
-                    stroke-dashoffset="${dashOffset}" />
-            <circle cx="50" cy="50" r="16" fill="white" />
-          </svg>
-          <div class="target-mission">
-            <span class="target-mission-badge">Sportfest-Treffer</span>
-            <div class="target-mission-text">Welche Zielscheibe trifft den Anteil?</div>
-            <div class="fraction-display" style="margin: 4px 0;">
-              <span class="num">${cur.num}</span>
-              <span class="den">${cur.den}</span>
+    let tDen = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    tDen.setAttribute('class', 'node-txt den');
+    tDen.setAttribute('y', `${yOffset + 12}`);
+    tDen.textContent = frac.den;
+    g.appendChild(tDen);
+  }
+
+  function handleNodeClick(targetId) {
+    let candidateIds = ADJ[currentNode] || [];
+    if (!candidateIds.includes(targetId)) return;
+
+    if (targetId === 'goal') {
+      playSound('fanfare');
+      winStation(1, '🧭', 'Pfad-Finder der Brüche!');
+      return;
+    }
+
+    let currNode = NODES[currentNode];
+    let targetNode = NODES[targetId];
+
+    // Regel: Der nächste Bruch MUSS kleiner sein!
+    if (targetNode.frac.val < currNode.frac.val) {
+      // RICHTIG!
+      playSound('correct');
+      visitedPath.push(targetId);
+      currentNode = targetId;
+      steps++;
+      renderBoard();
+    } else {
+      // FALSCH: Bruch ist nicht kleiner!
+      playSound('wrong');
+      lives--;
+      livesEl.textContent = getHeartString(lives);
+
+      let H = lcm(currNode.frac.den, targetNode.frac.den);
+      let factorCurr = H / currNode.frac.den;
+      let factorTarget = H / targetNode.frac.den;
+      let expCurr = currNode.frac.num * factorCurr;
+      let expTarget = targetNode.frac.num * factorTarget;
+
+      let explanationHtml = `
+        <div class="comp-row">
+          <div class="comp-card">
+            <small>Aktueller Bruch:</small>
+            <div class="comp-frac-big">
+              <span>${currNode.frac.num}</span>
+              <div class="bar"></div>
+              <span>${currNode.frac.den}</span>
+            </div>
+            <div class="expansion-box">
+              Erweitert mit <strong>${factorCurr}</strong>: <strong>${expCurr}/${H}</strong>
+            </div>
+          </div>
+          <div class="comp-sign">${targetNode.frac.val === currNode.frac.val ? '=' : '‹'}</div>
+          <div class="comp-card">
+            <small>Gewählte Abzweigung:</small>
+            <div class="comp-frac-big">
+              <span>${targetNode.frac.num}</span>
+              <div class="bar"></div>
+              <span>${targetNode.frac.den}</span>
+            </div>
+            <div class="expansion-box">
+              Erweitert mit <strong>${factorTarget}</strong>: <strong>${expTarget}/${H}</strong>
             </div>
           </div>
         </div>
-
-        <div style="font-size:0.95rem; font-weight:700; color:var(--text-muted);">
-          🎯 Tippe auf die passende Zielscheibe:
+        <div class="didactic-conclusion">
+          <strong>⚠️ Halt! Keine Vorwärtsbewegung möglich:</strong><br>
+          Der gewählte Bruch <strong>${targetNode.frac.str}</strong> (${expTarget}/${H}) ist <strong>${targetNode.frac.val === currNode.frac.val ? 'gleich groß wie' : 'größer als'}</strong> euer bisheriger Bruch <strong>${currNode.frac.str}</strong> (${expCurr}/${H})!<br>
+          Gesucht war ein <strong>kleinerer</strong> Bruch.<br><br>
+          Verbleibende Leben: <strong>${getHeartString(lives)}</strong> (${lives} von 3)
         </div>
+      `;
 
-        <div class="targets-row" id="targetsRow"></div>
-      </div>
-    `;
+      showExplanation('⚠️ Bruch ist nicht kleiner!', explanationHtml);
 
-    const row = document.getElementById('targetsRow');
-    const shuffledOpts = [...cur.opts].sort(() => Math.random() - 0.5);
-
-    shuffledOpts.forEach(opt => {
-      const disc = document.createElement('div');
-      disc.className = 'target-disc';
-      disc.innerHTML = `<div class="disc-inner">${opt}</div>`;
-
-      disc.onclick = () => {
-        if (opt === cur.ans) {
-          playSound('correct');
-          disc.classList.add('pop');
-          score++;
-          roundIdx++;
-          setTimeout(renderRound, 500);
-        } else {
-          playSound('wrong');
-          disc.classList.add('shake');
-          setTimeout(() => disc.classList.remove('shake'), 450);
-        }
-      };
-
-      row.appendChild(disc);
-    });
+      if (lives <= 0) {
+        setTimeout(() => {
+          closeExplanationModal();
+          showGameOver('KEINE LEBEN MEHR!', 'Du hast alle 3 Leben verloren. Der Pfad startet mit neuen Brüchen von vorne!', () => initGame1());
+        }, 800);
+      }
+    }
   }
 
-  renderRound();
+  renderBoard();
 }
 
 // ==========================================================================
-// 2. SPIEL 🔄 BRUCH-ZWILLINGE (SPEED-MEMORY)
+// 2. SPIEL 🔄 BRUCH-ZWILLINGE SPEED-MEMORY
+// - Gemischte Darstellungen: Quotienten, Brüche, Prozente
+// - Größeres Deck: 6 Paare (12 Karten)
+// - Realistische 15 Versuche! Bei 0 Versuchen -> Neustart mit neu gemischtem Deck
 // ==========================================================================
 function initGame2() {
   document.getElementById('arenaTitle').textContent = '🔄 Station 2: Bruch-Zwillinge Memory';
+  const livesEl = document.getElementById('arenaLives');
+  const scoreEl = document.getElementById('arenaScore');
+  livesEl.style.display = 'inline-flex';
+
+  let attempts = 15;
   let matchedPairs = 0;
-  const targetPairs = 4;
+  const targetPairs = 6;
   let flippedCards = [];
   let isLocked = false;
 
-  // 4 Paare (Zwillinge)
-  const cardPairs = [
-    { id: 1, frac: '3/5', num: 3, den: 5, val: 3/5, pairId: 1, note: '3/5 = 9/15 (erweitert mit 3)' },
-    { id: 2, frac: '9/15', num: 9, den: 15, val: 3/5, pairId: 1, note: '9/15 = 3/5 (gekürzt durch 3)' },
-    { id: 3, frac: '15/20', num: 15, den: 20, val: 3/4, pairId: 2, note: '15/20 = 3/4 (gekürzt durch 5)' },
-    { id: 4, frac: '3/4', num: 3, den: 4, val: 3/4, pairId: 2, note: '3/4 = 15/20 (erweitert mit 5)' },
-    { id: 5, frac: '14/35', num: 14, den: 35, val: 2/5, pairId: 3, note: '14/35 = 2/5 (gekürzt durch 7)' },
-    { id: 6, frac: '2/5', num: 2, den: 5, val: 2/5, pairId: 3, note: '2/5 = 14/35 (erweitert mit 7)' },
-    { id: 7, frac: '1/2', num: 1, den: 2, val: 1/2, pairId: 4, note: '1/2 = 12/24 (vollständig gekürzt)' },
-    { id: 8, frac: '12/24', num: 12, den: 24, val: 1/2, pairId: 4, note: '12/24 = 1/2 (vollständig gekürzt)' }
+  livesEl.textContent = `🎯 ${attempts} Versuche`;
+  scoreEl.textContent = `Paare: 0 / ${targetPairs}`;
+
+  // Pool an gemischten Paaren (Quotient, Bruch, Prozent)
+  const PAIRS_POOL = [
+    {
+      pairId: 1,
+      note: '1 : 2 = 50 % (die Hälfte!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">1 : 2</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">50 %</span>',        badge: 'badge-prozent' }
+    },
+    {
+      pairId: 2,
+      note: '3/4 = 75 % (drei Viertel!)',
+      c1: { type: 'Bruch',   html: '<div class="fraction-display"><span class="num">3</span><span class="den">4</span></div>', badge: 'badge-bruch' },
+      c2: { type: 'Prozent', html: '<span class="mem-value-pct">75 %</span>', badge: 'badge-prozent' }
+    },
+    {
+      pairId: 3,
+      note: '2 : 5 = 2/5 (oder 40 %)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">2 : 5</span>', badge: 'badge-quotient' },
+      c2: { type: 'Bruch',    html: '<div class="fraction-display"><span class="num">2</span><span class="den">5</span></div>', badge: 'badge-bruch' }
+    },
+    {
+      pairId: 4,
+      note: '1 : 4 = 25 % (ein Viertel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">1 : 4</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">25 %</span>', badge: 'badge-prozent' }
+    },
+    {
+      pairId: 5,
+      note: '4/5 = 80 % (vier Fünftel!)',
+      c1: { type: 'Bruch',   html: '<div class="fraction-display"><span class="num">4</span><span class="den">5</span></div>', badge: 'badge-bruch' },
+      c2: { type: 'Prozent', html: '<span class="mem-value-pct">80 %</span>', badge: 'badge-prozent' }
+    },
+    {
+      pairId: 6,
+      note: '3 : 5 = 60 % (drei Fünftel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">3 : 5</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">60 %</span>', badge: 'badge-prozent' }
+    },
+    {
+      pairId: 7,
+      note: '1 : 5 = 20 % (ein Fünftel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">1 : 5</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">20 %</span>', badge: 'badge-prozent' }
+    },
+    {
+      pairId: 8,
+      note: '1 : 10 = 10 % (ein Zehntel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">1 : 10</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">10 %</span>',  badge: 'badge-prozent' }
+    },
+    {
+      pairId: 9,
+      note: '1 : 3 = 1/3 (ein Drittel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">1 : 3</span>', badge: 'badge-quotient' },
+      c2: { type: 'Bruch',    html: '<div class="fraction-display"><span class="num">1</span><span class="den">3</span></div>', badge: 'badge-bruch' }
+    },
+    {
+      pairId: 10,
+      note: '7 : 10 = 70 % (sieben Zehntel!)',
+      c1: { type: 'Quotient', html: '<span class="mem-value-quotient">7 : 10</span>', badge: 'badge-quotient' },
+      c2: { type: 'Prozent',  html: '<span class="mem-value-pct">70 %</span>',  badge: 'badge-prozent' }
+    }
   ];
 
-  const deck = [...cardPairs].sort(() => Math.random() - 0.5);
+  // 6 Paare zufällig auswählen
+  let chosenPairs = [...PAIRS_POOL].sort(() => Math.random() - 0.5).slice(0, targetPairs);
+
+  let deck = [];
+  chosenPairs.forEach(p => {
+    deck.push({ pairId: p.pairId, note: p.note, ...p.c1 });
+    deck.push({ pairId: p.pairId, note: p.note, ...p.c2 });
+  });
+  deck.sort(() => Math.random() - 0.5);
 
   const content = document.getElementById('arenaContent');
   content.innerHTML = `
     <div class="memory-arena">
       <div class="memory-header-info">
-        Deck aufdecken & Zwillinge (gleichwertige Brüche) verbinden!
+        Finde die Paare mit gleichem Wert (Quotient ↔ Bruch ↔ Prozent)!
       </div>
       <div class="memory-factor-banner" id="memBanner">
-        Finde das erste Zwillings-Paar!
+        Tippe auf zwei Karten zum Aufdecken!
       </div>
-      <div class="memory-grid" id="memGrid"></div>
+      <div class="memory-grid" id="memGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
     </div>
   `;
 
-  document.getElementById('arenaScore').textContent = `Paare: 0 / ${targetPairs}`;
   const grid = document.getElementById('memGrid');
 
   deck.forEach((card, index) => {
@@ -438,13 +863,11 @@ function initGame2() {
     cardEl.innerHTML = `
       <div class="mem-card-face mem-card-back">
         <div class="card-logo">🔄</div>
-        <div class="card-label">Zwilling</div>
+        <div class="card-label">Mathe</div>
       </div>
       <div class="mem-card-face mem-card-front">
-        <div class="fraction-display">
-          <span class="num">${card.num}</span>
-          <span class="den">${card.den}</span>
-        </div>
+        <div class="mem-card-type-badge ${card.badge}">${card.type}</div>
+        ${card.html}
       </div>
     `;
 
@@ -462,6 +885,9 @@ function initGame2() {
 
     if (flippedCards.length === 2) {
       isLocked = true;
+      attempts--;
+      livesEl.textContent = `🎯 ${attempts} Versuche`;
+
       const [c1, c2] = flippedCards;
 
       if (c1.card.pairId === c2.card.pairId) {
@@ -470,7 +896,7 @@ function initGame2() {
         c1.el.classList.add('matched');
         c2.el.classList.add('matched');
         matchedPairs++;
-        document.getElementById('arenaScore').textContent = `Paare: ${matchedPairs} / ${targetPairs}`;
+        scoreEl.textContent = `Paare: ${matchedPairs} / ${targetPairs}`;
         document.getElementById('memBanner').innerHTML = `🎉 <strong>Treffer!</strong> ${c1.card.note}`;
 
         flippedCards = [];
@@ -479,17 +905,25 @@ function initGame2() {
         if (matchedPairs >= targetPairs) {
           setTimeout(() => {
             winStation(2, '🔄', 'Bruch-Zwillinge Meister!');
-          }, 800);
+          }, 700);
         }
       } else {
         // NO MATCH
         playSound('wrong');
-        document.getElementById('memBanner').textContent = '❌ Keine Zwillinge! Schau genau auf Zähler & Nenner...';
+        document.getElementById('memBanner').textContent = '❌ Keine Übereinstimmung!';
         setTimeout(() => {
           c1.el.classList.remove('flipped');
           c2.el.classList.remove('flipped');
           flippedCards = [];
           isLocked = false;
+
+          if (attempts <= 0 && matchedPairs < targetPairs) {
+            showGameOver(
+              'KEINE VERSUCHE MEHR!',
+              'Du hast alle 15 Versuche aufgebraucht. Das Memory-Deck wird neu gemischt!',
+              () => initGame2()
+            );
+          }
         }, 900);
       }
     }
@@ -497,269 +931,391 @@ function initGame2() {
 }
 
 // ==========================================================================
-// 3. SPIEL ⚖️ BRUCH-BALKENWAAGE (INTERACTIVE SCALE)
+// 3. SPIEL 🔍 WELCHER PASST NICHT? (ODD-ONE-OUT)
+// - 7 Runden (länger & abwechslungsreicher)
+// - 3 Leben! Bei falscher Wahl -> 1 Leben verloren
+// - Bei 0 Leben -> Neustart mit neuen Aufgaben
 // ==========================================================================
 function initGame3() {
-  document.getElementById('arenaTitle').textContent = '⚖️ Station 3: Die Bruch-Balkenwaage';
+  document.getElementById('arenaTitle').textContent = '🔍 Station 3: Welcher passt nicht?';
+  const livesEl = document.getElementById('arenaLives');
+  const scoreEl = document.getElementById('arenaScore');
+  livesEl.style.display = 'inline-flex';
+
+  let lives = 3;
   let score = 0;
-  const targetScore = 5;
+  const targetScore = 7;
 
-  const duels = [
+  livesEl.textContent = getHeartString(lives);
+  scoreEl.textContent = `Runde: 1 / ${targetScore}`;
+
+  function fracHtml3(n, d) {
+    return `<div class="oon-frac"><span class="oon-num">${n}</span><span class="oon-den">${d}</span></div>`;
+  }
+
+  function barSvg3(num, den) {
+    const total = Math.min(den, 8);
+    const filled = Math.round((num / den) * total);
+    const cells = Array.from({length: total}, (_, i) =>
+      `<rect x="${i*(100/total)+1}" y="6" width="${100/total-2}" height="18" rx="3"
+             fill="${i < filled ? '#16a34a' : '#e2e8f0'}"/>`
+    ).join('');
+    return `<svg viewBox="0 0 100 30" width="80" height="24">${cells}</svg>`;
+  }
+
+  const ALL_ROUNDS = [
     {
-      f1: { num: 5, den: 11, val: 5/11, text: '5/11' },
-      f2: { num: 5, den: 12, val: 5/12, text: '5/12' },
-      correct: '>',
-      lupe: 'Gleicher Zähler (5)! 11tel-Stücke sind größer als 12tel-Stücke.'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '1 : 2',           correct: true  }, // 1/2
+        { label: 'Prozent',   html: '50 %',            correct: true  }, // 50%
+        { label: 'Bild',      html: barSvg3(1,2),      correct: true  }, // 1/2
+        { label: 'Bruch',     html: fracHtml3(3,5),    correct: false }, // 3/5 ≠ 1/2
+      ],
+      explanation: '3/5 = 60 % – das passt nicht! Die anderen zeigen alle ½ = 50 %.'
     },
     {
-      f1: { num: 8, den: 20, val: 8/20, text: '8/20' },
-      f2: { num: 8, den: 30, val: 8/30, text: '8/30' },
-      correct: '>',
-      lupe: 'Gleicher Zähler (8)! 20stel sind größer als 30stel.'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Bruch',     html: fracHtml3(3,4),    correct: true  }, // 3/4
+        { label: 'Quotient',  html: '3 : 4',           correct: true  }, // 3/4
+        { label: 'Prozent',   html: '75 %',            correct: true  }, // 75%
+        { label: 'Prozent',   html: '60 %',            correct: false }, // 60% ≠ 3/4
+      ],
+      explanation: '60 % ≠ ¾! 3 : 4 ist 75 %, und der Bruch 3/4 ist ebenfalls 75 %.'
     },
     {
-      f1: { num: 15, den: 18, val: 15/18, text: '15/18' },
-      f2: { num: 19, den: 16, val: 19/16, text: '19/16' },
-      correct: '<',
-      lupe: 'Stützzahl 1! 15/18 ist kleiner als 1, 19/16 ist größer als 1!'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Prozent',   html: '25 %',            correct: true  }, // 25%
+        { label: 'Bild',      html: barSvg3(1,4),      correct: true  }, // 1/4
+        { label: 'Quotient',  html: '1 : 4',           correct: true  }, // 1/4
+        { label: 'Bruch',     html: fracHtml3(2,5),    correct: false }, // 2/5 = 40% ≠ 1/4
+      ],
+      explanation: '2/5 = 40 % – das passt nicht! Alle anderen zeigen ¼ = 25 %.'
     },
     {
-      f1: { num: 13, den: 14, val: 13/14, text: '13/14' },
-      f2: { num: 8, den: 9, val: 8/9, text: '8/9' },
-      correct: '>',
-      lupe: 'Rest zu 1! Bei 13/14 fehlt nur 1/14, bei 8/9 fehlt 1/9 (größere Lücke!).'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '2 : 5',           correct: true  }, // 2/5
+        { label: 'Bruch',     html: fracHtml3(2,5),    correct: true  }, // 2/5
+        { label: 'Bild',      html: barSvg3(2,5),      correct: true  }, // 2/5
+        { label: 'Prozent',   html: '50 %',            correct: false }, // 50% ≠ 2/5
+      ],
+      explanation: '50 % = ½ – das passt nicht! Die anderen zeigen alle 2/5 = 40 %.'
     },
     {
-      f1: { num: 3, den: 4, val: 3/4, text: '3/4' },
-      f2: { num: 6, den: 8, val: 6/8, text: '6/8' },
-      correct: '=',
-      lupe: 'Bruch-Zwillinge! 3/4 erweitert mit 2 ergibt exakt 6/8.'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Bruch',     html: fracHtml3(1,5),    correct: true  }, // 1/5
+        { label: 'Quotient',  html: '1 : 5',           correct: true  }, // 1/5
+        { label: 'Prozent',   html: '20 %',            correct: true  }, // 20%
+        { label: 'Prozent',   html: '30 %',            correct: false }, // 30% ≠ 1/5
+      ],
+      explanation: '30 % passt nicht! 1 : 5 = 1/5 = 20 %.'
     },
     {
-      f1: { num: 2, den: 5, val: 2/5, text: '2/5' },
-      f2: { num: 1, den: 2, val: 1/2, text: '1/2' },
-      correct: '<',
-      lupe: 'Stützzahl 1/2! 2/5 = 4/10 ist weniger als die Hälfte (5/10).'
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '4 : 5',           correct: true  }, // 4/5
+        { label: 'Bild',      html: barSvg3(4,5),      correct: true  }, // 4/5
+        { label: 'Prozent',   html: '80 %',            correct: true  }, // 80%
+        { label: 'Bruch',     html: fracHtml3(3,4),    correct: false }, // 3/4 = 75% ≠ 4/5
+      ],
+      explanation: '3/4 = 75 % – das passt nicht! Die anderen zeigen alle 4/5 = 80 %.'
+    },
+    {
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Bruch',     html: fracHtml3(3,5),    correct: true  }, // 3/5
+        { label: 'Quotient',  html: '3 : 5',           correct: true  }, // 3/5
+        { label: 'Prozent',   html: '60 %',            correct: true  }, // 60%
+        { label: 'Bruch',     html: fracHtml3(1,2),    correct: false }, // 1/2 = 50% ≠ 3/5
+      ],
+      explanation: '1/2 = 50 % – das passt nicht! 3 : 5 = 3/5 = 60 %.'
+    },
+    {
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '1 : 10',          correct: true  }, // 1/10
+        { label: 'Bruch',     html: fracHtml3(1,10),   correct: true  }, // 1/10
+        { label: 'Prozent',   html: '10 %',            correct: true  }, // 10%
+        { label: 'Prozent',   html: '25 %',            correct: false }, // 25% ≠ 1/10
+      ],
+      explanation: '25 % = ¼ – das passt nicht! 1 : 10 = 1/10 = 10 %.'
+    },
+    {
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '1 : 3',           correct: true  }, // 1/3
+        { label: 'Bruch',     html: fracHtml3(1,3),    correct: true  }, // 1/3
+        { label: 'Bild',      html: barSvg3(1,3),      correct: true  }, // 1/3
+        { label: 'Prozent',   html: '40 %',            correct: false }, // 40% ≠ 1/3
+      ],
+      explanation: '40 % = 2/5 – das passt nicht! Die anderen zeigen alle ⅓ ≈ 33 %.'
+    },
+    {
+      question: 'Drei Karten zeigen denselben Wert – welche passt NICHT?',
+      cards: [
+        { label: 'Quotient',  html: '7 : 10',          correct: true  }, // 7/10
+        { label: 'Prozent',   html: '70 %',            correct: true  }, // 70%
+        { label: 'Bild',      html: barSvg3(7,10),     correct: true  }, // 7/10
+        { label: 'Prozent',   html: '75 %',            correct: false }, // 75% ≠ 70%
+      ],
+      explanation: '75 % = ¾ – das passt nicht! 7 : 10 = 7/10 = 70 %.'
     }
   ];
 
-  duels.sort(() => Math.random() - 0.5);
-  let duelIdx = 0;
+  let rounds = [...ALL_ROUNDS].sort(() => Math.random() - 0.5).slice(0, targetScore);
+  let roundIdx = 0;
 
-  function renderDuel() {
-    document.getElementById('arenaScore').textContent = `Duelle: ${score} / ${targetScore}`;
+  function renderRound() {
+    scoreEl.textContent = `Runde: ${score + 1} / ${targetScore}`;
+    livesEl.textContent = getHeartString(lives);
+
     if (score >= targetScore) {
-      winStation(3, '⚖️', 'Vergleichs-Profi an der Balkenwaage!');
+      winStation(3, '🔍', 'Ausreißer-Detektor – Meisterlevel!');
       return;
     }
 
-    const d = duels[duelIdx % duels.length];
+    const r = rounds[roundIdx % rounds.length];
+    const shuffled = [...r.cards].sort(() => Math.random() - 0.5);
     const content = document.getElementById('arenaContent');
 
     content.innerHTML = `
-      <div class="scale-arena">
-        <div class="scale-stage">
-          <div class="scale-beam" id="scaleBeam">
-            <!-- Left Pan -->
-            <div class="scale-pan-wrap pan-left">
-              <div class="scale-chain"></div>
-              <div class="scale-pan">
-                <div class="fraction-display">
-                  <span class="num">${d.f1.num}</span>
-                  <span class="den">${d.f1.den}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Pan -->
-            <div class="scale-pan-wrap pan-right">
-              <div class="scale-chain"></div>
-              <div class="scale-pan">
-                <div class="fraction-display">
-                  <span class="num">${d.f2.num}</span>
-                  <span class="den">${d.f2.den}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="scale-pivot-ball"></div>
-          <div class="scale-fulcrum"></div>
-        </div>
-
-        <div class="scale-controls">
-          <button class="scale-btn" id="btnLess" title="Rechts ist schwerer">&lt;</button>
-          <button class="scale-btn" id="btnEqual" title="Beide sind gleich schwer">=</button>
-          <button class="scale-btn" id="btnGreater" title="Links ist schwerer">&gt;</button>
-        </div>
-
-        <div class="lupe-bar">
-          <button class="lupe-btn" id="lupeBtn">🔍 Hauptnenner-Lupe</button>
-          <div class="lupe-reveal" id="lupeReveal" style="display:none;">${d.lupe}</div>
-        </div>
+      <div class="oon-arena">
+        <div class="oon-question">${r.question}</div>
+        <div class="oon-grid" id="oonGrid"></div>
+        <div class="oon-feedback" id="oonFeedback"></div>
       </div>
     `;
 
-    document.getElementById('lupeBtn').onclick = () => {
-      playSound('lupe');
-      const rev = document.getElementById('lupeReveal');
-      rev.style.display = rev.style.display === 'none' ? 'block' : 'none';
-    };
-
-    document.getElementById('btnLess').onclick = () => handleChoice('<', d);
-    document.getElementById('btnEqual').onclick = () => handleChoice('=', d);
-    document.getElementById('btnGreater').onclick = () => handleChoice('>', d);
-  }
-
-  function handleChoice(symbol, d) {
-    const beam = document.getElementById('scaleBeam');
-    playSound('thud');
-
-    if (symbol === '<') beam.className = 'scale-beam tilt-right';
-    else if (symbol === '>') beam.className = 'scale-beam tilt-left';
-    else beam.className = 'scale-beam balanced';
-
-    if (symbol === d.correct) {
-      playSound('correct');
-      score++;
-      duelIdx++;
-      setTimeout(renderDuel, 850);
-    } else {
-      playSound('wrong');
-      const rev = document.getElementById('lupeReveal');
-      rev.style.display = 'block';
-      setTimeout(() => {
-        beam.className = 'scale-beam';
-      }, 1000);
-    }
-  }
-
-  renderDuel();
-}
-
-// ==========================================================================
-// 4. SPIEL ⏱️ SPORTFEST-HINDERNISLAUF (HURDLE RUNNER)
-// ==========================================================================
-function initGame4() {
-  document.getElementById('arenaTitle').textContent = '⏱️ Station 4: Der Sportfest-Hindernislauf';
-  let hurdleIdx = 0;
-  const totalHurdles = 4;
-
-  const hurdles = [
-    {
-      q: 'Hürde 1: 1/2 von 7 m = ?',
-      ans: '3,5 m',
-      opts: ['3,5 m', '3 m', '35 cm'],
-      pos: 20,
-      tip: '7 m durch 2 teilen = 3,5 m (oder 350 cm)!'
-    },
-    {
-      q: 'Hürde 2: 2/5 von 1000 g = ?',
-      ans: '400 g',
-      opts: ['400 g', '200 g', '500 g'],
-      pos: 42,
-      tip: '1000 g : 5 = 200 g, und 200 g · 2 = 400 g!'
-    },
-    {
-      q: 'Hürde 3: 3/4 von 60 min Pause = ?',
-      ans: '45 min',
-      opts: ['45 min', '30 min', '15 min'],
-      pos: 64,
-      tip: '60 min : 4 = 15 min, und 15 min · 3 = 45 min!'
-    },
-    {
-      q: 'Hürde 4: 25 % von 80 € Budget = ?',
-      ans: '20 €',
-      opts: ['20 €', '25 €', '40 €'],
-      pos: 84,
-      tip: '25 % ist 1/4! 80 € : 4 = 20 €!'
-    }
-  ];
-
-  function renderTrack() {
-    document.getElementById('arenaScore').textContent = `Hürden: ${hurdleIdx} / ${totalHurdles}`;
-    if (hurdleIdx >= totalHurdles) {
-      winStation(4, '⏱️', 'Sprint-Champion beim Sportfest-Lauf!');
-      return;
-    }
-
-    const cur = hurdles[hurdleIdx];
-    const runnerLeft = hurdleIdx === 0 ? 4 : hurdles[hurdleIdx - 1].pos;
-    const progressPercent = (hurdleIdx / totalHurdles) * 100;
-
-    const content = document.getElementById('arenaContent');
-    content.innerHTML = `
-      <div class="runner-arena">
-        <div class="tartan-track" id="track">
-          <div class="track-lane"></div>
-          <div class="track-finish-line"></div>
-
-          <!-- Runner -->
-          <div class="runner-avatar" id="runner" style="left: ${runnerLeft}%;">🏃</div>
-
-          <!-- Hurdles -->
-          ${hurdles.map((h, i) => `
-            <div class="hurdle-post ${i < hurdleIdx ? 'cleared' : ''}" style="left: ${h.pos}%;"></div>
-          `).join('')}
-        </div>
-
-        <div class="track-progress-bar">
-          <div class="track-progress-fill" style="width: ${progressPercent}%;"></div>
-        </div>
-
-        <div class="hurdle-prompt-card">
-          <div style="font-size:0.85rem; font-weight:800; color:var(--lvl-orange); text-transform:uppercase;">
-            Sportfest-Hindernis ${hurdleIdx + 1}
-          </div>
-          <div class="hurdle-prompt-q">${cur.q}</div>
-        </div>
-
-        <div class="sprint-pads-grid" id="padsGrid"></div>
-      </div>
-    `;
-
-    const padsGrid = document.getElementById('padsGrid');
-    const shuffledOpts = [...cur.opts].sort(() => Math.random() - 0.5);
-
-    shuffledOpts.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'sprint-pad-btn';
-      btn.textContent = opt;
-
-      btn.onclick = () => {
-        const runner = document.getElementById('runner');
-
-        if (opt === cur.ans) {
-          playSound('whoosh');
-          btn.classList.add('correct');
-          runner.classList.add('jump');
-
-          setTimeout(() => {
-            playSound('correct');
-            runner.style.left = `${cur.pos + 4}%`;
-          }, 350);
-
-          setTimeout(() => {
-            runner.classList.remove('jump');
-            hurdleIdx++;
-            renderTrack();
-          }, 750);
-        } else {
+    const grid = document.getElementById('oonGrid');
+    shuffled.forEach(card => {
+      const el = document.createElement('div');
+      el.className = 'oon-card';
+      el.innerHTML = `
+        <div class="oon-type-label">${card.label}</div>
+        <div class="oon-value">${card.html}</div>
+      `;
+      el.onclick = () => {
+        if (card.correct) {
+          // FALSCHE WAHL: Karte gehört zur Gruppe, ist kein Ausreißer!
           playSound('wrong');
-          btn.classList.add('wrong');
-          runner.classList.add('stumble');
+          el.classList.add('oon-wrong');
+          lives--;
+          livesEl.textContent = getHeartString(lives);
+          document.getElementById('oonFeedback').innerHTML =
+            `❌ Das gehört dazu! ${r.explanation}`;
+
+          grid.querySelectorAll('.oon-card').forEach((c, i) => {
+            if (!shuffled[i].correct) c.classList.add('oon-highlight');
+          });
+
+          if (lives <= 0) {
+            setTimeout(() => {
+              showGameOver(
+                'KEINE LEBEN MEHR!',
+                'Du hast alle 3 Leben verloren. Neue Aufgaben werden geladen!',
+                () => initGame3()
+              );
+            }, 1200);
+          } else {
+            setTimeout(() => {
+              roundIdx++;
+              renderRound();
+            }, 1800);
+          }
+        } else {
+          // RICHTIG: Ausreißer gefunden!
+          playSound('correct');
+          el.classList.add('oon-correct');
+          score++;
+          document.getElementById('oonFeedback').innerHTML =
+            `✅ Genau! ${r.explanation}`;
           setTimeout(() => {
-            btn.classList.remove('wrong');
-            runner.classList.remove('stumble');
-          }, 500);
+            roundIdx++;
+            renderRound();
+          }, 1200);
         }
       };
-
-      padsGrid.appendChild(btn);
+      grid.appendChild(el);
     });
   }
 
-  renderTrack();
+  renderRound();
+}
+
+// ==========================================================================
+// 4. SPIEL 🁣 BRUCH-DOMINO (GLEICHWERTIGE DARSTELLUNGEN)
+// - Mit vorgelegtem Startstein
+// - Längere Kette: 6 Schritte (7 Kacheln)
+// - Gemischte Darstellungen: Quotient, Bruch, Prozent, Bild
+// - 3 Leben! Bei falscher Kachel -> 1 Leben verloren, bei 0 Leben Neustart
+// ==========================================================================
+function initGame4() {
+  document.getElementById('arenaTitle').textContent = '🁣 Station 4: Bruch-Domino';
+  const livesEl = document.getElementById('arenaLives');
+  const scoreEl = document.getElementById('arenaScore');
+  livesEl.style.display = 'inline-flex';
+
+  let lives = 3;
+  let step = 0;
+  const totalSteps = 6;
+
+  livesEl.textContent = getHeartString(lives);
+  scoreEl.textContent = `Gelegt: 0 / ${totalSteps}`;
+
+  function makeCell(type, eq) {
+    const MAP = {
+      1: { frac: '1/2', quot: '1 : 2',  pct: '50 %', svg: svgBar(1,2) },
+      2: { frac: '1/4', quot: '1 : 4',  pct: '25 %', svg: svgBar(1,4) },
+      3: { frac: '3/4', quot: '3 : 4',  pct: '75 %', svg: svgBar(3,4) },
+      4: { frac: '2/5', quot: '2 : 5',  pct: '40 %', svg: svgBar(2,5) },
+      5: { frac: '1/5', quot: '1 : 5',  pct: '20 %', svg: svgBar(1,5) },
+      6: { frac: '4/5', quot: '4 : 5',  pct: '80 %', svg: svgBar(4,5) }
+    };
+    const d = MAP[eq] || MAP[1];
+    if (type === 'frac') return `<div class="dom-cell dom-frac">${fracHtml(d.frac)}</div>`;
+    if (type === 'quot') return `<div class="dom-cell dom-quot"><span class="mem-value-quotient" style="font-size:1.15rem;">${d.quot}</span></div>`;
+    if (type === 'pct')  return `<div class="dom-cell dom-pct">${d.pct}</div>`;
+    if (type === 'img')  return `<div class="dom-cell dom-img">${d.svg}</div>`;
+    return '';
+  }
+
+  function fracHtml(str) {
+    const [n, d] = str.split('/');
+    return `<div class="dom-fraction"><span class="dom-num">${n}</span><span class="dom-den">${d}</span></div>`;
+  }
+
+  function svgBar(num, den) {
+    const total = Math.min(den, 8);
+    const filled = Math.round((num / den) * total);
+    const cells = Array.from({length: total}, (_, i) =>
+      `<rect x="${i*(100/total)+1}" y="8" width="${100/total-2}" height="14" rx="2"
+             fill="${i < filled ? '#16a34a' : '#e2e8f0'}"/>`
+    ).join('');
+    return `<svg viewBox="0 0 100 30" width="72" height="22" class="dom-bar-svg">${cells}</svg>`;
+  }
+
+  // 7 Kacheln Kette: chain[0] ist der vorgelegte Startstein!
+  const chain = [
+    { leftEq: 1, leftType: 'frac', rightEq: 2, rightType: 'pct'  }, // Startstein: 1/2 | 25%
+    { leftEq: 2, leftType: 'quot', rightEq: 3, rightType: 'frac' }, // 1:4 | 3/4
+    { leftEq: 3, leftType: 'pct',  rightEq: 4, rightType: 'quot' }, // 75% | 2:5
+    { leftEq: 4, leftType: 'img',  rightEq: 5, rightType: 'pct'  }, // Bild 2/5 | 20%
+    { leftEq: 5, leftType: 'quot', rightEq: 6, rightType: 'frac' }, // 1:5 | 4/5
+    { leftEq: 6, leftType: 'pct',  rightEq: 1, rightType: 'quot' }, // 80% | 1:2
+    { leftEq: 1, leftType: 'img',  rightEq: 3, rightType: 'pct'  }  // Bild 1/2 | 75%
+  ];
+
+  const distractors = [
+    { leftEq: 3, leftType: 'frac', rightEq: 5, rightType: 'pct' },
+    { leftEq: 1, leftType: 'img',  rightEq: 4, rightType: 'quot'},
+    { leftEq: 4, leftType: 'pct',  rightEq: 2, rightType: 'frac'},
+    { leftEq: 5, leftType: 'frac', rightEq: 1, rightType: 'quot'},
+    { leftEq: 2, leftType: 'pct',  rightEq: 3, rightType: 'img' },
+    { leftEq: 4, leftType: 'quot', rightEq: 6, rightType: 'pct' }
+  ];
+
+  const content = document.getElementById('arenaContent');
+
+  function renderDomino() {
+    scoreEl.textContent = `Gelegt: ${step} / ${totalSteps}`;
+    livesEl.textContent = getHeartString(lives);
+
+    if (step >= totalSteps) {
+      winStation(4, '🁣', 'Domino-Meister der gleichwertigen Brüche!');
+      return;
+    }
+
+    const prevTile = chain[step];
+    const correct  = chain[step + 1];
+    const dist1    = distractors[step % distractors.length];
+    const dist2    = distractors[(step + 2) % distractors.length];
+
+    const startBadge = step === 0
+      ? `<div class="dom-startbadge">🟢 Startstein</div>` : '';
+
+    const chainHtml = `
+      <div class="dom-placed-wrap">
+        <div class="dom-tile-wrap">
+          ${startBadge}
+          <div class="dom-tile dom-tile-placed">
+            ${makeCell(prevTile.leftType, prevTile.leftEq)}
+            <div class="dom-divider"></div>
+            ${makeCell(prevTile.rightType, prevTile.rightEq)}
+          </div>
+        </div>
+        <div class="dom-arrow">➜</div>
+        <div class="dom-tile dom-tile-next">
+          <div class="dom-cell dom-cell-open">${makeCell(prevTile.rightType, prevTile.rightEq)}</div>
+          <div class="dom-divider"></div>
+          <div class="dom-cell dom-cell-question">?</div>
+        </div>
+      </div>`;
+
+    const allOpts = [correct, dist1, dist2].sort(() => Math.random() - 0.5);
+
+    content.innerHTML = `
+      <div class="domino-arena">
+        <div class="dom-chain-area">
+          <div class="dom-step-label">Kachel ${step + 1} von ${totalSteps}: Welche Kachel passt als Nächstes?</div>
+          ${chainHtml}
+        </div>
+        <div class="dom-options-grid" id="domOptions"></div>
+        <div class="dom-hint" id="domHint"></div>
+      </div>
+    `;
+
+    const grid = document.getElementById('domOptions');
+    allOpts.forEach(opt => {
+      const tile = document.createElement('div');
+      tile.className = 'dom-tile dom-tile-option';
+      const isCorrect = (opt === correct);
+
+      tile.innerHTML = `
+        ${makeCell(opt.leftType, opt.leftEq)}
+        <div class="dom-divider"></div>
+        ${makeCell(opt.rightType, opt.rightEq)}
+      `;
+
+      tile.onclick = () => {
+        if (isCorrect) {
+          playSound('correct');
+          tile.classList.add('dom-tile-correct');
+          step++;
+          setTimeout(renderDomino, 550);
+        } else {
+          playSound('wrong');
+          tile.classList.add('dom-tile-wrong');
+          lives--;
+          livesEl.textContent = getHeartString(lives);
+          const hint = document.getElementById('domHint');
+          hint.textContent = `❌ Passt nicht! Verbleibende Leben: ${getHeartString(lives)}`;
+
+          if (lives <= 0) {
+            setTimeout(() => {
+              showGameOver(
+                'KEINE LEBEN MEHR!',
+                'Du hast alle 3 Leben verloren. Das Domino startet mit neuen Kacheln von vorne!',
+                () => initGame4()
+              );
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              tile.classList.remove('dom-tile-wrong');
+              hint.textContent = '';
+            }, 1100);
+          }
+        }
+      };
+
+      grid.appendChild(tile);
+    });
+  }
+
+  renderDomino();
 }
 
 // ==========================================================================

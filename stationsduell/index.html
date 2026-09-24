@@ -62,11 +62,11 @@
         <article class="station-card" id="card1">
           <div class="card-header color-green">
             <span class="station-num">Station 1</span>
-            <span class="station-icon">🎯</span>
+            <span class="station-icon">🧭</span>
           </div>
           <div class="card-body">
-            <h3>Anteile & Prozente</h3>
-            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 1a</p>
+            <h3>Bruch-Expedition</h3>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 32, Nr. 1 (a–c)</p>
             <div class="status-badge locked" id="status1">🔒 Gesperrt</div>
           </div>
           <div class="card-footer">
@@ -83,7 +83,7 @@
           </div>
           <div class="card-body">
             <h3>Bruch-Zwillinge</h3>
-            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 4a</p>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 32, Nr. 4 (a, b, d)</p>
             <div class="status-badge locked" id="status2">🔒 Gesperrt</div>
           </div>
           <div class="card-footer">
@@ -96,11 +96,11 @@
         <article class="station-card" id="card3">
           <div class="card-header color-purple">
             <span class="station-num">Station 3</span>
-            <span class="station-icon">⚖️</span>
+            <span class="station-icon">🔍</span>
           </div>
           <div class="card-body">
             <h3>Wer war besser?</h3>
-            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 233, Nr. 11a</p>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 33, Nr. 11 (a–c)</p>
             <div class="status-badge locked" id="status3">🔒 Gesperrt</div>
           </div>
           <div class="card-footer">
@@ -113,11 +113,11 @@
         <article class="station-card" id="card4">
           <div class="card-header color-orange">
             <span class="station-num">Station 4</span>
-            <span class="station-icon">⏱️</span>
+            <span class="station-icon">🁣</span>
           </div>
           <div class="card-body">
             <h3>Sportfest-Zeitplan</h3>
-            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 6 / Pause</p>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 32, Nr. 6 (a, b, e)</p>
             <div class="status-badge locked" id="status4">🔒 Gesperrt</div>
           </div>
           <div class="card-footer">
@@ -132,8 +132,9 @@
     <section id="gameView" class="game-view" style="display:none;">
       <div class="arena-topbar">
         <button class="back-btn" onclick="returnToHub()">⬅ Zurück zum Hub</button>
-        <div class="arena-title" id="arenaTitle">Station 1: Prozent-Treffer</div>
+        <div class="arena-title" id="arenaTitle">Station 1: Bruch-Expedition</div>
         <div class="arena-stats">
+          <span id="arenaLives" class="lives-pill">❤️❤️❤️</span>
           <span id="arenaScore" class="score-pill">Punkte: 0</span>
         </div>
       </div>
@@ -154,12 +155,35 @@
       </div>
       <div class="modal-body">
         <p id="modalPrompt" class="modal-prompt">Aufgabe...</p>
-        <div class="input-wrap">
-          <input type="text" id="unlockInput" placeholder="Eure Lösung..." autocomplete="off">
-          <button id="checkUnlockBtn" class="confirm-btn" onclick="verifyUnlock()">Prüfen & Freischalten 🚀</button>
+        <div class="single-input-wrap">
+          <input type="text"
+                 id="unlockSingleInput"
+                 class="single-unlock-input"
+                 placeholder="Ergebnis..."
+                 autocomplete="off">
         </div>
+        <button id="checkUnlockBtn" class="confirm-btn" onclick="verifyUnlock()">Prüfen & Freischalten 🚀</button>
         <p id="modalFeedback" class="feedback-msg"></p>
       </div>
+    </div>
+  </div>
+
+  <!-- GAME OVER / RESTART MODAL -->
+  <div id="gameOverModal" class="modal-overlay" style="display:none;">
+    <div class="modal-card game-over-card">
+      <div class="game-over-icon">💔</div>
+      <h2 id="gameOverTitle">KEINE LEBEN MEHR!</h2>
+      <p id="gameOverMsg" class="game-over-msg">Du hast alle 3 Leben verloren. Du musst mit neuen Aufgaben von vorne anfangen!</p>
+      <button class="confirm-btn restart-btn" onclick="handleGameOverRestart()">🔄 Nochmal versuchen</button>
+    </div>
+  </div>
+
+  <!-- DIDAKTISCHES ERKLÄRUNGS-MODAL (STATION 1) -->
+  <div id="explanationModal" class="modal-overlay" style="display:none;">
+    <div class="modal-card explanation-card">
+      <h2 id="expTitle">⚠️ Nicht kleiner!</h2>
+      <div id="expContent"></div>
+      <button class="confirm-btn" onclick="closeExplanationModal()">Weiter ➔</button>
     </div>
   </div>
 
