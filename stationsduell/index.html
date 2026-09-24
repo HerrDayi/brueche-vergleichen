@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Sportfest-Stationsduell | Mathe 6D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="badge-tag">Mathe 6D</span>
+        <h1>🏆 Das große Sportfest-Stationsduell</h1>
+      </div>
+      <div class="team-bar">
+        <label for="teamNameInput" class="team-label">Tandem-Team:</label>
+        <input type="text" id="teamNameInput" placeholder="Namen eingeben..." maxlength="25">
+        <button id="soundToggleBtn" class="icon-btn" title="Ton an/aus">🔊</button>
+      </div>
+    </header>
+
+    <!-- STICKER PASS BAR (FORTSCHRITT) -->
+    <section class="pass-bar">
+      <div class="pass-title">
+        <span>🎖️ Euer digitaler Stationspass:</span>
+        <span id="badgeCount" class="badge-counter">0 / 4 Sticker gesammelt</span>
+      </div>
+      <div class="sticker-slots">
+        <div class="slot" id="slot1" data-station="1">
+          <div class="slot-circle locked">🎯</div>
+          <span class="slot-name">Station 1<br><b>Prozente</b></span>
+        </div>
+        <div class="slot" id="slot2" data-station="2">
+          <div class="slot-circle locked">🔄</div>
+          <span class="slot-name">Station 2<br><b>Zwillinge</b></span>
+        </div>
+        <div class="slot" id="slot3" data-station="3">
+          <div class="slot-circle locked">⚖️</div>
+          <span class="slot-name">Station 3<br><b>Vergleichen</b></span>
+        </div>
+        <div class="slot" id="slot4" data-station="4">
+          <div class="slot-circle locked">⏱️</div>
+          <span class="slot-name">Station 4<br><b>Größen</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUB VIEW: 4 STATIONEN CARDS -->
+    <main id="hubView" class="hub-view">
+      <div class="info-alert">
+        <strong>📋 Regel:</strong> Löst zuerst die <strong>Pflichtaufgabe</strong> im Heft/auf dem Zettel. Gebt dann das Ergebnis zur Freischaltung ein, um die Spiel-Challenge zu starten!
+      </div>
+
+      <div class="stations-grid">
+        <!-- Station 1 -->
+        <article class="station-card" id="card1">
+          <div class="card-header color-green">
+            <span class="station-num">Station 1</span>
+            <span class="station-icon">🎯</span>
+          </div>
+          <div class="card-body">
+            <h3>Anteile & Prozente</h3>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 1a</p>
+            <div class="status-badge locked" id="status1">🔒 Gesperrt</div>
+          </div>
+          <div class="card-footer">
+            <button class="action-btn unlock-btn" onclick="openUnlockModal(1)">🔓 Pflichtaufgabe prüfen</button>
+            <button class="action-btn play-btn" onclick="startStationGame(1)" style="display:none;">🎮 Spiel starten</button>
+          </div>
+        </article>
+
+        <!-- Station 2 -->
+        <article class="station-card" id="card2">
+          <div class="card-header color-blue">
+            <span class="station-num">Station 2</span>
+            <span class="station-icon">🔄</span>
+          </div>
+          <div class="card-body">
+            <h3>Bruch-Zwillinge</h3>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 4a</p>
+            <div class="status-badge locked" id="status2">🔒 Gesperrt</div>
+          </div>
+          <div class="card-footer">
+            <button class="action-btn unlock-btn" onclick="openUnlockModal(2)">🔓 Pflichtaufgabe prüfen</button>
+            <button class="action-btn play-btn" onclick="startStationGame(2)" style="display:none;">🎮 Spiel starten</button>
+          </div>
+        </article>
+
+        <!-- Station 3 -->
+        <article class="station-card" id="card3">
+          <div class="card-header color-purple">
+            <span class="station-num">Station 3</span>
+            <span class="station-icon">⚖️</span>
+          </div>
+          <div class="card-body">
+            <h3>Wer war besser?</h3>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 233, Nr. 11a</p>
+            <div class="status-badge locked" id="status3">🔒 Gesperrt</div>
+          </div>
+          <div class="card-footer">
+            <button class="action-btn unlock-btn" onclick="openUnlockModal(3)">🔓 Pflichtaufgabe prüfen</button>
+            <button class="action-btn play-btn" onclick="startStationGame(3)" style="display:none;">🎮 Spiel starten</button>
+          </div>
+        </article>
+
+        <!-- Station 4 -->
+        <article class="station-card" id="card4">
+          <div class="card-header color-orange">
+            <span class="station-num">Station 4</span>
+            <span class="station-icon">⏱️</span>
+          </div>
+          <div class="card-body">
+            <h3>Sportfest-Zeitplan</h3>
+            <p class="pflicht-info"><strong>Pflichtaufgabe:</strong> Buch S. 232, Nr. 6 / Pause</p>
+            <div class="status-badge locked" id="status4">🔒 Gesperrt</div>
+          </div>
+          <div class="card-footer">
+            <button class="action-btn unlock-btn" onclick="openUnlockModal(4)">🔓 Pflichtaufgabe prüfen</button>
+            <button class="action-btn play-btn" onclick="startStationGame(4)" style="display:none;">🎮 Spiel starten</button>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- GAME ARENA VIEW -->
+    <section id="gameView" class="game-view" style="display:none;">
+      <div class="arena-topbar">
+        <button class="back-btn" onclick="returnToHub()">⬅ Zurück zum Hub</button>
+        <div class="arena-title" id="arenaTitle">Station 1: Prozent-Treffer</div>
+        <div class="arena-stats">
+          <span id="arenaLives">❤️❤️❤️</span>
+          <span id="arenaScore" class="score-pill">Punkte: 0</span>
+        </div>
+      </div>
+
+      <div class="arena-content" id="arenaContent">
+        <!-- Dynamischer Spielinhalt wird per JS injiziert -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- UNLOCK MODAL -->
+  <div id="unlockModal" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">🔒 Station freischalten</h2>
+        <button class="close-x" onclick="closeUnlockModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalPrompt" class="modal-prompt">Aufgabe...</p>
+        <div class="input-wrap">
+          <input type="text" id="unlockInput" placeholder="Eure Lösung..." autocomplete="off">
+          <button id="checkUnlockBtn" class="confirm-btn" onclick="verifyUnlock()">Prüfen & Freischalten 🚀</button>
+        </div>
+        <p id="modalFeedback" class="feedback-msg"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY / STICKER MODAL -->
+  <div id="victoryModal" class="modal-overlay" style="display:none;">
+    <div class="modal-card victory-card">
+      <div class="confetti-zone">🎉 🏆 🎉</div>
+      <h2>STATION GEMEISTERT!</h2>
+      <div class="won-sticker" id="wonSticker">🎯</div>
+      <h3 id="wonStickerTitle">Treffsicher bei Anteilen & Prozenten!</h3>
+      <p class="victory-instruction">
+        👉 <strong>Zeigt diesen Bildschirm Herrn Dayi</strong> und holt euch den echten Sticker für euren Stationspass ab!
+      </p>
+      <button class="confirm-btn" onclick="closeVictoryModal()">Weiter im Stationsduell 🚀</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
