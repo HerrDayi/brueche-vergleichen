@@ -1790,6 +1790,89 @@ body {
   gap: 12px;
 }
 
+.expedition-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.level-toggle-group {
+  display: flex;
+  gap: 6px;
+}
+
+.lvl-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lvl-btn:hover {
+  background: #f1f5f9;
+}
+
+.lvl-btn.active {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.35);
+}
+
+.jokers-group {
+  display: flex;
+  gap: 6px;
+}
+
+.joker-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  border-radius: 20px;
+  border: 1.5px solid #f59e0b;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.joker-btn:hover:not(:disabled) {
+  background: #fef3c7;
+  transform: translateY(-1px);
+}
+
+.joker-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+  color: #94a3b8;
+  transform: none;
+}
+
+.expedition-toast {
+  background: #1e293b;
+  color: #ffffff;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  animation: fadeIn 0.25s ease;
+}
+
 .expedition-instruction {
   background: #eff6ff;
   border: 1.5px solid #93c5fd;
@@ -1884,9 +1967,22 @@ body {
 }
 
 .node-g.pos-team .node-base-circle {
-  stroke: #10b981;
+  stroke: #059669;
   stroke-width: 5;
   fill: #ecfdf5;
+}
+
+.node-g.is-eliminated .node-base-circle {
+  fill: #f1f5f9;
+  stroke: #cbd5e1;
+  stroke-dasharray: 4, 3;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.node-g.is-eliminated text,
+.node-g.is-eliminated line {
+  opacity: 0.3;
 }
 
 .node-txt {

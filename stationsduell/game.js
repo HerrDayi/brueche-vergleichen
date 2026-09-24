@@ -384,39 +384,48 @@ function returnToHub() {
 // - Nur Brüche <= 1 (keine unechten Brüche)
 // - 3 Leben! Bei 0 Leben -> Neustart mit neuen Brüchen
 // ==========================================================================
-function initGame1() {
+function initGame1(preferredLevel = 'meister') {
   document.getElementById('arenaTitle').textContent = '🧭 Station 1: Bruch-Expedition';
   const livesEl = document.getElementById('arenaLives');
   const scoreEl = document.getElementById('arenaScore');
   livesEl.style.display = 'inline-flex';
 
+  let currentLevel = preferredLevel; // 'meister' (schwierig) oder 'forscher'
   let lives = 3;
+  let steps = 0;
+  let jokerFiftyUsed = false;
+  let jokerHintUsed = false;
+  let eliminatedNodes = new Set();
+
   livesEl.textContent = getHeartString(lives);
   scoreEl.textContent = 'Schritte: 0 / 5';
 
-  const POOL = [
-    { num: 1, den: 12, val: 1/12, str: '1/12' },
-    { num: 1, den: 10, val: 1/10, str: '1/10' },
-    { num: 1, den: 8,  val: 1/8,  str: '1/8' },
-    { num: 1, den: 6,  val: 1/6,  str: '1/6' },
-    { num: 1, den: 5,  val: 1/5,  str: '1/5' },
-    { num: 1, den: 4,  val: 1/4,  str: '1/4' },
-    { num: 3, den: 10, val: 3/10, str: '3/10' },
-    { num: 1, den: 3,  val: 1/3,  str: '1/3' },
-    { num: 3, den: 8,  val: 3/8,  str: '3/8' },
-    { num: 2, den: 5,  val: 2/5,  str: '2/5' },
-    { num: 1, den: 2,  val: 1/2,  str: '1/2' },
-    { num: 3, den: 5,  val: 3/5,  str: '3/5' },
-    { num: 5, den: 8,  val: 5/8,  str: '5/8' },
-    { num: 2, den: 3,  val: 2/3,  str: '2/3' },
-    { num: 7, den: 10, val: 7/10, str: '7/10' },
-    { num: 3, den: 4,  val: 3/4,  str: '3/4' },
-    { num: 4, den: 5,  val: 4/5,  str: '4/5' },
-    { num: 5, den: 6,  val: 5/6,  str: '5/6' },
-    { num: 7, den: 8,  val: 7/8,  str: '7/8' },
-    { num: 9, den: 10, val: 9/10, str: '9/10' },
-    { num: 1, den: 1,  val: 1,    str: '1' }
-  ];
+  // 1. Mathematische Hilfsfunktionen
+  function buildFractionPool(denoms) {
+    let list = [];
+    denoms.forEach(d => {
+      for (let n = 1; n < d; n++) {
+        if (gcd(n, d) === 1) {
+          list.push({ num: n, den: d, val: n / d, str: `${n}/${d}` });
+        }
+      }
+    });
+    list.sort((a, b) => a.val - b.val);
+    let unique = [];
+    let lastVal = -1;
+    list.forEach(item => {
+      if (Math.abs(item.val - lastVal) > 1e-5) {
+        unique.push(item);
+        lastVal = item.val;
+      }
+    });
+    return unique;
+  }
+
+  // Schwierige Meister-Stufe (UPP-Niveau): Nenner bis 25, über 100 Brüche, keine Brüche > 1
+  const POOL_MEISTER = buildFractionPool([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 21, 24, 25]);
+  // Forscher-Stufe: Glattere Nenner
+  const POOL_FORSCHER = buildFractionPool([2, 3, 4, 5, 6, 8, 10, 12]);
 
   const NODES = {
     'start':  { id: 'start',  col: 0, x: 80,  y: 240, isStart: true },
@@ -457,52 +466,77 @@ function initGame1() {
     ['start', 'c1_bot', 'c2_bot', 'c3_bot', 'c4_bot', 'goal']
   ];
 
-  let chosenPath = CHORDLESS_PATHS[Math.floor(Math.random() * CHORDLESS_PATHS.length)];
-  let pathNodes = chosenPath.slice(0, -1); // 5 Knoten ohne 'goal'
-
-  // Wähle 5 echt absteigende Brüche (immer kleinerer Bruch!)
-  let maxIdx = Math.floor(Math.random() * 7) + 14; // Index zwischen 14 und 20
-  let sampleIndices = [];
-  while (sampleIndices.length < 4) {
-    let r = Math.floor(Math.random() * maxIdx);
-    if (!sampleIndices.includes(r)) sampleIndices.push(r);
-  }
-  sampleIndices.sort((a, b) => a - b);
-  let sorted5 = [maxIdx, sampleIndices[3], sampleIndices[2], sampleIndices[1], sampleIndices[0]];
-
+  let chosenPath = [];
+  let pathNodes = [];
   let nodeFracs = {};
-  pathNodes.forEach((nodeId, i) => {
-    nodeFracs[nodeId] = POOL[sorted5[i]];
-  });
-
-  // Distraktoren: An jeder Verzweigung muss der falsche Weg >= dem aktuellen Bruch sein
-  pathNodes.forEach((u, i) => {
-    let nextNode = chosenPath[i + 1];
-    let uVal = nodeFracs[u].val;
-    for (let v of ADJ[u]) {
-      if (v === 'goal' || v === nextNode || nodeFracs[v]) continue;
-      let geItems = POOL.filter(item => item.val >= uVal);
-      nodeFracs[v] = geItems.length > 0
-        ? geItems[Math.floor(Math.random() * geItems.length)]
-        : POOL[POOL.length - 1];
-    }
-  });
-
-  // Restliche Hintergrund-Knoten auffüllen
-  Object.keys(NODES).forEach(nodeId => {
-    if (nodeId === 'goal') {
-      NODES[nodeId].frac = { num: 0, den: 1, val: 0, str: 'Ziel' };
-      return;
-    }
-    if (!nodeFracs[nodeId]) {
-      nodeFracs[nodeId] = POOL[Math.floor(Math.random() * POOL.length)];
-    }
-    NODES[nodeId].frac = nodeFracs[nodeId];
-  });
-
   let currentNode = 'start';
   let visitedPath = ['start'];
-  let steps = 0;
+
+  function generateBoardData() {
+    const activePool = (currentLevel === 'meister') ? POOL_MEISTER : POOL_FORSCHER;
+    chosenPath = CHORDLESS_PATHS[Math.floor(Math.random() * CHORDLESS_PATHS.length)];
+    pathNodes = chosenPath.slice(0, -1); // 5 Knoten ohne 'goal'
+
+    // Wähle 5 echt absteigende Brüche für den Pfad:
+    // P0 in [0.82, 0.94], P1 in [0.68, 0.78], P2 in [0.52, 0.64], P3 in [0.36, 0.48], P4 in [0.18, 0.32]
+    const p0Cands = activePool.filter(x => x.val >= 0.82 && x.val <= 0.94);
+    const p1Cands = activePool.filter(x => x.val >= 0.68 && x.val <= 0.78);
+    const p2Cands = activePool.filter(x => x.val >= 0.52 && x.val <= 0.64);
+    const p3Cands = activePool.filter(x => x.val >= 0.36 && x.val <= 0.48);
+    const p4Cands = activePool.filter(x => x.val >= 0.18 && x.val <= 0.32);
+
+    const p0 = p0Cands.length ? p0Cands[Math.floor(Math.random() * p0Cands.length)] : activePool[activePool.length - 2];
+    const p1 = p1Cands.length ? p1Cands[Math.floor(Math.random() * p1Cands.length)] : activePool[Math.floor(activePool.length * 0.7)];
+    const p2 = p2Cands.length ? p2Cands[Math.floor(Math.random() * p2Cands.length)] : activePool[Math.floor(activePool.length * 0.5)];
+    const p3 = p3Cands.length ? p3Cands[Math.floor(Math.random() * p3Cands.length)] : activePool[Math.floor(activePool.length * 0.3)];
+    const p4 = p4Cands.length ? p4Cands[Math.floor(Math.random() * p4Cands.length)] : activePool[Math.floor(activePool.length * 0.15)];
+
+    const sorted5 = [p0, p1, p2, p3, p4];
+    nodeFracs = {};
+    pathNodes.forEach((nodeId, i) => {
+      nodeFracs[nodeId] = sorted5[i];
+    });
+
+    // Knifflige Distraktoren:
+    // An jeder Verzweigung muss der falsche Weg >= dem aktuellen Bruch sein.
+    // Für echte mathematische Schwierigkeit: Distraktor soll NAH am aktuellen Bruch liegen (+0.02 bis +0.15)!
+    pathNodes.forEach((u, i) => {
+      let nextNode = chosenPath[i + 1];
+      let uVal = nodeFracs[u].val;
+      for (let v of ADJ[u]) {
+        if (v === 'goal' || v === nextNode || nodeFracs[v]) continue;
+        // Nahe Distraktoren (knapp größer als uVal)
+        let closeItems = activePool.filter(item => item.val >= uVal && item.val <= uVal + 0.15 && item.str !== nodeFracs[u].str);
+        if (closeItems.length > 0) {
+          nodeFracs[v] = closeItems[Math.floor(Math.random() * closeItems.length)];
+        } else {
+          let geItems = activePool.filter(item => item.val >= uVal && item.str !== nodeFracs[u].str);
+          nodeFracs[v] = geItems.length > 0 ? geItems[0] : activePool[activePool.length - 1];
+        }
+      }
+    });
+
+    // Restliche Hintergrund-Knoten auffüllen
+    Object.keys(NODES).forEach(nodeId => {
+      if (nodeId === 'goal') {
+        NODES[nodeId].frac = { num: 0, den: 1, val: 0, str: 'Ziel' };
+        return;
+      }
+      if (!nodeFracs[nodeId]) {
+        nodeFracs[nodeId] = activePool[Math.floor(Math.random() * activePool.length)];
+      }
+      NODES[nodeId].frac = nodeFracs[nodeId];
+    });
+
+    currentNode = 'start';
+    visitedPath = ['start'];
+    steps = 0;
+    eliminatedNodes.clear();
+    jokerFiftyUsed = false;
+    jokerHintUsed = false;
+  }
+
+  generateBoardData();
 
   const content = document.getElementById('arenaContent');
   content.style.padding = '12px';
@@ -510,9 +544,24 @@ function initGame1() {
 
   content.innerHTML = `
     <div class="expedition-arena">
+      <div class="expedition-toolbar">
+        <div class="level-toggle-group">
+          <button class="lvl-btn ${currentLevel === 'meister' ? 'active' : ''}" id="lvlMeisterBtn" title="Ungleichnamige Brüche & Prim-Nenner (UPP-Niveau)">⚡ Meister-Stufe (Schwierig 🔥)</button>
+          <button class="lvl-btn ${currentLevel === 'forscher' ? 'active' : ''}" id="lvlForscherBtn" title="Glattere Nenner">🌱 Forscher-Stufe</button>
+        </div>
+        <div class="jokers-group">
+          <button class="joker-btn" id="jokerFiftyBtn" title="Streicht einen falschen Weg">✂️ 50:50</button>
+          <button class="joker-btn" id="jokerHintBtn" title="Verrät den Hauptnenner">🔍 Lupe</button>
+          <button class="joker-btn" id="shuffleBoardBtn" title="Neues Gitter mit neuen Zufallsbrüchen">🎲 Neu mischen</button>
+        </div>
+      </div>
+
+      <div class="expedition-toast" id="expeditionToast" style="display: none;"></div>
+
       <div class="expedition-instruction">
         🧭 <strong>Regel:</strong> Wählt immer einen <strong>kleineren</strong> Bruch nach rechts!
       </div>
+
       <div class="board-wrapper">
         <svg id="boardSvg" viewBox="0 0 980 480" preserveAspectRatio="xMidYMid meet">
           <g id="edgesLayer"></g>
@@ -523,6 +572,76 @@ function initGame1() {
       </div>
     </div>
   `;
+
+  function showExpToast(msg) {
+    const t = document.getElementById('expeditionToast');
+    if (!t) return;
+    t.innerHTML = msg;
+    t.style.display = 'block';
+    setTimeout(() => {
+      t.style.display = 'none';
+    }, 4500);
+  }
+
+  // Level Buttons
+  document.getElementById('lvlMeisterBtn').onclick = () => {
+    if (currentLevel === 'meister') return;
+    initGame1('meister');
+  };
+  document.getElementById('lvlForscherBtn').onclick = () => {
+    if (currentLevel === 'forscher') return;
+    initGame1('forscher');
+  };
+
+  // Joker 50:50
+  document.getElementById('jokerFiftyBtn').onclick = () => {
+    if (jokerFiftyUsed) return;
+    let candidateIds = ADJ[currentNode] || [];
+    let currNode = NODES[currentNode];
+    let wrongCandidates = candidateIds.filter(id => {
+      if (NODES[id].isGoal || eliminatedNodes.has(id)) return false;
+      return NODES[id].frac.val >= currNode.frac.val; // Falscher Weg
+    });
+
+    if (wrongCandidates.length === 0) {
+      showExpToast('💡 Alle verbleibenden Wege führen zum Ziel!');
+      return;
+    }
+
+    let toEliminate = wrongCandidates[Math.floor(Math.random() * wrongCandidates.length)];
+    eliminatedNodes.add(toEliminate);
+    jokerFiftyUsed = true;
+    document.getElementById('jokerFiftyBtn').disabled = true;
+    playSound('correct');
+    showExpToast(`✂️ <strong>50:50:</strong> Knoten <strong>${NODES[toEliminate].frac.str}</strong> ist eine Falle und wurde gestrichen!`);
+    renderBoard();
+  };
+
+  // Joker Lupe (Hauptnenner)
+  document.getElementById('jokerHintBtn').onclick = () => {
+    if (jokerHintUsed) return;
+    let candidateIds = ADJ[currentNode] || [];
+    if (candidateIds.length === 0) return;
+    let currNode = NODES[currentNode];
+    let dens = [currNode.frac.den];
+    candidateIds.forEach(id => {
+      let n = NODES[id];
+      if (n && !n.isGoal && !eliminatedNodes.has(id)) dens.push(n.frac.den);
+    });
+
+    let overallLCM = dens.reduce((acc, d) => lcm(acc, d), 1);
+    jokerHintUsed = true;
+    document.getElementById('jokerHintBtn').disabled = true;
+    playSound('correct');
+    showExpToast(`🔍 <strong>Hauptnenner-Lupe:</strong> Erweitert die Brüche an dieser Kreuzung auf <strong>${overallLCM}</strong>!`);
+  };
+
+  // Neu mischen Button
+  document.getElementById('shuffleBoardBtn').onclick = () => {
+    generateBoardData();
+    renderBoard();
+    showExpToast('🎲 <strong>Neues Spielfeld:</strong> Frische Zufallsbrüche generiert!');
+  };
 
   function renderBoard() {
     scoreEl.textContent = `Schritte: ${steps} / 5`;
@@ -581,7 +700,8 @@ function initGame1() {
       let cls = ['node-g'];
       if (node.isStart) cls.push('is-start');
       if (node.isGoal) cls.push('is-goal');
-      if (candidateIds.includes(node.id)) cls.push('is-candidate');
+      if (candidateIds.includes(node.id) && !eliminatedNodes.has(node.id)) cls.push('is-candidate');
+      if (eliminatedNodes.has(node.id)) cls.push('is-eliminated');
       if (currentNode === node.id) cls.push('pos-team');
       g.setAttribute('class', cls.join(' '));
 
@@ -666,11 +786,11 @@ function initGame1() {
 
   function handleNodeClick(targetId) {
     let candidateIds = ADJ[currentNode] || [];
-    if (!candidateIds.includes(targetId)) return;
+    if (!candidateIds.includes(targetId) || eliminatedNodes.has(targetId)) return;
 
     if (targetId === 'goal') {
       playSound('fanfare');
-      winStation(1, '🧭', 'Pfad-Finder der Brüche!');
+      winStation(1, '🧭', 'Meister-Pfadfinder der Brüche!');
       return;
     }
 
@@ -700,7 +820,7 @@ function initGame1() {
       let explanationHtml = `
         <div class="comp-row">
           <div class="comp-card">
-            <small>Aktueller Bruch:</small>
+            <small>Bisheriger Bruch:</small>
             <div class="comp-frac-big">
               <span>${currNode.frac.num}</span>
               <div class="bar"></div>
@@ -736,7 +856,7 @@ function initGame1() {
       if (lives <= 0) {
         setTimeout(() => {
           closeExplanationModal();
-          showGameOver('KEINE LEBEN MEHR!', 'Du hast alle 3 Leben verloren. Der Pfad startet mit neuen Brüchen von vorne!', () => initGame1());
+          showGameOver('KEINE LEBEN MEHR!', 'Ihr habt alle 3 Leben verloren. Der Pfad startet mit neuen kniffligen Zufallsbrüchen von vorne!', () => initGame1(currentLevel));
         }, 800);
       }
     }
