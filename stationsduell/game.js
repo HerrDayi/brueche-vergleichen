@@ -390,7 +390,7 @@ function initGame1(preferredLevel = 'meister') {
   const scoreEl = document.getElementById('arenaScore');
   livesEl.style.display = 'inline-flex';
 
-  let currentLevel = preferredLevel; // 'meister' (schwierig) oder 'forscher'
+  let currentLevel = preferredLevel; // 'meister' (großes Netzwerk mit vielen Wegen) oder 'kompakt'
   let lives = 3;
   let steps = 0;
   let jokerFiftyUsed = false;
@@ -398,7 +398,6 @@ function initGame1(preferredLevel = 'meister') {
   let eliminatedNodes = new Set();
 
   livesEl.textContent = getHeartString(lives);
-  scoreEl.textContent = 'Schritte: 0 / 5';
 
   // 1. Mathematische Hilfsfunktionen
   function buildFractionPool(denoms) {
@@ -422,33 +421,112 @@ function initGame1(preferredLevel = 'meister') {
     return unique;
   }
 
-  // Schwierige Meister-Stufe (UPP-Niveau): Nenner bis 25, über 100 Brüche, keine Brüche > 1
+  // Über 110 echte, ungleichnamige Brüche (< 1)
   const POOL_MEISTER = buildFractionPool([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 18, 20, 21, 24, 25]);
-  // Forscher-Stufe: Glattere Nenner
-  const POOL_FORSCHER = buildFractionPool([2, 3, 4, 5, 6, 8, 10, 12]);
+  const POOL_KOMPAKT = buildFractionPool([2, 3, 4, 5, 6, 8, 10, 12]);
 
-  const NODES = {
-    'start':  { id: 'start',  col: 0, x: 80,  y: 240, isStart: true },
-    'c1_top': { id: 'c1_top', col: 1, x: 245, y: 145 },
-    'c1_bot': { id: 'c1_bot', col: 1, x: 245, y: 335 },
-    'c2_top': { id: 'c2_top', col: 2, x: 410, y: 95 },
-    'c2_mid': { id: 'c2_mid', col: 2, x: 410, y: 240 },
-    'c2_bot': { id: 'c2_bot', col: 2, x: 410, y: 385 },
-    'c3_top': { id: 'c3_top', col: 3, x: 575, y: 145 },
-    'c3_bot': { id: 'c3_bot', col: 3, x: 575, y: 335 },
-    'c4_top': { id: 'c4_top', col: 4, x: 740, y: 145 },
-    'c4_bot': { id: 'c4_bot', col: 4, x: 740, y: 335 },
-    'goal':   { id: 'goal',   col: 5, x: 890, y: 240, isGoal: true }
+  // TOPOLOGIE A: Großes Meister-Netzwerk aus Brüche vergleichen 2 (30 Knoten, 55 Kanten, 144 sehnenfreie Pfade!)
+  const TOPOLOGY_MEISTER = {
+    viewBox: '0 0 1080 560',
+    totalSteps: 10,
+    nodeRadius: 23,
+    nodes: {
+      'start':   { id: 'start',   col: 0, x: 70,  y: 280, isStart: true },
+      'c1_r2':   { id: 'c1_r2',   col: 1, x: 165, y: 200 },
+      'c1_r4':   { id: 'c1_r4',   col: 1, x: 165, y: 360 },
+      'c2_r1':   { id: 'c2_r1',   col: 2, x: 260, y: 120 },
+      'c2_r3':   { id: 'c2_r3',   col: 2, x: 260, y: 280 },
+      'c2_r5':   { id: 'c2_r5',   col: 2, x: 260, y: 440 },
+      'c3_r0':   { id: 'c3_r0',   col: 3, x: 355, y: 40 },
+      'c3_r2':   { id: 'c3_r2',   col: 3, x: 355, y: 200 },
+      'c3_r4':   { id: 'c3_r4',   col: 3, x: 355, y: 360 },
+      'c3_r6':   { id: 'c3_r6',   col: 3, x: 355, y: 520 },
+      'c4_r1':   { id: 'c4_r1',   col: 4, x: 450, y: 120 },
+      'c4_r3':   { id: 'c4_r3',   col: 4, x: 450, y: 280 },
+      'c4_r5':   { id: 'c4_r5',   col: 4, x: 450, y: 440 },
+      'c5_r0':   { id: 'c5_r0',   col: 5, x: 545, y: 40 },
+      'c5_r2':   { id: 'c5_r2',   col: 5, x: 545, y: 200 },
+      'c5_r4':   { id: 'c5_r4',   col: 5, x: 545, y: 360 },
+      'c5_r6':   { id: 'c5_r6',   col: 5, x: 545, y: 520 },
+      'c6_r1':   { id: 'c6_r1',   col: 6, x: 640, y: 120 },
+      'c6_r3':   { id: 'c6_r3',   col: 6, x: 640, y: 280 },
+      'c6_r5':   { id: 'c6_r5',   col: 6, x: 640, y: 440 },
+      'c7_r0':   { id: 'c7_r0',   col: 7, x: 735, y: 40 },
+      'c7_r2':   { id: 'c7_r2',   col: 7, x: 735, y: 200 },
+      'c7_r4':   { id: 'c7_r4',   col: 7, x: 735, y: 360 },
+      'c7_r6':   { id: 'c7_r6',   col: 7, x: 735, y: 520 },
+      'c8_r1':   { id: 'c8_r1',   col: 8, x: 830, y: 120 },
+      'c8_r3':   { id: 'c8_r3',   col: 8, x: 830, y: 280 },
+      'c8_r5':   { id: 'c8_r5',   col: 8, x: 830, y: 440 },
+      'c9_r2':   { id: 'c9_r2',   col: 9, x: 925, y: 200 },
+      'c9_r4':   { id: 'c9_r4',   col: 9, x: 925, y: 360 },
+      'goal':    { id: 'goal',    col: 10, x: 1010, y: 280, isGoal: true }
+    },
+    edges: [
+      ['start', 'c1_r2'], ['start', 'c1_r4'],
+      ['c1_r2', 'c2_r1'], ['c1_r2', 'c2_r3'],
+      ['c1_r4', 'c2_r3'], ['c1_r4', 'c2_r5'],
+      ['c2_r1', 'c3_r0'], ['c2_r1', 'c3_r2'],
+      ['c2_r3', 'c3_r2'], ['c2_r3', 'c3_r4'],
+      ['c2_r5', 'c3_r4'], ['c2_r5', 'c3_r6'],
+      ['c2_r3', 'c4_r3'],
+      ['c3_r0', 'c4_r1'], ['c3_r2', 'c4_r1'], ['c3_r2', 'c4_r3'],
+      ['c3_r4', 'c4_r3'], ['c3_r4', 'c4_r5'], ['c3_r6', 'c4_r5'],
+      ['c3_r0', 'c5_r0'], ['c3_r6', 'c5_r6'],
+      ['c4_r1', 'c5_r0'], ['c4_r1', 'c5_r2'],
+      ['c4_r3', 'c5_r2'], ['c4_r3', 'c5_r4'],
+      ['c4_r5', 'c5_r4'], ['c4_r5', 'c5_r6'],
+      ['c4_r3', 'c6_r3'],
+      ['c5_r0', 'c6_r1'], ['c5_r2', 'c6_r1'], ['c5_r2', 'c6_r3'],
+      ['c5_r4', 'c6_r3'], ['c5_r4', 'c6_r5'],
+      ['c5_r6', 'c6_r5'],
+      ['c5_r0', 'c7_r0'], ['c5_r6', 'c7_r6'],
+      ['c6_r1', 'c7_r0'], ['c6_r1', 'c7_r2'],
+      ['c6_r3', 'c7_r2'], ['c6_r3', 'c7_r4'],
+      ['c6_r5', 'c7_r4'], ['c6_r5', 'c7_r6'],
+      ['c6_r3', 'c8_r3'],
+      ['c7_r0', 'c8_r1'], ['c7_r2', 'c8_r1'], ['c7_r2', 'c8_r3'],
+      ['c7_r4', 'c8_r3'], ['c7_r4', 'c8_r5'],
+      ['c7_r6', 'c8_r5'],
+      ['c8_r1', 'c9_r2'], ['c8_r3', 'c9_r2'], ['c8_r3', 'c9_r4'],
+      ['c8_r5', 'c9_r4'],
+      ['c9_r2', 'goal'], ['c9_r4', 'goal']
+    ]
   };
 
-  const EDGES = [
-    ['start', 'c1_top'], ['start', 'c1_bot'],
-    ['c1_top', 'c2_top'], ['c1_top', 'c2_mid'],
-    ['c1_bot', 'c2_mid'], ['c1_bot', 'c2_bot'],
-    ['c2_top', 'c3_top'], ['c2_mid', 'c3_top'], ['c2_mid', 'c3_bot'], ['c2_bot', 'c3_bot'],
-    ['c3_top', 'c4_top'], ['c3_bot', 'c4_top'], ['c3_bot', 'c4_bot'],
-    ['c4_top', 'goal'], ['c4_bot', 'goal']
-  ];
+  // TOPOLOGIE B: Kompaktes Netzwerk (11 Knoten, 5 Schritte)
+  const TOPOLOGY_KOMPAKT = {
+    viewBox: '0 0 980 480',
+    totalSteps: 5,
+    nodeRadius: 30,
+    nodes: {
+      'start':  { id: 'start',  col: 0, x: 80,  y: 240, isStart: true },
+      'c1_top': { id: 'c1_top', col: 1, x: 245, y: 145 },
+      'c1_bot': { id: 'c1_bot', col: 1, x: 245, y: 335 },
+      'c2_top': { id: 'c2_top', col: 2, x: 410, y: 95 },
+      'c2_mid': { id: 'c2_mid', col: 2, x: 410, y: 240 },
+      'c2_bot': { id: 'c2_bot', col: 2, x: 410, y: 385 },
+      'c3_top': { id: 'c3_top', col: 3, x: 575, y: 145 },
+      'c3_bot': { id: 'c3_bot', col: 3, x: 575, y: 335 },
+      'c4_top': { id: 'c4_top', col: 4, x: 740, y: 145 },
+      'c4_bot': { id: 'c4_bot', col: 4, x: 740, y: 335 },
+      'goal':   { id: 'goal',   col: 5, x: 890, y: 240, isGoal: true }
+    },
+    edges: [
+      ['start', 'c1_top'], ['start', 'c1_bot'],
+      ['c1_top', 'c2_top'], ['c1_top', 'c2_mid'],
+      ['c1_bot', 'c2_mid'], ['c1_bot', 'c2_bot'],
+      ['c2_top', 'c3_top'], ['c2_mid', 'c3_top'], ['c2_mid', 'c3_bot'], ['c2_bot', 'c3_bot'],
+      ['c3_top', 'c4_top'], ['c3_bot', 'c4_top'], ['c3_bot', 'c4_bot'],
+      ['c4_top', 'goal'], ['c4_bot', 'goal']
+    ]
+  };
+
+  const currentTopology = (currentLevel === 'meister') ? TOPOLOGY_MEISTER : TOPOLOGY_KOMPAKT;
+  const activePool = (currentLevel === 'meister') ? POOL_MEISTER : POOL_KOMPAKT;
+
+  const NODES = JSON.parse(JSON.stringify(currentTopology.nodes));
+  const EDGES = currentTopology.edges;
 
   const ADJ = {};
   Object.keys(NODES).forEach(id => ADJ[id] = []);
@@ -457,15 +535,41 @@ function initGame1(preferredLevel = 'meister') {
     else ADJ[v].push(u);
   });
 
-  const CHORDLESS_PATHS = [
-    ['start', 'c1_top', 'c2_top', 'c3_top', 'c4_top', 'goal'],
-    ['start', 'c1_top', 'c2_mid', 'c3_top', 'c4_top', 'goal'],
-    ['start', 'c1_top', 'c2_mid', 'c3_bot', 'c4_bot', 'goal'],
-    ['start', 'c1_bot', 'c2_mid', 'c3_top', 'c4_top', 'goal'],
-    ['start', 'c1_bot', 'c2_mid', 'c3_bot', 'c4_bot', 'goal'],
-    ['start', 'c1_bot', 'c2_bot', 'c3_bot', 'c4_bot', 'goal']
-  ];
+  // Sehnenfreie Pfade berechnen
+  function getChordlessPaths() {
+    let paths = [];
+    function dfs(u, cur) {
+      if (u === 'goal') {
+        paths.push(cur);
+        return;
+      }
+      for (let v of (ADJ[u] || [])) {
+        dfs(v, cur.concat(v));
+      }
+    }
+    dfs('start', ['start']);
 
+    let chordless = [];
+    for (let p of paths) {
+      let set = new Set(p);
+      let chord = false;
+      for (let i = 0; i < p.length - 1; i++) {
+        let u = p[i];
+        let nxt = p[i + 1];
+        for (let v of (ADJ[u] || [])) {
+          if (set.has(v) && v !== nxt) {
+            chord = true;
+            break;
+          }
+        }
+        if (chord) break;
+      }
+      if (!chord) chordless.push(p);
+    }
+    return chordless.length > 0 ? chordless : paths;
+  }
+
+  const allChordless = getChordlessPaths();
   let chosenPath = [];
   let pathNodes = [];
   let nodeFracs = {};
@@ -473,40 +577,38 @@ function initGame1(preferredLevel = 'meister') {
   let visitedPath = ['start'];
 
   function generateBoardData() {
-    const activePool = (currentLevel === 'meister') ? POOL_MEISTER : POOL_FORSCHER;
-    chosenPath = CHORDLESS_PATHS[Math.floor(Math.random() * CHORDLESS_PATHS.length)];
-    pathNodes = chosenPath.slice(0, -1); // 5 Knoten ohne 'goal'
+    chosenPath = allChordless[Math.floor(Math.random() * allChordless.length)];
+    pathNodes = chosenPath.slice(0, -1); // ohne 'goal'
+    const L = pathNodes.length;
 
-    // Wähle 5 echt absteigende Brüche für den Pfad:
-    // P0 in [0.82, 0.94], P1 in [0.68, 0.78], P2 in [0.52, 0.64], P3 in [0.36, 0.48], P4 in [0.18, 0.32]
-    const p0Cands = activePool.filter(x => x.val >= 0.82 && x.val <= 0.94);
-    const p1Cands = activePool.filter(x => x.val >= 0.68 && x.val <= 0.78);
-    const p2Cands = activePool.filter(x => x.val >= 0.52 && x.val <= 0.64);
-    const p3Cands = activePool.filter(x => x.val >= 0.36 && x.val <= 0.48);
-    const p4Cands = activePool.filter(x => x.val >= 0.18 && x.val <= 0.32);
+    // L Brüche gleichmäßig über den Pool verteilt wählen (streng absteigend!)
+    let stepSize = activePool.length / (L + 1);
+    let chosenIndices = [];
+    for (let i = 0; i < L; i++) {
+      let base = Math.floor((i + 1) * stepSize + (Math.random() * 3 - 1.5));
+      base = Math.max(0, Math.min(activePool.length - 1, base));
+      chosenIndices.push(base);
+    }
+    chosenIndices = Array.from(new Set(chosenIndices)).sort((a, b) => b - a);
+    while (chosenIndices.length < L) {
+      let minVal = chosenIndices[chosenIndices.length - 1];
+      chosenIndices.push(Math.max(0, minVal - 1));
+    }
+    chosenIndices.sort((a, b) => b - a);
 
-    const p0 = p0Cands.length ? p0Cands[Math.floor(Math.random() * p0Cands.length)] : activePool[activePool.length - 2];
-    const p1 = p1Cands.length ? p1Cands[Math.floor(Math.random() * p1Cands.length)] : activePool[Math.floor(activePool.length * 0.7)];
-    const p2 = p2Cands.length ? p2Cands[Math.floor(Math.random() * p2Cands.length)] : activePool[Math.floor(activePool.length * 0.5)];
-    const p3 = p3Cands.length ? p3Cands[Math.floor(Math.random() * p3Cands.length)] : activePool[Math.floor(activePool.length * 0.3)];
-    const p4 = p4Cands.length ? p4Cands[Math.floor(Math.random() * p4Cands.length)] : activePool[Math.floor(activePool.length * 0.15)];
-
-    const sorted5 = [p0, p1, p2, p3, p4];
     nodeFracs = {};
     pathNodes.forEach((nodeId, i) => {
-      nodeFracs[nodeId] = sorted5[i];
+      nodeFracs[nodeId] = activePool[chosenIndices[i]];
     });
 
-    // Knifflige Distraktoren:
-    // An jeder Verzweigung muss der falsche Weg >= dem aktuellen Bruch sein.
-    // Für echte mathematische Schwierigkeit: Distraktor soll NAH am aktuellen Bruch liegen (+0.02 bis +0.15)!
+    // Knifflige Distraktoren: An jeder Weggabelung muss der falsche Weg >= dem aktuellen Bruch sein!
+    // Liegt extrem nah am aktuellen Wert (+0.02 bis +0.15) für maximale didaktische Herausforderung!
     pathNodes.forEach((u, i) => {
       let nextNode = chosenPath[i + 1];
       let uVal = nodeFracs[u].val;
       for (let v of ADJ[u]) {
         if (v === 'goal' || v === nextNode || nodeFracs[v]) continue;
-        // Nahe Distraktoren (knapp größer als uVal)
-        let closeItems = activePool.filter(item => item.val >= uVal && item.val <= uVal + 0.15 && item.str !== nodeFracs[u].str);
+        let closeItems = activePool.filter(item => item.val >= uVal && item.val <= uVal + 0.16 && item.str !== nodeFracs[u].str);
         if (closeItems.length > 0) {
           nodeFracs[v] = closeItems[Math.floor(Math.random() * closeItems.length)];
         } else {
@@ -516,7 +618,7 @@ function initGame1(preferredLevel = 'meister') {
       }
     });
 
-    // Restliche Hintergrund-Knoten auffüllen
+    // Restliche Knoten (Hintergrundpfade) mit passenden Brüchen auffüllen
     Object.keys(NODES).forEach(nodeId => {
       if (nodeId === 'goal') {
         NODES[nodeId].frac = { num: 0, den: 1, val: 0, str: 'Ziel' };
@@ -539,15 +641,15 @@ function initGame1(preferredLevel = 'meister') {
   generateBoardData();
 
   const content = document.getElementById('arenaContent');
-  content.style.padding = '12px';
+  content.style.padding = '8px';
   content.style.alignItems = 'center';
 
   content.innerHTML = `
     <div class="expedition-arena">
       <div class="expedition-toolbar">
         <div class="level-toggle-group">
-          <button class="lvl-btn ${currentLevel === 'meister' ? 'active' : ''}" id="lvlMeisterBtn" title="Ungleichnamige Brüche & Prim-Nenner (UPP-Niveau)">⚡ Meister-Stufe (Schwierig 🔥)</button>
-          <button class="lvl-btn ${currentLevel === 'forscher' ? 'active' : ''}" id="lvlForscherBtn" title="Glattere Nenner">🌱 Forscher-Stufe</button>
+          <button class="lvl-btn ${currentLevel === 'meister' ? 'active' : ''}" id="lvlMeisterBtn" title="Großes 30-Knoten Originalnetz mit über 140 Wegen!">👑 Meister-Netzwerk (Viele Wege 🔥)</button>
+          <button class="lvl-btn ${currentLevel === 'kompakt' ? 'active' : ''}" id="lvlKompaktBtn" title="Kompakteres 11-Knoten Gitter">🌿 Kompakt-Netzwerk</button>
         </div>
         <div class="jokers-group">
           <button class="joker-btn" id="jokerFiftyBtn" title="Streicht einen falschen Weg">✂️ 50:50</button>
@@ -559,11 +661,11 @@ function initGame1(preferredLevel = 'meister') {
       <div class="expedition-toast" id="expeditionToast" style="display: none;"></div>
 
       <div class="expedition-instruction">
-        🧭 <strong>Regel:</strong> Wählt immer einen <strong>kleineren</strong> Bruch nach rechts!
+        🧭 <strong>Regel:</strong> Wählt an jeder Kreuzung einen <strong>kleineren</strong> Bruch nach rechts!
       </div>
 
       <div class="board-wrapper">
-        <svg id="boardSvg" viewBox="0 0 980 480" preserveAspectRatio="xMidYMid meet">
+        <svg id="boardSvg" viewBox="${currentTopology.viewBox}" preserveAspectRatio="xMidYMid meet">
           <g id="edgesLayer"></g>
           <g id="teamPathLayer"></g>
           <g id="nodesLayer"></g>
@@ -583,14 +685,13 @@ function initGame1(preferredLevel = 'meister') {
     }, 4500);
   }
 
-  // Level Buttons
   document.getElementById('lvlMeisterBtn').onclick = () => {
     if (currentLevel === 'meister') return;
     initGame1('meister');
   };
-  document.getElementById('lvlForscherBtn').onclick = () => {
-    if (currentLevel === 'forscher') return;
-    initGame1('forscher');
+  document.getElementById('lvlKompaktBtn').onclick = () => {
+    if (currentLevel === 'kompakt') return;
+    initGame1('kompakt');
   };
 
   // Joker 50:50
@@ -600,11 +701,11 @@ function initGame1(preferredLevel = 'meister') {
     let currNode = NODES[currentNode];
     let wrongCandidates = candidateIds.filter(id => {
       if (NODES[id].isGoal || eliminatedNodes.has(id)) return false;
-      return NODES[id].frac.val >= currNode.frac.val; // Falscher Weg
+      return NODES[id].frac.val >= currNode.frac.val;
     });
 
     if (wrongCandidates.length === 0) {
-      showExpToast('💡 Alle verbleibenden Wege führen zum Ziel!');
+      showExpToast('💡 Alle verbleibenden Abzweigungen sind gültig!');
       return;
     }
 
@@ -613,11 +714,11 @@ function initGame1(preferredLevel = 'meister') {
     jokerFiftyUsed = true;
     document.getElementById('jokerFiftyBtn').disabled = true;
     playSound('correct');
-    showExpToast(`✂️ <strong>50:50:</strong> Knoten <strong>${NODES[toEliminate].frac.str}</strong> ist eine Falle und wurde gestrichen!`);
+    showExpToast(`✂️ <strong>50:50-Joker:</strong> Knoten <strong>${NODES[toEliminate].frac.str}</strong> ist eine Falle und wurde gestrichen!`);
     renderBoard();
   };
 
-  // Joker Lupe (Hauptnenner)
+  // Joker Lupe
   document.getElementById('jokerHintBtn').onclick = () => {
     if (jokerHintUsed) return;
     let candidateIds = ADJ[currentNode] || [];
@@ -636,15 +737,15 @@ function initGame1(preferredLevel = 'meister') {
     showExpToast(`🔍 <strong>Hauptnenner-Lupe:</strong> Erweitert die Brüche an dieser Kreuzung auf <strong>${overallLCM}</strong>!`);
   };
 
-  // Neu mischen Button
+  // Neu mischen
   document.getElementById('shuffleBoardBtn').onclick = () => {
     generateBoardData();
     renderBoard();
-    showExpToast('🎲 <strong>Neues Spielfeld:</strong> Frische Zufallsbrüche generiert!');
+    showExpToast('🎲 <strong>Neues Spielfeld:</strong> Frische Zufallsbrüche auf dem Netzwerk verteilt!');
   };
 
   function renderBoard() {
-    scoreEl.textContent = `Schritte: ${steps} / 5`;
+    scoreEl.textContent = `Schritte: ${steps} / ${currentTopology.totalSteps}`;
     livesEl.textContent = getHeartString(lives);
 
     const edgesLayer = document.getElementById('edgesLayer');
@@ -676,7 +777,7 @@ function initGame1(preferredLevel = 'meister') {
       edgesLayer.appendChild(line);
     });
 
-    // 2. Pfad
+    // 2. Bisheriger Pfad
     if (visitedPath.length >= 2) {
       for (let i = 0; i < visitedPath.length - 1; i++) {
         let u = NODES[visitedPath[i]];
@@ -692,6 +793,7 @@ function initGame1(preferredLevel = 'meister') {
     }
 
     // 3. Knoten
+    const r = currentTopology.nodeRadius;
     Object.values(NODES).forEach(node => {
       let g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('transform', `translate(${node.x}, ${node.y})`);
@@ -711,7 +813,7 @@ function initGame1(preferredLevel = 'meister') {
       });
 
       let c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      c.setAttribute('r', '32');
+      c.setAttribute('r', node.isGoal ? (r + 4) : r);
       c.setAttribute('class', 'node-base-circle');
       g.appendChild(c);
 
@@ -719,21 +821,21 @@ function initGame1(preferredLevel = 'meister') {
       if (node.isStart) {
         let tStart = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         tStart.setAttribute('class', 'node-txt');
-        tStart.setAttribute('y', '-13');
-        tStart.setAttribute('style', 'font-size: 11px; fill: #059669; font-weight: 800;');
+        tStart.setAttribute('y', currentLevel === 'meister' ? '-10' : '-13');
+        tStart.setAttribute('style', `font-size: ${currentLevel === 'meister' ? '9px' : '11px'}; fill: #059669; font-weight: 800;`);
         tStart.textContent = 'START';
         g.appendChild(tStart);
 
-        drawNodeFraction(g, node.frac, 5);
+        drawNodeFraction(g, node.frac, currentLevel === 'meister' ? 4 : 5, currentLevel === 'meister');
       } else if (node.isGoal) {
         let tGoal = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         tGoal.setAttribute('class', 'node-txt single');
         tGoal.setAttribute('y', '2');
-        tGoal.setAttribute('style', 'fill: #b45309; font-size: 15px; font-weight: 900;');
+        tGoal.setAttribute('style', `fill: #b45309; font-size: ${currentLevel === 'meister' ? '12px' : '15px'}; font-weight: 900;`);
         tGoal.textContent = 'ZIEL 🏁';
         g.appendChild(tGoal);
       } else {
-        drawNodeFraction(g, node.frac, 0);
+        drawNodeFraction(g, node.frac, 0, currentLevel === 'meister');
       }
 
       nodesLayer.appendChild(g);
@@ -744,42 +846,50 @@ function initGame1(preferredLevel = 'meister') {
     if (activeNode) {
       let token = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       token.setAttribute('x', activeNode.x);
-      token.setAttribute('y', activeNode.y - 32);
+      token.setAttribute('y', activeNode.y - (r + 5));
       token.setAttribute('class', 'team-token');
       token.setAttribute('text-anchor', 'middle');
       token.setAttribute('dominant-baseline', 'central');
+      token.setAttribute('style', `font-size: ${currentLevel === 'meister' ? '22px' : '26px'};`);
       token.textContent = '🧭';
       tokensLayer.appendChild(token);
     }
   }
 
-  function drawNodeFraction(g, frac, yOffset) {
+  function drawNodeFraction(g, frac, yOffset, isSmall) {
     if (!frac.den || frac.den === 1) {
       let tInt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       tInt.setAttribute('class', 'node-txt single');
       tInt.setAttribute('y', `${yOffset + 2}`);
+      tInt.setAttribute('style', `font-size: ${isSmall ? '12px' : '15px'};`);
       tInt.textContent = frac.str;
       g.appendChild(tInt);
       return;
     }
 
+    let fSize = isSmall ? '11px' : '14px';
+    let barHalf = isSmall ? '9' : '13';
+
     let tNum = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     tNum.setAttribute('class', 'node-txt num');
-    tNum.setAttribute('y', `${yOffset - 9}`);
+    tNum.setAttribute('y', `${yOffset - (isSmall ? 6 : 9)}`);
+    tNum.setAttribute('style', `font-size: ${fSize};`);
     tNum.textContent = frac.num;
     g.appendChild(tNum);
 
     let bar = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    bar.setAttribute('x1', '-14');
-    bar.setAttribute('x2', '14');
-    bar.setAttribute('y1', `${yOffset - 2}`);
-    bar.setAttribute('y2', `${yOffset - 2}`);
+    bar.setAttribute('x1', `-${barHalf}`);
+    bar.setAttribute('x2', `${barHalf}`);
+    bar.setAttribute('y1', `${yOffset - 1.5}`);
+    bar.setAttribute('y2', `${yOffset - 1.5}`);
     bar.setAttribute('class', 'node-frac-bar');
+    bar.setAttribute('style', `stroke-width: ${isSmall ? '1.4' : '1.8'};`);
     g.appendChild(bar);
 
     let tDen = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     tDen.setAttribute('class', 'node-txt den');
-    tDen.setAttribute('y', `${yOffset + 12}`);
+    tDen.setAttribute('y', `${yOffset + (isSmall ? 8 : 12)}`);
+    tDen.setAttribute('style', `font-size: ${fSize};`);
     tDen.textContent = frac.den;
     g.appendChild(tDen);
   }
@@ -856,7 +966,7 @@ function initGame1(preferredLevel = 'meister') {
       if (lives <= 0) {
         setTimeout(() => {
           closeExplanationModal();
-          showGameOver('KEINE LEBEN MEHR!', 'Ihr habt alle 3 Leben verloren. Der Pfad startet mit neuen kniffligen Zufallsbrüchen von vorne!', () => initGame1(currentLevel));
+          showGameOver('KEINE LEBEN MEHR!', 'Ihr habt alle 3 Leben verloren. Das große Netzwerk startet mit neuen kniffligen Zufallsbrüchen von vorne!', () => initGame1(currentLevel));
         }, 800);
       }
     }
